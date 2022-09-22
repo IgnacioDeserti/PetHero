@@ -1,23 +1,21 @@
 <?php
-
-    class Owner{
-
-        private $name;
-        private $address;
-        private $id; //DNI
+	include "model/Person.php";
+    class Owner extends Person {
         private $dogs; //ARRAY DE DOGS??
-        private $number;
 
-        private function __construct($name, $address, $id, $dogs, $number){
-            $this->name = $name;
-            $this->address = $address;
-            $this->id = $id;
-            $this->dogs = $dogs;
-            $this->number = $number;
-        }
-    
+		public function __construct($name = null, $address = null, $email = null, $number = null) {
+			parent::__construct($name, $address, $email, $number);
+			$this->dogs = array();
+		}
+	
+	function getDogs() {
+		return $this->dogs;
+	}
 
-    }
-
+	function setDogs($dogs) {
+		$this->dogs = $dogs;
+		return $this;
+	}
+}
 
 ?>

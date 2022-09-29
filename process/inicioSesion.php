@@ -6,11 +6,15 @@
     use Repositories\ownerRepository as ownerRepository;
     use Repositories\guardiansRepository as guardiansRepository;
 
+    Autoload::Start();
+
     $repoOwners = new ownerRepository();
     $repoOwners->getAll();
 
     $repoGuardians = new guardiansRepository();
     $repoGuardians->getAll();
+
+    $loggedUser;
 
 
     if($_POST){

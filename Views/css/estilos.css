@@ -4,7 +4,8 @@
     box-sizing: border-box;
     font-family: 'Vollkorn';
 }
-.pagInicio{
+
+html{
     background-image: url("https://blog-cdn.dogbuddy.com/wp-content/uploads/2015/07/caracteristicas-de-un-buen-cuidador-chica-besando-a-un-perro-golde-retriever-e1438179668679.jpg");
     background-repeat:no-repeat;
     background-size:cover;
@@ -17,20 +18,75 @@
     background-color: rgba(255, 242, 183, 0.599);
     border: 2px solid black;
     display: flex;
+    justify-content: center;
     position:absolute;
-    left: 40%;
+    left: 15%;
     top: 25%;
 }
 
 .tituloInicio{
     text-align: center;
-    background-color: darkgray;
+    background-color: rgba(255, 242, 183, 0.599);
 }
 
 .buttonInicio{
-    padding: 5px 12px;
+    position: absolute;
+    top: 135%;
+    left: 55%;
+    width: 115px;
+    padding: 5px 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+}
+
+.inputLogin{
+    width: 90%;
+}
+
+.contenidoForm{
+    position: absolute;
+    top: 10%;
+    left: 2%;
+}
+
+.buttonCreateProfileGuardian{
+    position: absolute;
+    top: 55%;
+    left: 17%;
+    width: 200px;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.buttonCreateProfileOwner{
+    position: absolute;
+    top: 28%;
+    left: 17%;
+    width: 200px;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.tituloCreateProfile{
+    position: absolute;
+    top: 5%;
+    left: 22%;
+}
+
+.backgroundCreateProfile{
+    position:absolute;
+    left: 40%;
+    top: 20%;
+    height: 300px;
+    width: 300px;
+    background-color: rgba(255, 242, 183, 0.599);
+    border: 2px solid black;
 }

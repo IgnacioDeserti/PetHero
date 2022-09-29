@@ -1,17 +1,17 @@
 <?php
+
+	namespace Models;
         
-        abstract class Person{
+    abstract class Person{
         
-        private $name;
+    	private $name;
         private $address;
         private $email;
         private $number;
+		private $password;
 
-	function __construct($name = null, $address = null, $email = null, $number = null) {
-	    $this->name = $name;
-	    $this->address = $address;
-	    $this->email = $email;
-	    $this->number = $number;
+	function __construct() {
+	    
 	}
 
 	function getName() {
@@ -20,7 +20,6 @@
 	
 	function setName($name) {
 		$this->name = $name;
-		return $this;
 	}	
 
 	function getAddress() {
@@ -29,7 +28,6 @@
 	
 	function setAddress($address) {
 		$this->address = $address;
-		return $this;
 	}
 	
 	function getEmail() {
@@ -38,7 +36,6 @@
 	
 	function setEmail($email) {
 		$this->email = $email;
-		return $this;
 	}
 	
 	function getNumber() {
@@ -47,7 +44,14 @@
 	
 	function setNumber($number) {
 		$this->number = $number;
-		return $this;
+	}
+	
+	public function getPassword() {
+		return $this->password;
+	}
+	
+	public function setPassword($password){
+		$this->password = $password;
 	}
 }
 

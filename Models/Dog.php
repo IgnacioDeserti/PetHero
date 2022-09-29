@@ -1,4 +1,6 @@
 <?php
+	namespace Models;
+
     class Dog {
         private $name;
         private $breed; //raza
@@ -9,11 +11,8 @@
         private $video;
 
 
-        private function __construct($name, $breed, $size, $observations){
-            $this->name = $name;
-            $this->breed = $breed;
-            $this->size = $size;
-            $this->observations = $observations;
+        private function __construct(){
+            
         }
 
 	function getName() {
@@ -22,7 +21,6 @@
 	
 	function setName($name) {
 		$this->name = $name;
-		return $this;
 	}
 
 	function getBreed() {
@@ -31,7 +29,6 @@
 	
 	function setBreed($breed) {
 		$this->breed = $breed;
-		return $this;
 	}
 
 	function getSize() {
@@ -40,7 +37,6 @@
 	
 	function setSize($size){
 		$this->size = $size;
-		return $this;
 	}
 
 	function getObservations() {
@@ -49,7 +45,30 @@
 	
 	function setObservations($observations) {
 		$this->observations = $observations;
-		return $this;
+	}
+	
+	public function getPhoto1() {
+		return $this->photo1;
+	}
+	
+	public function setPhoto1($photo1) {
+		$this->photo1 = $photo1;
+	}
+	
+	public function getPhoto2() {
+		return $this->photo2;
+	}
+
+	public function setPhoto2($photo2) {
+		$this->photo2 = $photo2;
+	}
+
+	public function getVideo() {
+		return $this->video;
+	}
+	
+	public function setVideo($video) {
+		$this->video = $video;
 	}
 }
 

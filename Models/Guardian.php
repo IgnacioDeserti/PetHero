@@ -1,15 +1,15 @@
 <?php
-	include "model/Person.php";
-    class Guardian extends Person {
+	
+	namespace Models;
+	use Models\Person as Person;
+
+    class Guardian extends Person{
         private $availability;
 		private $size;
 		private $reviews;
 
-		public function __construct($name = null, $address = null, $email = null, $number = null, $availability = null, $size = null, $reviews = null) {
-			parent::__construct($name, $address, $email, $number);
-			$this->availability = $availability;
-			$this->size = $size;
-			$this->reviews = $reviews;
+		public function __construct() {
+			$this->reviews = array();
 		}
 
 	public function getAvailability() {

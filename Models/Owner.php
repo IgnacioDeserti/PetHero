@@ -1,10 +1,12 @@
 <?php
-	include "model/Person.php";
+	
+	namespace Models;
+	use Models\Person as Person;
+
     class Owner extends Person {
         private $dogs; //ARRAY DE DOGS??
 
-		public function __construct($name = null, $address = null, $email = null, $number = null) {
-			parent::__construct($name, $address, $email, $number);
+		public function __construct() {
 			$this->dogs = array();
 		}
 	

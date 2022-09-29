@@ -1,0 +1,36 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Vollkorn';
+}
+.pagInicio{
+    background-image: url("https://blog-cdn.dogbuddy.com/wp-content/uploads/2015/07/caracteristicas-de-un-buen-cuidador-chica-besando-a-un-perro-golde-retriever-e1438179668679.jpg");
+    background-repeat:no-repeat;
+    background-size:cover;
+    height: 100vh;
+}
+
+.loginForm{
+    height: 300px;
+    width: 300px;
+    background-color: rgba(255, 242, 183, 0.599);
+    border: 2px solid black;
+    display: flex;
+    position:absolute;
+    left: 40%;
+    top: 25%;
+}
+
+.tituloInicio{
+    text-align: center;
+    background-color: darkgray;
+}
+
+.buttonInicio{
+    padding: 5px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}

@@ -1,10 +1,14 @@
+<?php
+     include("header.php");
+?>
+
 <main class="d-flex align-items-center justify-content-center height-100">
      <div class="content">
           <header class="text-center">
                <h2>Practico N° 4</h2>
           </header>
 
-          <form action="../process/createDogProfile.php" method="post" class="login-form bg-dark-alpha p-5 text-white">
+          <form action="../process/createDogProfile.php" method="post" class="loginCSS">
                <div class="form-group">
                     <label for="">Nombre del Perro</label>
                     <input type="text" name="userName" class="form-control form-control-lg" placeholder="Ingresar usuario">

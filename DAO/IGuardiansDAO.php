@@ -1,10 +1,10 @@
 <?php
 
-    namespace Repositories;
+    namespace DAO;
 
     use Models\Guardian as Guardian;
 
-    interface IGuardians{
+    interface IGuardiansDAO{
         function add(Guardian $newGuardian);
         function delete($id);
         function getAll();

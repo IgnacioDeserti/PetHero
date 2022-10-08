@@ -90,3 +90,42 @@ html{
     background-color: rgba(255, 242, 183, 0.599);
     border: 2px solid black;
 }
+
+.tituloForm{
+    width: 100%;
+    position: absolute;
+    left: 6%;
+}
+
+.formCreateProfile{
+    position:absolute;
+    left: 35%;
+    top: 20%;
+    height: 450px;
+    width: 450px;
+    background-color: rgba(255, 242, 183, 0.599);
+    border: 2px solid black;
+}
+
+.contentForm{
+    position: absolute;
+    top: 10%;
+}
+
+.inputForm{
+    position: absolute;
+    left: 45%;
+}
+
+.divForm{
+    margin: 15px;
+}
+
+.buttonForm{
+    padding: 15px;
+    position: absolute;
+    top: 110%;
+    left: 150%;
+    font-size: 16px;
+}
+

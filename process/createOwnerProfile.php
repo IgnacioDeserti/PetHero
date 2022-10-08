@@ -1,34 +1,49 @@
 <?php 
 
 	namespace Process;
+
 	require_once("../Config/Autoload.php");
+
+	use Config\Autoload as Autoload;
 	use Repositories\ownerRepository as ownerRepository;
-	
+	use Models\Owner as Owner;
+
+	Autoload::Start();
+
+	$repo = new ownerRepository();
+
+	$repo->getAll();
+
 
 	if($_POST){
-		$userName = $_POST['userName'];
-		$password = $_POST['password'];
-		if($userName == 'Cosme Fulanito'){
-			if($password == 'strongPassword'){
+
+		$newOwner = new Owner();
+		$newOwner->setName($_POST["name"]);
+		$newOwner->setAddress($_POST["address"]);
+		$newOwner->setEmail($_POST["email"]);
+		$newOwner->setNumber($_POST["number"]);
+		$newOwner->setUserName($_POST["userName"]);
+		$newOwner->setPassword($_POST["password"]);
 		
-				
-				header("location:../add-bill.php");
-		
-			}else{
-				echo "<script> if(confirm('Verifique que la contraseña sea correcta'));";
-				echo "window.location = '../index.php';
-				</script>";
-			}
-		
+		$searched = $repo->getOwner($newOwner);
+
+
+		if($searched == NULL){
+			$repo->add($newOwner);
+			echo "<script> if(confirm('Perfil creado con éxito!'));";
+			echo "window.location = '../Views/owner.php';
+			</script>";
+
 		}else{
-			echo "<script> if(confirm('Verifique que el nombre de usuario sea correcto'));";
-			echo "window.location = '../index.php';
+			echo "<script> if(confirm('Nombre de usuario ya registrado, ingrese otro'));";
+			echo "window.location = '../Views/createOwnerProfile.php';
 			</script>";
 		}
+		
 	}else{
 		echo "<script> if(confirm('Error en el método de envio de datos'));";
-			echo "window.location = '../index.php';
-			</script>";
+		echo "window.location = '../index.php';
+		</script>";
 	}
 	
 ?>	

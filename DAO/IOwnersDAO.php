@@ -1,10 +1,10 @@
 <?php
 
-    namespace Repositories;
+    namespace DAO;
 
     use Models\Owner as Owner;
 
-    interface IOwners{
+    interface IOwnersDAO{
         function add(Owner $newOwner);
         function delete($id);
         function getAll();

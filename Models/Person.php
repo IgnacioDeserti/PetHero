@@ -8,6 +8,7 @@
         private $address;
         private $email;
         private $number;
+		private $userName;
 		private $password;
 
 	function __construct() {
@@ -52,6 +53,14 @@
 	
 	public function setPassword($password){
 		$this->password = $password;
+	}
+
+	function getUserName(){
+		return $this->userName;
+	}
+
+	function setUserName($userName){
+		$this->userName = $userName;
 	}
 }
 

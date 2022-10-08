@@ -14,7 +14,7 @@
     $repoGuardians = new guardiansRepository();
     $repoGuardians->getAll();
 
-    $loggedUser;
+    $loggedUser = NULL;
 
 
     if($_POST){

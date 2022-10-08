@@ -1,12 +1,12 @@
 <?php
 
-    namespace Repositories;
+    namespace DAO;
 
     use Models\Owner as Owner;
-    use Repositories\IOwners;
+    use DAO\IOwnersDAO;
     use Models\Dog as Dog;
 
-    class ownerRepository implements IOwners{
+    class ownersDAO implements IOwnersDAO{
 
         private $ownerList;
         private $fileName;
@@ -31,6 +31,18 @@
             return $this->ownerList;
         }
 
+        public function getOwner(Owner $newOwner){
+            $searched = NULL;
+
+            foreach($this->ownerList as $list){
+                if($list->getUserName() == $newOwner->getUserName()){
+                    $searched = $newOwner;
+                }
+            }
+
+            return $searched;
+        }
+
         private function saveData(){
             $arrayToEncode = array();
 
@@ -40,6 +52,8 @@
                     $valuesArray["adress"] = $owner->getAddress();
                     $valuesArray["email"] = $owner->getEmail();
                     $valuesArray["number"] = $owner->getNumber();
+                    $valuesArray["userName"] = $owner->getUserName();
+                    $valuesArray["password"] = $owner->getPassword();
                     $aux = $owner->getDogs();
                     $arrayDogs = array();
                     foreach($aux as $dog){
@@ -75,6 +89,8 @@
                     $owner->setAddress($valuesArray["adress"]);
                     $owner->setEmail($valuesArray["email"]);
                     $owner->setNumber($valuesArray["number"]);
+                    $owner->setUserName($valuesArray["userName"]);
+                    $owner->setPassword($valuesArray["password"]);
                     $aux = $valuesArray["dogs"];
                     $arrayDogs = array();
                     foreach($aux as $value){

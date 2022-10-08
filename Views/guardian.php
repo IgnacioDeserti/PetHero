@@ -1,0 +1,1 @@
+apartado de poner disponibilidad de estadias

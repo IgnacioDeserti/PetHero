@@ -6,11 +6,11 @@
 
 	use Config\Autoload;
 	use Models\Guardian as Guardian;
-	use Repositories\guardiansRepository as guardiansRepository;
+	use DAO\guardiansDAO as guardiansDAO;
 
 	Autoload::Start();
 
-	$repo = new guardiansRepository();
+	$repo = new guardiansDAO();
 
 	$repo->getAll();
 

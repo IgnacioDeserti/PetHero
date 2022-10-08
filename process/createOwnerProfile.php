@@ -5,12 +5,12 @@
 	require_once("../Config/Autoload.php");
 
 	use Config\Autoload as Autoload;
-	use Repositories\ownerRepository as ownerRepository;
+	use DAO\ownersDAO as ownerDAO;
 	use Models\Owner as Owner;
 
 	Autoload::Start();
 
-	$repo = new ownerRepository();
+	$repo = new ownerDAO();
 
 	$repo->getAll();
 

@@ -1,4 +1,5 @@
-<?php include("header.php");
+<?php 
+    include('header.php');
 ?>
 
 <main>
@@ -7,11 +8,9 @@
             <h2 class="tituloCreateProfile">Registrate como:</h2>
         </header>
         <div>
-            <form action="../Process/createProfileP.php" method="post">
+            <form action="<?php echo FRONT_ROOT ?> createProfile/profileType" method="post">
                 <button type="submit" name="do" value="guardian" class="buttonCreateProfileGuardian">Guardian</button>
-            </form>
-            <form action="">
-                
+                <button type="submit" name="do" value="owner" class="buttonCreateProfileOwner">Dueño</button>
             </form>
         </div>
         

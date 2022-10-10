@@ -13,31 +13,29 @@
             $this->ownerDAO = new ownersDAO();
         }
 
-        public function inicioSesion($userName, $password){
-
-            $this->guardianDAO->getAll();
-            $this->ownerDAO->getAll();
+        public function inicioSesion($email, $password){
         
             $loggedUser = NULL;
+            
             if($_POST){
-                foreach($this->ownerDAO as $owner){
+                foreach($this->ownerDAO->getAll() as $owner){
                     if($_POST['email'] == $owner->getEmail()){
                         if($_POST['password'] == $owner->getPassword()){
                             $loggedUser = $owner;
                             session_start();
                             $_SESSION['loggedUser'] = $loggedUser;
-                            header("../Views/owner.php");
+                            header("location:../Views/owner.php");
                         }
                     }
                 }
                 if($loggedUser == NULL){
-                    foreach($this->guardianDAO as $guardian){
-                        if($_POST['email'] == $guardian->getEail()){
+                    foreach($this->guardianDAO->getAll() as $guardian){
+                        if($_POST['email'] == $guardian->getEmail()){
                             if($_POST['password'] == $guardian->getPassword()){
                                 $loggedUser = $guardian;
                                 session_start();
                                 $_SESSION['loggedUser'] = $loggedUser;
-                                header("../Views/guardian.php");
+                                header("location:../Views/guardian.php");
                             }
                         }
                     }

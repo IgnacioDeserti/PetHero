@@ -1,5 +1,5 @@
 <?php
-    include("header.php");
+    include('header.php');
 ?>
 <html>
     <main>
@@ -8,7 +8,7 @@
                 <h2 class="tituloInicio ">BIENVENIDO</h2>
             </header>
             <div class="loginForm">
-                <form action=" <?php echo FRONT_ROOT?> /Controllers/inicioSesionController.php/inicioSesion" method="post">
+                <form action=" <?php echo FRONT_ROOT?> inicioSesion/inicioSesion" method="post">
                     <div class = "contenidoForm">
                         <label for="email"> <h3>Usuario</h3></label>
                         <input type="email" name="email" placeholder="email" class="inputLogin"><br><br>
@@ -17,9 +17,11 @@
                         <input type="password" name="password" placeholder="password" class="inputLogin">
                     
                         <button class="buttonInicio" type="submit">Iniciar Sesion</button>
-                        <span class="registroInicio">¿No tenes cuenta? <a href="<?php echo FRONT_ROOT ?> /Controllers/createProfileController/createProfile">Registrate!</a> </span>
                     </div>
                 </form>
+                <div>
+                    <span>¿No tenes cuenta? <form action="<?php echo FRONT_ROOT ?>createProfile/createProfile" method="post"><button type="submit">Registrate!</button></form></span>
+                </div>
             </div>
         </div>
     </main>

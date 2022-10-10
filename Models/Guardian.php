@@ -4,40 +4,46 @@
 	use Models\Person as Person;
 
     class Guardian extends Person{
-        private $availability;
+        private $availabilityStart;
+		private $availabilityEnd;
 		private $size;
 		private $reviews;
 
-		public function __construct() {
+		public function __construct(){
 			$this->reviews = array();
 		}
 
-	public function getAvailability() {
-		return $this->availability;
-	}
+		public function getReviews(){
+			return $this->reviews;
+		}
+		
+		public function setReviews($reviews){
+			$this->reviews = $reviews;
+		}
 
-	public function setAvailability($availability) {
-		$this->availability = $availability;
-		return $this;
-	}
+		public function getSize(){
+			return $this->size;
+		}
 
-	public function getReviews() {
-		return $this->reviews;
-	}
-	
-	public function setReviews($reviews) {
-		$this->reviews = $reviews;
-		return $this;
-	}
+		public function setSize($size){
+			$this->size = $size;
+		}
 
-	public function getSize() {
-		return $this->size;
-	}
+		public function getAvailabilityStart(){
+			return $this->availabilityStart;
+		}
+		
+		public function setAvailabilityStart($availabilityStart){
+			$this->availabilityStart = $availabilityStart;
+		}
 
-	public function setSize($size) {
-		$this->size = $size;
-		return $this;
-	}
+		public function getAvailabilityEnd(){
+			return $this->availabilityEnd;
+		}
+		
+		public function setAvailabilityEnd($availabilityEnd){
+			$this->availabilityEnd = $availabilityEnd;
+		}
 }
 
 ?>

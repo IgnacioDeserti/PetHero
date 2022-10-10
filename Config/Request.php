@@ -8,10 +8,6 @@
 
         public function __construct(){
 
-            echo "MUESTROOOOOOO <br><br>";
-            echo filter_input(INPUT_GET, "url", FILTER_SANITIZE_URL);
-            echo "<br><br>YA MOSTRADOOOOOOOOOOO <br><br>";
-
             $url = filter_input(INPUT_GET, "url", FILTER_SANITIZE_URL);
 
             $urlArray = explode("/", $url);
@@ -39,15 +35,11 @@
                     foreach($_GET as $key => $value){
                         array_push($this->parameters, $value);
                     }
-                }else{
-                    $this->parameters = $urlArray;
                 }
             }else if($_POST){
                 $this->parameters = $_POST;
             }
             if($_FILES){
-                unset($this->parameters["button"]);
-
                 foreach($_FILES as $file){
                     array_push($this->parameters, $file);
                 }
@@ -55,7 +47,7 @@
         }
 
         private static function getMethodRequest(){
-            return $_SERVER['REQUEST_METHOD'];
+            return $_SERVER["REQUEST_METHOD"];
         }
 
         public function getController(){

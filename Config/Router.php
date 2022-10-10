@@ -6,7 +6,7 @@
     class Router{
         
         public static function Route(Request $request){
-            $controllerName = $request->getController() . "Controller";
+            $controllerName = $request->getController() . 'Controller';
 
             $methodName = $request->getMethod();
 

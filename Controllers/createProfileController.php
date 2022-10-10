@@ -13,7 +13,19 @@
             $this->ownerDAO = new ownersDAO();
         }
 
-       
+        public function createProfile(){
+            require_once(VIEWS_PATH."createProfile.php");
+        }
+
+        public function profileType($do){
+            if($_POST){
+                if($do == "guardian"){
+                    require_once(VIEWS_PATH."createGuardianProfile.php");
+                }else{
+                    require_once(VIEWS_PATH."createOwnerProfile.php");
+                }
+            }
+        }
 
 
     }

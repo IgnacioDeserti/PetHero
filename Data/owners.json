@@ -1,3 +1,11 @@
 [
-    
+    {
+        "name": "Ignacio Tosini",
+        "adress": "Castelli 2562",
+        "email": "ignaciotosini@gmail.com",
+        "number": "2234567890",
+        "userName": "ZurdoSiete",
+        "password": "123456789",
+        "dogs": []
+    }
 ]

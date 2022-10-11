@@ -98,7 +98,7 @@ html{
 }
 
 .formCreateProfile{
-    position:absolute;
+    position: absolute;
     left: 35%;
     top: 20%;
     height: 450px;
@@ -118,7 +118,7 @@ html{
 }
 
 .divForm{
-    margin: 15px;
+    margin: 10px;
 }
 
 .buttonForm{
@@ -129,3 +129,26 @@ html{
     font-size: 16px;
 }
 
+.inputOwner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    bottom: 8px;
+    left: 57%;
+}
+
+.buttonOwner{
+    position: absolute;
+    top: 97%;
+    left: 180%;
+    padding: 15px;
+    font-size: 16px;
+}
+
+.divOwner{
+    margin: -8px 0px 0px 13px;
+    position: relative;
+    top: 10px;
+}

@@ -47,7 +47,6 @@
             $arrayToEncode = array();
 
             foreach($this->ownerList as $owner){
-                    $owner = new Owner();
                     $valuesArray["name"] = $owner->getName();
                     $valuesArray["adress"] = $owner->getAddress();
                     $valuesArray["email"] = $owner->getEmail();

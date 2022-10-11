@@ -35,5 +35,18 @@
             "medium"
         ],
         "reviews": []
+    },
+    {
+        "name": "Adrian Deserti",
+        "address": "Misiones 2454",
+        "email": "desertam@hotmail.com",
+        "number": "2231234567",
+        "userName": "adeserti",
+        "password": "123456789",
+        "size": [
+            "small",
+            "big"
+        ],
+        "reviews": []
     }
 ]

@@ -23,8 +23,12 @@
             if($_POST){
                 if($do == "guardian"){
                     require_once(VIEWS_PATH."createGuardianProfile.php");
-                }else{
+                }else if($do == "owner"){
                     require_once(VIEWS_PATH."createOwnerProfile.php");
+                }else if($do == "goBack"){
+                    require_once(VIEWS_PATH."inicio.php");
+                }else{
+                    
                 }
             }
         }

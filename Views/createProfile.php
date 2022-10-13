@@ -11,6 +11,7 @@
             <form action="<?php echo FRONT_ROOT ?> createProfile/profileType" method="post">
                 <button type="submit" name="do" value="guardian" class="buttonCreateProfileGuardian">Guardian</button>
                 <button type="submit" name="do" value="owner" class="buttonCreateProfileOwner">Dueño</button>
+                <button type="submit" name="do" value="goBack" class="buttonGoBackCreateProfile">Volver</button>
             </form>
         </div>
         

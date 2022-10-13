@@ -15,9 +15,9 @@ include('header.php');
         </head>
         
         <body>
-            <form action=" <?php echo FRONT_ROOT?> Owner/showGuardianList" method="post">
+            <form action=" <?php echo FRONT_ROOT?> Owner/menuOwner" method="post">
 
-            <button>Ver listado</button>
+            <button name="button" type="submit" value="listGuardian">Ver listado</button>
 
             </form>
 

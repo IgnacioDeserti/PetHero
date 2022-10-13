@@ -24,7 +24,7 @@
                             $loggedUser = $owner;
                             session_start();
                             $_SESSION['loggedUser'] = $loggedUser;
-                            header("location:../Views/owner.php");
+                            require_once(VIEWS_PATH. "owner.php");
                         }
                     }
                 }
@@ -35,7 +35,7 @@
                                 $loggedUser = $guardian;
                                 session_start();
                                 $_SESSION['loggedUser'] = $loggedUser;
-                                header("location:../Views/guardian.php");
+                               require_once(VIEWS_PATH. "guardian.php");
                             }
                         }
                     }
@@ -46,7 +46,7 @@
                 }
         
             }else{
-                echo "<script> if(confirm('Error en la transferencia de datos'));</script>";
+                echo "<script> if(confirm('Error en el método de envio de datos'));</script>";
                 require_once(VIEWS_PATH . "inicio.php");
             }
         

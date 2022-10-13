@@ -36,6 +36,8 @@
         public function createOwnerProfile($name, $address, $email, $number, $userName, $password){
             if($_POST){
 
+                $this->ownerDAO->getAll();
+
                 $newOwner = new Owner();
                 $newOwner->setName($name);
                 $newOwner->setAddress($address);
@@ -49,26 +51,22 @@
         
                 if($searched == NULL){
                     $this->ownerDAO->add($newOwner);
-                    echo "<script> if(confirm('Perfil creado con éxito!'));";
-                    echo "window.location = '../Views/owner.php';
-                    </script>";
+                    
         
                 }else{
-                    echo "<script> if(confirm('Nombre de usuario ya registrado, ingrese otro'));";
-                    echo "window.location = '../Views/createOwnerProfile.php';
-                    </script>";
+                    
                 }
                 
             }else{
-                echo "<script> if(confirm('Error en el método de envio de datos'));";
-                echo "window.location = '../index.php';
-                </script>";
+                
             }
         }
 
         public function createGuardianProfile($name, $address, $email, $number, $userName, $password, $size){
             
             if($_POST){
+
+                $this->guardianDAO->getAll();
 
                 $newGuardian = new Guardian();
                 $newGuardian->setName($name);
@@ -84,20 +82,14 @@
         
                 if($searched == NULL){
                     $this->guardianDAO->add($newGuardian);
-                    echo "<script> if(confirm('Perfil creado con éxito!'));";
-                    echo "window.location = '../Views/guardian.php';
-                    </script>";
+                   
         
                 }else{
-                    echo "<script> if(confirm('Nombre de usuario ya registrado, ingrese otro'));";
-                    echo "window.location = '../Views/createGuardianProfile.php';
-                    </script>";
+                    
                 }
                 
             }else{
-                echo "<script> if(confirm('Error en el método de envio de datos'));";
-                echo "window.location = '../Views/inicio.php';
-                </script>";
+                
             }
         }
 

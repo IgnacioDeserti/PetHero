@@ -141,7 +141,7 @@ html{
 
 .buttonOwner{
     position: absolute;
-    top: 97%;
+    top: 111.5%;
     left: 180%;
     padding: 15px;
     font-size: 16px;
@@ -151,4 +151,20 @@ html{
     margin: -8px 0px 0px 13px;
     position: relative;
     top: 10px;
+}
+
+.buttonGoBackGuardian{
+    padding: 15px;
+    position: absolute;
+    top: 60%;
+    left: 4%;
+    font-size: 16px;
+}
+
+.buttonGoBackOwner{
+    padding: 15px;
+    position: absolute;
+    top: 55%;
+    left: 4%;
+    font-size: 16px;
 }

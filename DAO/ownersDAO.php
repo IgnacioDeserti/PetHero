@@ -48,7 +48,7 @@
 
             foreach($this->ownerList as $owner){
                     $valuesArray["name"] = $owner->getName();
-                    $valuesArray["adress"] = $owner->getAddress();
+                    $valuesArray["address"] = $owner->getAddress();
                     $valuesArray["email"] = $owner->getEmail();
                     $valuesArray["number"] = $owner->getNumber();
                     $valuesArray["userName"] = $owner->getUserName();
@@ -85,7 +85,7 @@
                 foreach($arrayToDecode as $valuesArray){
                     $owner = new Owner();
                     $owner->setName($valuesArray["name"]);
-                    $owner->setAddress($valuesArray["adress"]);
+                    $owner->setAddress($valuesArray["address"]);
                     $owner->setEmail($valuesArray["email"]);
                     $owner->setNumber($valuesArray["number"]);
                     $owner->setUserName($valuesArray["userName"]);

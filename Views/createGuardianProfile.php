@@ -42,6 +42,10 @@
 
                 <button type="submit" class="buttonForm">Registrarse</button>
         </form>
+        
+        <form action="<?php echo FRONT_ROOT . "createProfile/createProfile"?>">
+            <button class="buttonGoBackGuardian">Volver</button>        
+        </form>
     </div>
 
 </main>

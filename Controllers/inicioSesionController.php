@@ -40,11 +40,14 @@
                         }
                     }
                 }
+                if($loggedUser == null){
+                    echo "<script> if(confirm('Verifique que los datos ingresados sean correctos'));</script>";
+                    require_once(VIEWS_PATH . "inicio.php");
+                }
         
             }else{
-                echo "<script> if(confirm('Verifique que los datos ingresados sean correctos'));";
-                echo "window.location = '../Views/inicio.php';
-                    </script>";
+                echo "<script> if(confirm('Error en la transferencia de datos'));</script>";
+                require_once(VIEWS_PATH . "inicio.php");
             }
         
         }

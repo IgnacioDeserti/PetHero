@@ -58,6 +58,10 @@
 
             <button type="submit" class="buttonOwner">Registrarse</button>
         </form>
+        
+        <form action="<?php echo FRONT_ROOT . "createProfile/createProfile"?>">
+            <button class="buttonGoBackOwner">Volver</button>        
+        </form>
     </div>
 
 </main>

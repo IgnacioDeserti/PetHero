@@ -32,7 +32,7 @@
                               foreach($arrayListGuardian as $guardian)
                                {?>
                                    <tr>
-                                        <td> <?php echo $guardian->getName()?> </td>
+                                        <td><?php echo $guardian->getName()?> </td>
                                         <td><?php echo $guardian->getAddress()?></td>
                                         <td><?php echo $guardian->getEmail()?></td>
                                         <td><?php echo $guardian->getNumber()?></td>

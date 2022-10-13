@@ -35,7 +35,8 @@
 
         public function createOwnerProfile($name, $address, $email, $number, $userName, $password){
             if($_POST){
-
+                
+                $this->ownerDAO->getAll();
                 $newOwner = new Owner();
                 $newOwner->setName($name);
                 $newOwner->setAddress($address);
@@ -67,6 +68,7 @@
             
             if($_POST){
 
+                $this->guardianDAO->getAll();
                 $newGuardian = new Guardian();
                 $newGuardian->setName($name);
                 $newGuardian->setAddress($address);

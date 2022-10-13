@@ -26,7 +26,8 @@
             $searched = NULL;
 
             foreach($this->guardianList as $list){
-                if($list->getUserName() == $newGuardian->getUserName()){
+                if(strcmp($list->getEmail(), $newGuardian->getEmail()) == 0)
+                {
                     $searched = $newGuardian;
                 }
             }

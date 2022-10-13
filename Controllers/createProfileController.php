@@ -45,20 +45,17 @@
         
                 if($searched == NULL){
                     $this->ownerDAO->add($newOwner);
-                    echo "<script> if(confirm('Perfil creado con éxito!'));";
-                    echo "window.location = '../Views/owner.php';
-                    </script>";
+                    echo "<script> if(confirm('Perfil creado con éxito!'));</script>";
+                    require_once(VIEWS_PATH.'owner.php');
         
                 }else{
-                    echo "<script> if(confirm('Nombre de usuario ya registrado, ingrese otro'));";
-                    echo "window.location = '../Views/createOwnerProfile.php';
-                    </script>";
+                    echo "<script> if(confirm('Nombre de usuario ya registrado, ingrese otro'));</script>";
+                    require_once(VIEWS_PATH.'createOwnerProfile.php');
                 }
                 
             }else{
-                echo "<script> if(confirm('Error en el método de envio de datos'));";
-                echo "window.location = '../index.php';
-                </script>";
+                echo "<script> if(confirm('Error en el método de envio de datos'));</script>";
+                require_once(FRONT_ROOT.'index.php');
             }
         }
 
@@ -80,20 +77,18 @@
         
                 if($searched == NULL){
                     $this->guardianDAO->add($newGuardian);
-                    echo "<script> if(confirm('Perfil creado con éxito!'));";
-                    echo "window.location = '../Views/guardian.php';
-                    </script>";
+                    echo "<script> if(confirm('Perfil creado con éxito!'));</script>";
+                    require_once(VIEWS_PATH.'guardian.php');
+                    
         
                 }else{
-                    echo "<script> if(confirm('Nombre de usuario ya registrado, ingrese otro'));";
-                    echo "window.location = '../Views/createGuardianProfile.php';
-                    </script>";
+                    echo "<script> if(confirm('Nombre de usuario ya registrado, ingrese otro')); </script>";
+                    require_once(VIEWS_PATH.'createGuardianProfile.php');
                 }
                 
             }else{
-                echo "<script> if(confirm('Error en el método de envio de datos'));";
-                echo "window.location = '../Views/inicio.php';
-                </script>";
+                echo "<script> if(confirm('Error en el método de envio de datos'));</script>";
+                require_once(VIEWS_PATH.'inicio.php');
             }
         }
 

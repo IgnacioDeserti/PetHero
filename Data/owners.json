@@ -1,3 +1,11 @@
 [
-    
+    {
+        "name": "marcos rojo",
+        "address": "Marcos Rojo 123",
+        "email": "marquitosred@gmail.com",
+        "number": "22344313234",
+        "userName": "Marquitos",
+        "password": "marcos",
+        "dogs": []
+    }
 ]

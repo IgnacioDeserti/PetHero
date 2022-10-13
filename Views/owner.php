@@ -1,8 +1,8 @@
-crear el apartado para poner mascotas
-mostrar mascotas
-ver guardianes
+
 <?php
+echo 'ola';
 include('header.php');
+echo 'ola';
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +17,7 @@ include('header.php');
         <body>
             <form action=" <?php echo FRONT_ROOT?> Owner/menuOwner" method="post">
 
-            <button name="button" type="submit" value="listGuardian">Ver listado</button>
+            <button type='submit' value='listGuardian' name='button'>Ver listado</button>
 
             </form>
 

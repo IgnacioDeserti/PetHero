@@ -35,9 +35,8 @@
 
         public function createOwnerProfile($name, $address, $email, $number, $userName, $password){
             if($_POST){
-
+                
                 $this->ownerDAO->getAll();
-
                 $newOwner = new Owner();
                 $newOwner->setName($name);
                 $newOwner->setAddress($address);
@@ -51,14 +50,17 @@
         
                 if($searched == NULL){
                     $this->ownerDAO->add($newOwner);
-                    
+                    echo "<script> if(confirm('Perfil creado con éxito!'));</script>";
+                    require_once(VIEWS_PATH.'owner.php');
         
                 }else{
-                    
+                    echo "<script> if(confirm('Nombre de usuario ya registrado, ingrese otro'));</script>";
+                    require_once(VIEWS_PATH.'createOwnerProfile.php');
                 }
                 
             }else{
-                
+                echo "<script> if(confirm('Error en el método de envio de datos'));</script>";
+                require_once(FRONT_ROOT.'index.php');
             }
         }
 
@@ -67,7 +69,6 @@
             if($_POST){
 
                 $this->guardianDAO->getAll();
-
                 $newGuardian = new Guardian();
                 $newGuardian->setName($name);
                 $newGuardian->setAddress($address);
@@ -82,14 +83,18 @@
         
                 if($searched == NULL){
                     $this->guardianDAO->add($newGuardian);
-                   
+                    echo "<script> if(confirm('Perfil creado con éxito!'));</script>";
+                    require_once(VIEWS_PATH.'guardian.php');
+                    
         
                 }else{
-                    
+                    echo "<script> if(confirm('Nombre de usuario ya registrado, ingrese otro')); </script>";
+                    require_once(VIEWS_PATH.'createGuardianProfile.php');
                 }
                 
             }else{
-                
+                echo "<script> if(confirm('Error en el método de envio de datos'));</script>";
+                require_once(VIEWS_PATH.'inicio.php');
             }
         }
 

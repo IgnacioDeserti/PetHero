@@ -35,7 +35,8 @@
             $searched = NULL;
 
             foreach($this->ownerList as $list){
-                if($list->getUserName() == $newOwner->getUserName()){
+                if(strcmp($list->getEmail(), $newOwner->getEmail()) == 0)
+                {
                     $searched = $newOwner;
                 }
             }

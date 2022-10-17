@@ -4,15 +4,18 @@
 
     use Models\Owner as Owner;
     use DAO\IOwnersDAO;
+    use DAO\dogDAO as DogDAO;
     use Models\Dog as Dog;
 
     class ownersDAO implements IOwnersDAO{
 
         private $ownerList;
         private $fileName;
+        private $dogDAO;
 
         public function __construct(){
             $this->fileName = dirname(__DIR__)."/Data/owners.json";
+            $this->dogDAO = new DogDAO();
         }
 
 
@@ -56,13 +59,7 @@
                     $aux = $owner->getDogs();
                     $arrayDogs = array();
                     foreach($aux as $dog){
-                        $value['name'] = $dog->getName();
-                        $value['breed'] = $dog->getBreed();
-                        $value['size'] = $dog->getSize();
-                        $value['observations'] = $dog->getObservations();
-                        $value['photo1'] = $dog->getPhoto1();
-                        $value['photo2'] = $dog->getPhoto2();
-                        $value['video'] = $dog->getVideo();
+                        $value = $dog->getId();
                         array_push($arrayDogs, $value);
                     }
                     $valuesArray['dogs'] = $arrayDogs;
@@ -76,7 +73,7 @@
 
         private function retrieveData(){
             $this->ownerList = array();
-
+            $this->
             if(file_exists($this->fileName)){
                 $jsonContent = file_get_contents($this->GetJsonFilePath());
 
@@ -94,13 +91,7 @@
                     $arrayDogs = array();
                     foreach($aux as $value){
                         $dog = new Dog();
-                        $dog->setName($value['name']);
-                        $dog->setBreed($value['breed']);
-                        $dog->setSize($value['size']);
-                        $dog->setObservations($value['observations']);
-                        $dog->setPhoto1($value['photo1']);
-                        $dog->setPhoto2($value['photo2']);
-                        $dog->setVideo($value['video']);
+                        $dog = $this->dogDAO->getDogById($value);
                         array_push($arrayDogs, $dog);
                     }
                     $owner->setDogs($arrayDogs);

@@ -1,8 +1,5 @@
-
 <?php
-echo 'ola';
-include('header.php');
-echo 'ola';
+    include('header.php');
 ?>
 
 <!DOCTYPE html>

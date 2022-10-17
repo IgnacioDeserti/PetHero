@@ -44,7 +44,7 @@
                 $newOwner->setNumber($number);
                 $newOwner->setUserName($userName);
                 $newOwner->setPassword($password);
-                
+
                 $searched = $this->ownerDAO->getOwner($newOwner);
         
         
@@ -54,7 +54,7 @@
                     require_once(VIEWS_PATH.'owner.php');
         
                 }else{
-                    echo "<script> if(confirm('Nombre de usuario ya registrado, ingrese otro'));</script>";
+                    echo "<script> if(confirm('El email ingresado ya tiene una cuenta registrada, ingrese otro'));</script>";
                     require_once(VIEWS_PATH.'createOwnerProfile.php');
                 }
                 
@@ -88,7 +88,7 @@
                     
         
                 }else{
-                    echo "<script> if(confirm('Nombre de usuario ya registrado, ingrese otro')); </script>";
+                    echo "<script> if(confirm('El email ingresado ya tiene una cuenta registrada, ingrese otro')); </script>";
                     require_once(VIEWS_PATH.'createGuardianProfile.php');
                 }
                 

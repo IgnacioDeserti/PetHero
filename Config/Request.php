@@ -15,7 +15,7 @@
             $urlArray = array_filter($urlArray);
 
             if(empty($urlArray)){
-                $this->controller = "Home";
+                $this->controller = "Auth";
             }else{
                 $this->controller = ucwords(array_shift($urlArray));
             }
@@ -35,6 +35,8 @@
                     foreach($_GET as $key => $value){
                         array_push($this->parameters, $value);
                     }
+                }else{
+                    $this->parameters = $urlArray;
                 }
             }else if($_POST){
                 $this->parameters = $_POST;
@@ -74,6 +76,5 @@
             $this->parameters = $parameters;
         }
 }
-
 
 ?>

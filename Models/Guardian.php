@@ -8,8 +8,10 @@
 		private $availabilityEnd;
 		private $size;
 		private $reviews;
+		private $idGuardian;
 
 		public function __construct(){
+			parent::__construct();
 			$this->reviews = array();
 		}
 
@@ -43,6 +45,14 @@
 		
 		public function setAvailabilityEnd($availabilityEnd){
 			$this->availabilityEnd = $availabilityEnd;
+		}
+	
+		public function getIdGuardian(){
+			return $this->idGuardian;
+		}
+
+		public function setIdGuardian($idGuardian){
+			$this->idGuardian = $idGuardian;
 		}
 }
 

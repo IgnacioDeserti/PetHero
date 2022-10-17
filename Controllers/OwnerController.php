@@ -2,20 +2,24 @@
     namespace Controllers;
 
     use DAO\guardiansDAO as GuardianDAO;
+    use DAO\guardiansDAO;
+    use DAO\ownersDAO;
 
     class OwnerController{
 
         private $ownerDAO;
         private $guardianDAO;
 
+        public function __construct(){
+            $this->guardianDAO = new guardiansDAO();
+            $this->ownerDAO = new ownersDAO();
+        }
+
 
         public function menuOwner($button){
-            if($button == "listGuardian")
-            {   
-                echo 'ola';
+            if($button == "listGuardian"){   
                 $this->showGuardianList();
-            }else if($button == "addDog")
-            {
+            }else if($button == "addDog"){
                 require_once(VIEWS_PATH."addDog.php");
             }else if($button == "listDog"){
                 require_once(VIEWS_PATH."listDog.php");
@@ -24,8 +28,7 @@
 
         public function showGuardianList(){
     
-            $Guardians = new GuardianDAO();
-            $arrayListGuardian = $Guardians->getAll();
+            $arrayListGuardian = $this->guardianDAO->getAll();
             require_once(VIEWS_PATH."listGuardian.php");
         }
 

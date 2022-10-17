@@ -19,10 +19,9 @@
             
             if($_POST){
                 foreach($this->ownerDAO->getAll() as $owner){
-                    if($_POST['email'] == $owner->getEmail()){
-                        if($_POST['password'] == $owner->getPassword()){
+                    if($email == $owner->getEmail()){
+                        if($password == $owner->getPassword()){
                             $loggedUser = $owner;
-                            session_start();
                             $_SESSION['loggedUser'] = $loggedUser;
                             require_once(VIEWS_PATH. "owner.php");
                         }
@@ -30,10 +29,10 @@
                 }
                 if($loggedUser == NULL){
                     foreach($this->guardianDAO->getAll() as $guardian){
-                        if($_POST['email'] == $guardian->getEmail()){
-                            if($_POST['password'] == $guardian->getPassword()){
+                        if($email == $guardian->getEmail()){
+                            if($password == $guardian->getPassword()){
                                 $loggedUser = $guardian;
-                                session_start();
+
                                 $_SESSION['loggedUser'] = $loggedUser;
                                require_once(VIEWS_PATH. "guardian.php");
                             }

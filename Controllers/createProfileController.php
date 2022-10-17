@@ -31,7 +31,7 @@
             }
         }
 
-        public function createOwnerProfile($name, $address, $email, $number, $userName, $password){
+        public function createOwnerProfile($name, $address, $email, $number, $userName, $password, $typeUser){
             if($_POST){
                 
                 $this->ownerDAO->getAll();
@@ -42,6 +42,7 @@
                 $newOwner->setNumber($number);
                 $newOwner->setUserName($userName);
                 $newOwner->setPassword($password);
+                $newOwner->setTypeUser($typeUser);
 
                 $searched = $this->ownerDAO->getOwner($newOwner);
         
@@ -49,6 +50,8 @@
                 if($searched == NULL){
                     $this->ownerDAO->add($newOwner);
                     echo "<script> if(confirm('Perfil creado con éxito!'));</script>";
+                    $_SESSION["idUser"] = $newOwner->getIdOwner();
+                    $_SESSION["typeUser"] = $newOwner->getTypeUser();
                     require_once(VIEWS_PATH.'owner.php');
         
                 }else{
@@ -62,7 +65,7 @@
             }
         }
 
-        public function createGuardianProfile($name, $address, $email, $number, $userName, $password, $size){
+        public function createGuardianProfile($name, $address, $email, $number, $userName, $password, $size, $typeUser){
             
             if($_POST){
 
@@ -75,6 +78,7 @@
                 $newGuardian->setUserName($userName);
                 $newGuardian->setPassword($password);
                 $newGuardian->setSize($size);
+                $newGuardian->setTypeUser($typeUser);
                 
                 $searched = $this->guardianDAO->getGuardian($newGuardian);
         
@@ -82,6 +86,8 @@
                 if($searched == NULL){
                     $this->guardianDAO->add($newGuardian);
                     echo "<script> if(confirm('Perfil creado con éxito!'));</script>";
+                    $_SESSION["idUser"] = $newGuardian->getIdGuardian();
+                    $_SESSION["typeUser"] = $newGuardian->getTypeUser();
                     require_once(VIEWS_PATH.'guardian.php');
                     
         

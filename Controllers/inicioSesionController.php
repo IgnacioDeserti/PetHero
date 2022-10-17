@@ -22,7 +22,8 @@
                     if($email == $owner->getEmail()){
                         if($password == $owner->getPassword()){
                             $loggedUser = $owner;
-                            $_SESSION['loggedUser'] = $loggedUser;
+                            $_SESSION['idUser'] = $loggedUser->getIdOwner();
+                            $_SESSION['typeUser'] = $loggedUser->getTypeUser();
                             require_once(VIEWS_PATH. "owner.php");
                         }
                     }
@@ -33,7 +34,8 @@
                             if($password == $guardian->getPassword()){
                                 $loggedUser = $guardian;
 
-                                $_SESSION['loggedUser'] = $loggedUser;
+                                $_SESSION['idUser'] = $loggedUser->getIdGuardian();
+                                $_SESSION['typeUser'] = $loggedUser->geTypeUser();
                                require_once(VIEWS_PATH. "guardian.php");
                             }
                         }

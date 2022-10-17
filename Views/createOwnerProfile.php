@@ -55,8 +55,12 @@
                     <input type="password" name="password"  placeholder="Ingresar contraseña" required>                
                 </div>
                 
+                <div>
+                    <input type="hidden" name="typeUser" value="O">
+                    <button type="submit" class="buttonOwner">Registrarse</button>
+                </div>
 
-            <button type="submit" class="buttonOwner">Registrarse</button>
+
         </form>
         
         <form action="<?php echo FRONT_ROOT . "createProfile/createProfile"?>">

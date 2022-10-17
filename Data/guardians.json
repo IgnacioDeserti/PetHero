@@ -11,6 +11,7 @@
             "big"
         ],
         "reviews": [],
-        "idGuardian": 1
+        "idGuardian": 1,
+        "typeUser": "G"
     }
 ]

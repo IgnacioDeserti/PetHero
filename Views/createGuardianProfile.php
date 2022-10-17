@@ -40,7 +40,11 @@
                     <label for="ch3">Grande</label>
                 </div>
 
-                <button type="submit" class="buttonForm">Registrarse</button>
+                <div>
+                    <input type="hidden" name="typeUser" value="G">
+                    <button type="submit" class="buttonForm">Registrarse</button>
+                </div>
+
         </form>
         
         <form action="<?php echo FRONT_ROOT . "createProfile/createProfile"?>">

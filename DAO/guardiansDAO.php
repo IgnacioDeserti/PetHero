@@ -64,6 +64,7 @@
                     }
                     $valuesArray["reviews"] = $arrayReviews;
                     $valuesArray["idGuardian"] = $guardian->getIdGuardian();
+                    $valuesArray["typeUser"] = $guardian->getTypeUser();
                     array_push($arrayToEncode, $valuesArray);
                 }
 
@@ -100,6 +101,7 @@
                     }
                     $guardian->setReviews($arrayReviews);
                     $guardian->setIdGuardian($valuesArray["idGuardian"]);
+                    $guardian->setTypeUser($valuesArray["typeUser"]);
                     array_push($this->guardianList, $guardian);
                 }
             }

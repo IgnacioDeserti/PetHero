@@ -10,58 +10,67 @@
         private $number;
 		private $userName;
 		private $password;
+		private $typeUser;
 
-	function __construct() {
-	    
-	}
+		public function __construct() {
+			
+		}
 
-	function getName() {
-		return $this->name;
-	}
-	
-	function setName($name) {
-		$this->name = $name;
-	}	
+		public function getName(){
+			return $this->name;
+		}
+		
+		public function setName($name){
+			$this->name = $name;
+		}	
 
-	function getAddress() {
-		return $this->address;
-	}
-	
-	function setAddress($address) {
-		$this->address = $address;
-	}
-	
-	function getEmail() {
-		return $this->email;
-	}
-	
-	function setEmail($email) {
-		$this->email = $email;
-	}
-	
-	function getNumber() {
-		return $this->number;
-	}
-	
-	function setNumber($number) {
-		$this->number = $number;
-	}
-	
-	public function getPassword() {
-		return $this->password;
-	}
-	
-	public function setPassword($password){
-		$this->password = $password;
-	}
+		public function getAddress(){
+			return $this->address;
+		}
+		
+		public function setAddress($address){
+			$this->address = $address;
+		}
+		
+		public function getEmail(){
+			return $this->email;
+		}
+		
+		public function setEmail($email){
+			$this->email = $email;
+		}
+		
+		public function getNumber(){
+			return $this->number;
+		}
+		
+		public function setNumber($number){
+			$this->number = $number;
+		}
+		
+		public function getPassword(){
+			return $this->password;
+		}
+		
+		public function setPassword($password){
+			$this->password = $password;
+		}
 
-	function getUserName(){
-		return $this->userName;
-	}
+		public function getUserName(){
+			return $this->userName;
+		}
 
-	function setUserName($userName){
-		$this->userName = $userName;
-	}
+		public function setUserName($userName){
+			$this->userName = $userName;
+		}
+		
+		public function setTypeUser($typeUser){
+			$this->typeUser = $typeUser;
+		}
+
+		public function getTypeUser() {
+			return $this->typeUser;
+		}
 }
 
 ?>

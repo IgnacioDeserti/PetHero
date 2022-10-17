@@ -7,6 +7,7 @@
         "userName": "ideserti",
         "password": "44667880",
         "dogs": [],
-        "idOwner": 1
+        "idOwner": 1,
+        "typeUser": "O"
     }
 ]

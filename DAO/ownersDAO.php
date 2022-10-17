@@ -65,6 +65,7 @@
                     }
                     $valuesArray['dogs'] = $arrayDogs;
                     $valuesArray["idOwner"] = $owner->getIdOwner();
+                    $valuesArray["typeUser"] = $owner->getTypeUser();
                     array_push($arrayToEncode, $valuesArray);
                 }
 
@@ -75,7 +76,6 @@
 
         private function retrieveData(){
             $this->ownerList = array();
-            $this->
             if(file_exists($this->fileName)){
                 $jsonContent = file_get_contents($this->GetJsonFilePath());
 
@@ -97,6 +97,7 @@
                         array_push($arrayDogs, $dog);
                     }
                     $owner->setIdOwner($valuesArray["idOwner"]);
+                    $owner->setTypeUser($valuesArray["typeUser"]);
                     $owner->setDogs($arrayDogs);
                     array_push($this->ownerList, $owner);
                 }

@@ -18,10 +18,13 @@
 
         public function menuOwner($button){
             if($button == "listGuardian"){   
+                require_once(VIEWS_PATH . "validate-session.php");
                 $this->showGuardianList();
             }else if($button == "addDog"){
+                require_once(VIEWS_PATH . "validate-session.php");
                 require_once(VIEWS_PATH."addDog.php");
             }else if($button == "listDog"){
+                require_once(VIEWS_PATH . "validate-session.php");
                 require_once(VIEWS_PATH."listDog.php");
             }
         }

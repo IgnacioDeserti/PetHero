@@ -75,7 +75,6 @@
 
         private function retrieveData(){
             $this->ownerList = array();
-            $this->
             if(file_exists($this->fileName)){
                 $jsonContent = file_get_contents($this->GetJsonFilePath());
 

@@ -18,22 +18,23 @@
                     <input type="text" name="breed" class="form-control form-control-lg" placeholder="Ingresar raza" required>
                </div>
                <div>
-                    <input type="checkbox" id="ch1" name="size[]" value="small" checked>
-                    <label for="ch1">Pequeño</label>
-                    <input type="checkbox" id="ch2" name="size[]" value="medium">
-                    <label for="ch2">Mediano</label>
-                    <input type="checkbox" id="ch3" name="size[]" value="big">
-                    <label for="ch3">Grande</label>
+                    <label for="">Tamaño</label>
+                    <select name="size" id="">
+                    <option value="">Seleccione el tamaño de la mascota</option>
+                    <option value="small">Pequeño</option>
+                    <option value="medium">Medio</option>
+                    <option value="Big">Grande</option>
+                    </select>                 
                </div>
                <div class="form-group">
                     <label for="">Observaciones</label>
                     <textarea name="observations" cols="50" rows="30"></textarea>
                </div>
                <div class="form-group">
-                    <input type="file" name="photo1"  class="form-control form-control-lg" placeholder="Ingresar foto">          
+                    <input type="file" name="photo1"  class="form-control form-control-lg" placeholder="Ingresar foto perfil" required>          
                </div>
                <div class="form-group">
-                    <input type="file" name="photo2"  class="form-control form-control-lg" placeholder="Ingresar foto">          
+                    <input type="file" name="photo2"  class="form-control form-control-lg" placeholder="Ingresar foto plan de vacunacion" required>          
                </div>
                <div class="form-group">
                     <input type="file" name="video"  class="form-control form-control-lg" placeholder="Ingresar video">          

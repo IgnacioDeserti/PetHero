@@ -18,6 +18,7 @@
 
         public function add(guardian $newGuardian){
             $this->retrieveData();
+            $newGuardian->setIdGuardian($this->setId());
             array_push($this->guardianList, $newGuardian);
             $this->saveData();
         }
@@ -62,6 +63,7 @@
                         array_push($arrayReviews, $value);
                     }
                     $valuesArray["reviews"] = $arrayReviews;
+                    $valuesArray["idGuardian"] = $guardian->getIdGuardian();
                     array_push($arrayToEncode, $valuesArray);
                 }
 
@@ -97,6 +99,7 @@
                         array_push($arrayReviews, $review);
                     }
                     $guardian->setReviews($arrayReviews);
+                    $guardian->setIdGuardian($valuesArray["idGuardian"]);
                     array_push($this->guardianList, $guardian);
                 }
             }
@@ -112,6 +115,10 @@
             }
 
             return $jsonFilePath;
+        }
+
+        private function setId(){
+            return count($this->getAll()) + 1;
         }
 }
 

@@ -27,8 +27,6 @@
                     require_once(VIEWS_PATH."createOwnerProfile.php");
                 }else if($do == "goBack"){
                     require_once(VIEWS_PATH."inicio.php");
-                }else{
-                    
                 }
             }
         }

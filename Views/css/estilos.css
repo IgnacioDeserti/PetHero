@@ -187,7 +187,7 @@ html{
     border: 2px solid black;
     position: relative;
     width: 190vh;
-    left: 3%;
+    margin: 150px auto;
 }
 
 .tableListGuardian{
@@ -195,4 +195,10 @@ html{
     justify-content: center;
     align-items: center;
     text-align: center;
+    width: 100%;
+}
+
+.thListGuardian{
+    border: solid 1px black;
+    padding: 0px;
 }

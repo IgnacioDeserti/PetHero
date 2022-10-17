@@ -1,52 +1,16 @@
 [
     {
-        "name": "Ignacio Deserti",
-        "address": "Misiones 2454",
-        "email": "nachodeserti@gmail.com",
-        "number": "2235139919",
-        "userName": "ideserti",
-        "password": "44667880",
-        "size": [
-            "small"
-        ],
-        "reviews": []
-    },
-    {
         "name": "Mateo Braganza",
         "address": "Ciudad de Rosario 1455",
         "email": "mateobraganza1@gmail.com",
         "number": "2234567890",
         "userName": "MateoBraganza1",
-        "password": "123456789",
-        "size": [
-            "medium",
-            "big"
-        ],
-        "reviews": []
-    },
-    {
-        "name": "Ignacio Muzio",
-        "address": "Juan b Justo e Independencia",
-        "email": "nachotemuzio@gmail.com",
-        "number": "2235336642",
-        "userName": "NachoMuzio66",
-        "password": "123456678",
-        "size": [
-            "medium"
-        ],
-        "reviews": []
-    },
-    {
-        "name": "Adrian Deserti",
-        "address": "Misiones 2454",
-        "email": "desertam@hotmail.com",
-        "number": "2231234567",
-        "userName": "adeserti",
-        "password": "123456789",
+        "password": "12345678",
         "size": [
             "small",
             "big"
         ],
-        "reviews": []
+        "reviews": [],
+        "idGuardian": 1
     }
 ]

@@ -17,13 +17,13 @@
                     <caption>Guardianes</caption>
                     <thead>
                          <tr>
-                              <th>name</th>
-                              <th>address</th>
-                              <th>email</th>
-                              <th>number</th>
-                              <th>availabilityStart</th>
-                              <th>availabilityEnd</th>
-                              <th>size</th>
+                              <th class="thListGuardian">name</th>
+                              <th class="thListGuardian">address</th>
+                              <th class="thListGuardian">email</th>
+                              <th class="thListGuardian">number</th>
+                              <th class="thListGuardian">availabilityStart</th>
+                              <th class="thListGuardian">availabilityEnd</th>
+                              <th class="thListGuardian">size</th>
                          </tr>
                     </thead>
                     <tbody>
@@ -31,14 +31,14 @@
                          if(isset($arrayListGuardian)){
                               foreach($arrayListGuardian as $guardian)
                                {?>
-                                   <tr class="rowListGuardian">
-                                        <td><?php echo $guardian->getName();?> </td>
-                                        <td><?php echo $guardian->getAddress();?></td>
-                                        <td><?php echo $guardian->getEmail();?></td>
-                                        <td><?php echo $guardian->getNumber();?></td>
-                                        <td><?php echo $guardian->getAvailabilityStart();?></td>
-                                        <td><?php echo $guardian->getAvailabilityEnd();?></td>
-                                        <td><?php foreach($guardian->getSize() as $size){
+                                   <tr>
+                                        <td class="thListGuardian"><?php echo $guardian->getName();?> </td>
+                                        <td class="thListGuardian"><?php echo $guardian->getAddress();?></td>
+                                        <td class="thListGuardian"><?php echo $guardian->getEmail();?></td>
+                                        <td class="thListGuardian"><?php echo $guardian->getNumber();?></td>
+                                        <td class="thListGuardian"><?php echo $guardian->getAvailabilityStart();?></td>
+                                        <td class="thListGuardian"><?php echo $guardian->getAvailabilityEnd();?></td>
+                                        <td class="thListGuardian"><?php foreach($guardian->getSize() as $size){
                                              if(strcmp($size, "small") == 0){
                                              ?> Pequeño <?php
                                              }else if(strcmp($size, "medium") == 0){

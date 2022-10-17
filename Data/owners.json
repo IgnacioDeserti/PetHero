@@ -1,20 +1,12 @@
 [
     {
-        "name": "Ignacio Tosini",
-        "address": "Castelli 2562",
-        "email": "ignaciotosini@gmail.com",
-        "number": "2234567890",
-        "userName": "ZurdoSiete",
-        "password": "123456789",
-        "dogs": []
-    },
-    {
-        "name": "marcos rojo",
-        "address": "Marcos Rojo 123",
-        "email": "marquitosred@gmail.com",
-        "number": "22344313234",
-        "userName": "Marquitos",
-        "password": "marcos",
-        "dogs": []
+        "name": "Ignacio Deserti",
+        "address": "Misiones 2454",
+        "email": "ignaciodeserti@gmail.com",
+        "number": "2235139919",
+        "userName": "ideserti",
+        "password": "44667880",
+        "dogs": [],
+        "idOwner": 1
     }
 ]

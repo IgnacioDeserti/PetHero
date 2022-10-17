@@ -18,6 +18,7 @@
 
         public function add(Owner $newOwner){
             $this->retrieveData();
+            $newOwner->setIdOwner($this->setId());
             array_push($this->ownerList, $newOwner);
             $this->saveData();
         }
@@ -66,6 +67,7 @@
                         array_push($arrayDogs, $value);
                     }
                     $valuesArray['dogs'] = $arrayDogs;
+                    $valuesArray["idOwner"] = $owner->getIdOwner();
                     array_push($arrayToEncode, $valuesArray);
                 }
 
@@ -103,6 +105,7 @@
                         $dog->setVideo($value['video']);
                         array_push($arrayDogs, $dog);
                     }
+                    $owner->setIdOwner($valuesArray["idOwner"]);
                     $owner->setDogs($arrayDogs);
                     array_push($this->ownerList, $owner);
                 }
@@ -119,6 +122,10 @@
             }
 
             return $jsonFilePath;
+        }
+
+        private function setId(){
+            return count($this->getAll()) + 1;
         }
 }
 

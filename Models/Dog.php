@@ -2,6 +2,7 @@
 	namespace Models;
 
     class Dog {
+		private $idDog;
         private $name;
         private $breed; //raza
         private $size;
@@ -79,6 +80,16 @@
 		public function setIdOwner($idOwner){
 			$this->idOwner = $idOwner;
 		}
+
+		function getIdDog() {
+		return $this->idDog;
+	}
+	
+
+	function setIdDog($id): self {
+		$this->idDog = $id;
+		return $this;
+	}
 }
 
 

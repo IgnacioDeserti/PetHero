@@ -1,5 +1,6 @@
 <?php
 include('header.php');
+include("nav.php");
 
 use DAO\dogDAO as dogDAO;
 

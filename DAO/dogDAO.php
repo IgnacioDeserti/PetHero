@@ -119,7 +119,7 @@
             
             foreach ($this->dogList as $dog) 
             {
-                $id= $dog->getId() > $id ? $dog->getId() : $id;
+                $id= $dog->getIdDog() > $id ? $dog->getIdDog() : $id;
             }
     
             return $id+1;

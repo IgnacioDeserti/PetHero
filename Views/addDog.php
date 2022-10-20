@@ -1,5 +1,7 @@
 <?php
      include("header.php");
+     include("nav.php");
+
 ?>
 
 <main class="d-flex align-items-center justify-content-center height-100">
@@ -8,7 +10,7 @@
                <h2 style="text-align: center;">INGRESAR MASCOTA</h2>
           </header>
 
-          <form action="<?php echo FRONT_ROOT ?> Owner/addDog" method="post" class="contentForm">
+          <form action="<?php echo FRONT_ROOT ?> Owner/addDog" method="post" class="contentForm" enctype="multipart/form-data">
                
                <div class="divOwner">
                     <label for="">Nombre del Perro</label>
@@ -52,7 +54,7 @@
                </div>
 
                <div class="fileDog">
-                    <input type="file" name="photo1"  class="form-control form-control-lg" required>
+                    <input type="file" name="photo1"  id = 'photo1' class="form-control form-control-lg" required>
                </div>
                
                <div class="divOwner">
@@ -60,7 +62,7 @@
                </div>
 
                <div class="fileDog">
-                    <input type="file" name="photo2"  class="form-control form-control-lg" required>
+                    <input type="file" name="photo2" id = 'photo2' class="form-control form-control-lg" required>
                </div>
 
                <div class="divOwner">

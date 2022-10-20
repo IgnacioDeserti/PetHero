@@ -57,13 +57,6 @@
                     $valuesArray["number"] = $owner->getNumber();
                     $valuesArray["userName"] = $owner->getUserName();
                     $valuesArray["password"] = $owner->getPassword();
-                    $aux = $owner->getDogs();
-                    $arrayDogs = array();
-                    foreach($aux as $dog){
-                        $value = $dog->getId();
-                        array_push($arrayDogs, $value);
-                    }
-                    $valuesArray['dogs'] = $arrayDogs;
                     $valuesArray["idOwner"] = $owner->getIdOwner();
                     $valuesArray["typeUser"] = $owner->getTypeUser();
                     array_push($arrayToEncode, $valuesArray);
@@ -89,16 +82,8 @@
                     $owner->setNumber($valuesArray["number"]);
                     $owner->setUserName($valuesArray["userName"]);
                     $owner->setPassword($valuesArray["password"]);
-                    $aux = $valuesArray["dogs"];
-                    $arrayDogs = array();
-                    foreach($aux as $value){
-                        $dog = new Dog();
-                        $dog = $this->dogDAO->getDogById($value);
-                        array_push($arrayDogs, $dog);
-                    }
                     $owner->setIdOwner($valuesArray["idOwner"]);
                     $owner->setTypeUser($valuesArray["typeUser"]);
-                    $owner->setDogs($arrayDogs);
                     array_push($this->ownerList, $owner);
                 }
             }

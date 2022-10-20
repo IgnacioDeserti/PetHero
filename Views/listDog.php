@@ -1,8 +1,7 @@
 <?php
 
        include('header.php');
-
-       use Models\Dog as Dog;
+       
        use DAO\dogDAO as dogDAO;
 
        $DAODog = new dogDAO();

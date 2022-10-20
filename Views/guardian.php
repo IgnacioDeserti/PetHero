@@ -13,11 +13,8 @@
         </head>
         
         <body>
-            <form action=" <?php echo FRONT_ROOT?> Owner/menuOwner" method="post">
-            <button type='submit' value='listGuardian' name='button'>Ver listado</button>
-
+            <form action=" <?php echo FRONT_ROOT?> Guardian/modifyAvailability" method="post">
+                <button type='submit' value='<?php echo $_SESSION['idUser']?>' name='id'>Modificar Disponibilidad</button>
             </form>
-
-
         </body>
 </html>

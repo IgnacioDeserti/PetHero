@@ -1,15 +1,13 @@
-<div class="wrapper row1">
-  <header> 
-    <div>
-      <h1>Menu</h1>
-    </div>
+<div>
+  <header>
     <nav class="">
       <ul class="clear">
         <?php if($_SESSION["typeUser"] == "O"){?>
-        <li class=""><a class="" href="">Menu</a>
+        <li class=""><a class="" href="">Menu</a></li>
           <ul>
             <li><a href="<?php echo FRONT_ROOT . "Owner/showAddDog" ?>">AGREGAR PERRO</a></li>
-            <li><a href="<?php echo FRONT_ROOT . "Event/showDogList" ?>">VER LISTADO PERROS</a></li>
+            <li><a href="<?php echo FRONT_ROOT . "Owner/showDogList" ?>">VER LISTADO PERROS</a></li>
+            <li><a href="<?php echo FRONT_ROOT . "Owner/showGuardianList" ?>">VER LISTADO GUARDIANES</a></li>
             <li><a href="<?php echo FRONT_ROOT . "Home/logOut" ?>">LOG OUT</a></li>
           </ul>
         </li>

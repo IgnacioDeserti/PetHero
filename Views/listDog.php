@@ -1,10 +1,11 @@
 <?php
-include('header.php');
+     include('header.php');
+     include("nav.php");
 
-use DAO\dogDAO as dogDAO;
+     use DAO\dogDAO as dogDAO;
 
-$DAODog = new dogDAO();
-$arrayListDog = $DAODog->getAll();
+     $DAODog = new dogDAO();
+     $arrayListDog = $DAODog->getAll();
 
 ?>
 

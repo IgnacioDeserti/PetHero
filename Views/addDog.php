@@ -1,5 +1,6 @@
 <?php
      include("header.php");
+     include("nav.php");
 ?>
 
 <main class="d-flex align-items-center justify-content-center height-100">

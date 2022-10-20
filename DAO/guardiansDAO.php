@@ -62,6 +62,8 @@
                         $value["userName"] = $review->getUserName();
                         array_push($arrayReviews, $value);
                     }
+                    $valuesArray["availabilityStart"] = $guardian->getAvailabilityStart();
+                    $valuesArray["availabilityEnd"] = $guardian->getAvailabilityEnd();
                     $valuesArray["reviews"] = $arrayReviews;
                     $valuesArray["idGuardian"] = $guardian->getIdGuardian();
                     $valuesArray["typeUser"] = $guardian->getTypeUser();
@@ -99,6 +101,8 @@
                         $review->setUserName($value["userName"]);
                         array_push($arrayReviews, $review);
                     }
+                    $guardian->setAvailabilityStart($valuesArray["availabilityStart"]);
+                    $guardian->setAvailabilityEnd($valuesArray["availabilityEnd"]);
                     $guardian->setReviews($arrayReviews);
                     $guardian->setIdGuardian($valuesArray["idGuardian"]);
                     $guardian->setTypeUser($valuesArray["typeUser"]);
@@ -121,6 +125,17 @@
 
         private function setId(){
             return count($this->getAll()) + 1;
+        }
+
+        public function UpdateAvailability($id, $date1, $date2){
+            foreach($this->getAll() as $guardian){
+                if($guardian->getIdGuardian() == $id){
+                    $guardian->setAvailabilityStart($date1);
+                    $guardian->setAvailabilityEnd($date2);
+                    $this->saveData();
+                }
+                
+            }
         }
 }
 

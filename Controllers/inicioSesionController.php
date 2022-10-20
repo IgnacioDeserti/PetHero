@@ -40,7 +40,7 @@
                                 $loggedUser = $guardian;
 
                                 $_SESSION['idUser'] = $loggedUser->getIdGuardian();
-                                $_SESSION['typeUser'] = $loggedUser->geTypeUser();
+                                $_SESSION['typeUser'] = $loggedUser->getTypeUser();
                                 $_SESSION['name'] = $loggedUser->getName();
                                 echo "<script> if(confirm('Iniciaste sesion como Guardian con Exito!'));</script>";
                                require_once(VIEWS_PATH. "guardian.php");

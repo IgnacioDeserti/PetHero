@@ -1,5 +1,6 @@
 <?php
        include('header.php');
+       include("nav.php");
 
        use Models\Guardian as guardian;
        use DAO\guardiansDAO as guardiansDAO;

@@ -1,52 +1,45 @@
 <?php
 
-        /////CAMBIAR TODOOOOOO
        include('header.php');
 
-       use Models\Guardian as guardian;
-       use DAO\guardiansDAO as guardiansDAO;
+       use Models\Dog as Dog;
+       use DAO\dogDAO as dogDAO;
 
-       $daoGuardian = new guardiansDAO();
+       $DAODog = new dogDAO();
 
-       $arrayListGuardian = $daoGuardian->getAll();
+       $arrayListDog = $DAODog->getAll();
 
 ?>
 
 <main>
      <section id="listado">
           <div>
-               <h2>Guardianes</h2>
+               <h2>Perros</h2>
                <table >
                     <thead>
                          <th>name</th>
-                         <th>address</th>
-                         <th>email</th>
-                         <th>number</th>
-                         <th>availabilityStart</th>
-                         <th>availabilityEnd</th>
+                         <th>breed</th>
                          <th>size</th>
-                         <th>reviews</th>
+                         <th>observations</th>
+                         <th>photo</th>
                     </thead>
                     <tbody>
 
                          <?php 
-                         if(isset($arrayListGuardian)){
-                              foreach($arrayListGuardian as $guardian)
-                               {?>
+                         if(isset($arrayListDog)){
+                              foreach($$arrayListDog as $dog)
+                               {if($dog->getIdOwner==$_SESSION['idUser']){?>
                                    <tr>
-                                        <td> <?php echo $guardian->getName()?> </td>
-                                        <td><?php echo $guardian->getAddress()?></td>
-                                        <td><?php echo $guardian->getEmail()?></td>
-                                        <td><?php echo $guardian->getNumber()?></td>
-                                        <td><?php echo $guardian->getAvailabilityStart()?></td>
-                                        <td><?php echo $guardian->getAvailabilityEnd()?></td>
-                                        <td><?php echo $guardian->getSize()?></td>
-                                        <td><?php echo $guardian->getReviews()?></td>
+                                        <td> <?php echo $dog->getName()?> </td>
+                                        <td><?php echo $dog->getBreed()?></td>
+                                        <td><?php echo $dog->getSize()?></td>
+                                        <td><?php echo $dog->getObservations()?></td>
+                                        <td><?php echo $dog->getPhoto()?></td>
+
                                    </tr>
-                         <?php }} ?>
+                         <?php }}} ?>
                     </tbody>
                </table>
           </div>
      </section>
 </main>
-

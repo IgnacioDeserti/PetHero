@@ -16,7 +16,7 @@
                         <label for="password"><h3>Password</h3></label>
                         <input type="password" name="password" placeholder="password" class="inputLogin">
                     
-                        <button class="buttonInicio" type="submit">Iniciar Sesion</button>
+                        <button class="buttonInicio buttonHoversGreen" type="submit">Iniciar Sesion</button>
                     </div>
                 </form>
                 <div>

@@ -42,13 +42,13 @@
 
                 <div>
                     <input type="hidden" name="typeUser" value="G">
-                    <button type="submit" class="buttonForm">Registrarse</button>
+                    <button type="submit" class="buttonForm buttonHoversGreen">Registrarse</button>
                 </div>
 
         </form>
         
         <form action="<?php echo FRONT_ROOT . "createProfile/createProfile"?>">
-            <button class="buttonGoBackGuardian">Volver</button>        
+            <button class="buttonGoBackGuardian buttonGoBackOwner:hover">Volver</button>        
         </form>
     </div>
 

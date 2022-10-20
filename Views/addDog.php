@@ -71,9 +71,9 @@
                     <input type="file" name="video"  class="form-control form-control-lg">
                </div>
 
-               <button class="buttonAddDog" type="submit">Agregar Mascota</button>
+               <button class="buttonAddDog buttonHoversGreen" type="submit">Agregar Mascota</button>
           </form>
-          <a href="<?php echo FRONT_ROOT?> Owner/showListDog "><button class="buttonGoBackDog">Volver</button></a>
+          <a href="<?php echo FRONT_ROOT?> Owner/showListDog "><button class="buttonGoBackDog buttonGoBackOwner:hover">Volver</button></a>
      
      </div>
 </main>

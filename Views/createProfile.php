@@ -9,9 +9,9 @@
         </header>
         <div>
             <form action="<?php echo FRONT_ROOT ?> createProfile/profileType" method="post">
-                <button type="submit" name="do" value="guardian" class="buttonCreateProfileGuardian">Guardian</button>
-                <button type="submit" name="do" value="owner" class="buttonCreateProfileOwner">Dueño</button>
-                <button type="submit" name="do" value="goBack" class="buttonGoBackCreateProfile">Volver</button>
+                <button type="submit" name="do" value="guardian" class="buttonCreateProfileGuardian buttonHoversGreen">Guardian</button>
+                <button type="submit" name="do" value="owner" class="buttonCreateProfileOwner buttonHoversGreen">Dueño</button>
+                <button type="submit" name="do" value="goBack" class="buttonGoBackCreateProfile buttonGoBackOwner:hover">Volver</button>
             </form>
         </div>
         

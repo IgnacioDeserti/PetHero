@@ -57,7 +57,7 @@
                 
                 <div>
                     <input type="hidden" name="typeUser" value="O">
-                    <button type="submit" class="buttonOwner">Registrarse</button>
+                    <button type="submit" class="buttonOwner buttonHoversGreen">Registrarse</button>
                 </div>
 
 

@@ -36,8 +36,14 @@
                                         <td class="thListGuardian"><?php echo $guardian->getAddress();?></td>
                                         <td class="thListGuardian"><?php echo $guardian->getEmail();?></td>
                                         <td class="thListGuardian"><?php echo $guardian->getNumber();?></td>
-                                        <td class="thListGuardian"><?php echo $guardian->getAvailabilityStart();?></td>
+                                        <?php if(($guardian->getAvailabilityStart() == null || $guardian->getAvailabilityEnd() == null)){?>
+                                        <td class="thListGuardian">No disponible</td> 
+                                        <td class="thListGuardian">No disponible</td>
+                                        <?php } 
+                                        else{?>
+                                             <td class="thListGuardian"><?php echo $guardian->getAvailabilityStart();?></td>
                                         <td class="thListGuardian"><?php echo $guardian->getAvailabilityEnd();?></td>
+                                        <?php } ?>
                                         <td class="thListGuardian"><?php foreach($guardian->getSize() as $size){
                                              if(strcmp($size, "small") == 0){
                                              ?> Pequeño <?php

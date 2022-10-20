@@ -1,9 +1,7 @@
 <?php
-
-        /////CAMBIAR TODOOOOOO
        include('header.php');
 
-       use Models\Guardian as guardian;
+       use Models\Dog;
        use DAO\guardiansDAO as guardiansDAO;
 
        $daoGuardian = new guardiansDAO();
@@ -18,14 +16,14 @@
                <h2>Guardianes</h2>
                <table >
                     <thead>
-                         <th>name</th>
-                         <th>address</th>
-                         <th>email</th>
-                         <th>number</th>
-                         <th>availabilityStart</th>
-                         <th>availabilityEnd</th>
-                         <th>size</th>
-                         <th>reviews</th>
+                         <th>Name</th>
+                         <th>Address</th>
+                         <th>Email</th>
+                         <th>Number</th>
+                         <th>Availability Start</th>
+                         <th>Availability End</th>
+                         <th>Size</th>
+                         <th>Reviews</th>
                     </thead>
                     <tbody>
 
@@ -34,7 +32,7 @@
                               foreach($arrayListGuardian as $guardian)
                                {?>
                                    <tr>
-                                        <td> <?php echo $guardian->getName()?> </td>
+                                        <td><?php echo $guardian->getName()?> </td>
                                         <td><?php echo $guardian->getAddress()?></td>
                                         <td><?php echo $guardian->getEmail()?></td>
                                         <td><?php echo $guardian->getNumber()?></td>

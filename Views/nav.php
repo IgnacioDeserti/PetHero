@@ -8,17 +8,15 @@
         <?php if($_SESSION["typeUser"] == "O"){?>
         <li class=""><a class="" href="">Menu</a>
           <ul>
-            <li><a href="<?php echo FRONT_ROOT . "Event/add" ?>">NUEVO</a></li>
-            <li><a href="<?php echo FRONT_ROOT . "Event/showEventList" ?>">EVENTOS</a></li>
-            <li><a href="<?php echo FRONT_ROOT . "Home/logout" ?>">LOGOUT</a></li>
+            <li><a href="<?php echo FRONT_ROOT . "Owner/showAddDog" ?>">AGREGAR PERRO</a></li>
+            <li><a href="<?php echo FRONT_ROOT . "Event/showDogList" ?>">VER LISTADO PERROS</a></li>
+            <li><a href="<?php echo FRONT_ROOT . "Home/logOut" ?>">LOG OUT</a></li>
           </ul>
         </li>
         <?php }else{?>
           <li class=""><a class="" href="">Menu</a>
           <ul>
-          <li><a href="<?php echo FRONT_ROOT . "Event/showEventListGerente" ?>">EVENTOS</a></li>
-          <li><a href="<?php echo FRONT_ROOT . "Event/showReportList" ?>">REPORT LIST</a></li>
-            <li><a href="<?php echo FRONT_ROOT . "Home/logout" ?>">LOGOUT</a></li>
+            <li><a href="<?php echo FRONT_ROOT . "Home/logOut" ?>">LOG OUT</a></li>
           </ul>
         </li>
         <?php }?>

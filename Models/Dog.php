@@ -13,7 +13,7 @@
 		private $idOwner;
 
 
-        private function __construct(){
+        public function __construct(){
             
         }
 

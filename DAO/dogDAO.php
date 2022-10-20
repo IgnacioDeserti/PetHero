@@ -66,7 +66,7 @@
                     $value['photo1'] = $dog->getPhoto1();
                     $value['photo2'] = $dog->getPhoto2();
                     $value['video'] = $dog->getVideo();
-                    array_push($arrayDogs, $value);
+                    $value["idOwner"] = $dog->getIdOwner();
 
                     array_push($arrayToEncode, $value);
                 }
@@ -94,7 +94,7 @@
                     $dog->setPhoto1($valuesArray["photo1"]);
                     $dog->setPhoto2($valuesArray["photo2"]);
                     $dog->setVideo($valuesArray["video"]);
-
+                    $dog->setIdOwner($valuesArray["idOwner"]);
 
                     array_push($this->dogList, $dog);
                 }

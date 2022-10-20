@@ -1,0 +1,13 @@
+[
+    {
+        "idDog": 1,
+        "name": "Brandon",
+        "breed": "Golden",
+        "size": "Big",
+        "observations": "Jugueton capo total",
+        "photo1": "rrope.jpg",
+        "photo2": "random.jpg",
+        "video": "",
+        "idOwner": 1
+    }
+]

@@ -32,13 +32,17 @@ html{
 .buttonInicio{
     position: absolute;
     top: 135%;
-    left: 55%;
+    left: 85%;
     width: 115px;
     padding: 5px 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+}
+
+.buttonInicio:hover{
+    background-color :chartreuse;
 }
 
 .inputLogin{
@@ -63,6 +67,10 @@ html{
     font-size: 16px;
 }
 
+.buttonCreateProfileGuardian:hover{
+    background-color :chartreuse;
+}
+
 .buttonCreateProfileOwner{
     position: absolute;
     top: 20%;
@@ -73,6 +81,10 @@ html{
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+}
+
+.buttonCreateProfileOwner:hover{
+    background-color :chartreuse;
 }
 
 .tituloCreateProfile{
@@ -129,6 +141,10 @@ html{
     font-size: 16px;
 }
 
+.buttonForm:hover{
+    background-color :chartreuse;
+}
+
 .inputOwner {
     display: flex;
     flex-direction: column;
@@ -147,6 +163,10 @@ html{
     font-size: 16px;
 }
 
+.buttonOwner:hover{
+    background-color :chartreuse;
+}
+
 .divOwner{
     margin: -8px 0px 0px 13px;
     position: relative;
@@ -161,12 +181,20 @@ html{
     font-size: 16px;
 }
 
+.buttonGoBackGuardian:hover{
+    background-color : rgba(255, 38, 0, 0.719);
+}
+
 .buttonGoBackOwner{
     padding: 15px;
     position: absolute;
     top: 55%;
     left: 4%;
     font-size: 16px;
+}
+
+.buttonGoBackOwner:hover{
+    background-color : rgba(255, 38, 0, 0.719);
 }
 
 .buttonGoBackCreateProfile{
@@ -181,6 +209,9 @@ html{
     font-size: 16px;
 }
 
+.buttonGoBackCreateProfile:hover{
+    background-color : rgba(255, 38, 0, 0.719);
+}
 
 .divListGuardian{
     background-color: white;
@@ -201,4 +232,58 @@ html{
 .thListGuardian{
     border: solid 1px black;
     padding: 0px;
+}
+
+.formAddDog{
+    position: absolute;
+    left: 30%;
+    top: 10%;
+    height: 650px;
+    width: 650px;
+    background-color: rgba(255, 242, 183, 0.599);
+    border: 2px solid black;
+}
+
+.inputDog {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    bottom: 8px;
+    left: 90%;
+}
+
+.fileDog{
+    position: relative;
+    bottom: 8px;
+    left: 110%;
+}
+
+.buttonAddDog{
+    position: absolute;
+    top: 250px;
+    left: 150%;
+    padding: 15px;
+    width: 200px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.buttonAddDog:hover{
+    background-color :chartreuse;
+}
+
+.buttonGoBackDog{
+    position: absolute;
+    top: 315px;
+    left: 5%;
+    padding: 15px;
+    width: 200px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.buttonGoBackDog:hover{
+    background-color : rgba(255, 38, 0, 0.719);
 }

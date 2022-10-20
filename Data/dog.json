@@ -9,5 +9,38 @@
         "photo2": "random.jpg",
         "video": "",
         "idOwner": 1
+    },
+    {
+        "idDog": 2,
+        "name": "1",
+        "breed": "1",
+        "size": "small",
+        "observations": "1",
+        "photo1": null,
+        "photo2": null,
+        "video": null,
+        "idOwner": 3
+    },
+    {
+        "idDog": 3,
+        "name": "1",
+        "breed": "1",
+        "size": "small",
+        "observations": "1",
+        "photo1": null,
+        "photo2": null,
+        "video": null,
+        "idOwner": 3
+    },
+    {
+        "idDog": 4,
+        "name": "1",
+        "breed": "1",
+        "size": "small",
+        "observations": "1",
+        "photo1": null,
+        "photo2": null,
+        "video": null,
+        "idOwner": 3
     }
 ]

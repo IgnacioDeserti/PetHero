@@ -4,7 +4,7 @@
 ?>
 
 <html class="fondoMenus">
-    <div>
+    <div class="containerModify">
         <main> 
             <form action="<?php echo FRONT_ROOT ?> Guardian/modifyAvailability" method="post">
                 
@@ -16,15 +16,15 @@
                     <input type="date" name="availabilityStart">
                 </div>
 
-                <div>
+                <div class="containerFecha">
                     <label for="">Fecha fin</label>
                 </div>
 
-                <div>
+                <div class="containerFecha">
                     <input type="date" name="availabilityEnd">
                 </div>
 
-                <button type="submit" name="id" value="<?php echo $_SESSION["idUser"] ?>">Modificar</button>
+                <button type="submit" class="buttonModify buttonHoversGreen" name="id" value="<?php echo $_SESSION["idUser"] ?>">Modificar</button>
             </form>
         </main>
     </div>

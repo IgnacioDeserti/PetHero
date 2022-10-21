@@ -5,7 +5,7 @@
     <main>       
         <div class="formCreateProfile">         
             <header>            
-                <h2 class="tituloForm">Create un nuevo perfil como guardian</h2>        
+                <h3 class="tituloForm">Create un nuevo perfil como guardian</h3>        
             </header>          
             <form action=" <?php echo FRONT_ROOT ?>createProfile/createGuardianProfile" method="POST" class="contentForm"> 
                     <div class="divForm">                    

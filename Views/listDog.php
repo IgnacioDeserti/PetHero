@@ -33,7 +33,13 @@
                                                   <td class="thListGuardian"><?php echo $dog->getPhoto2() ?></td>
                                                   <td class="thListGuardian"><?php echo $dog->getName() ?> </td>
                                                   <td class="thListGuardian"><?php echo $dog->getBreed() ?></td>
-                                                  <td class="thListGuardian"><?php echo $dog->getSize() ?></td>
+                                                  <?php if($dog->getSize() == "Small"){?>
+                                                       <td class="thListGuardian">Pequeño</td>
+                                                  <?php }else if($dog->getSize() == "Medium"){?>
+                                                       <td class="thListGuardian">Mediano</td>
+                                                  <?php }else{?>
+                                                       <td class="thListGuardian">Grande</td>
+                                                  <?php }?>
                                                   <td class="thListGuardian"><?php echo $dog->getObservations() ?></td>
                                                   <?php if ($dog->getVideo() != null) { ?>
                                                        <td class="thListGuardian"><?php echo $dog->getVideo(); ?></td>

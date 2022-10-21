@@ -1,11 +1,11 @@
 <?php
     include("header.php");
 ?>
-<hmtl class="pantallaInicial">
+<html class="pantallaInicial">
     <main>        
         <div class="formCreateProfile">         
             <header>            
-                <h2 class="tituloForm">Create un nuevo perfil como dueño</h2>        
+                <h3 class="tituloForm">Create un nuevo perfil como dueño</h3>        
             </header>          
             <form action=" <?php echo FRONT_ROOT ?>createProfile/createOwnerProfile" method="POST" class="contentForm"> 
                     <div class="divOwner">                    

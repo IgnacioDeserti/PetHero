@@ -35,8 +35,8 @@
                     <div class="inputDog">
                          <select name="size">
                               <option value="">Seleccione el tamaño de la mascota</option>
-                              <option value="small">Pequeño</option>
-                              <option value="medium">Medio</option>
+                              <option value="Small">Pequeño</option>
+                              <option value="Medium">Medio</option>
                               <option value="Big">Grande</option>
                          </select>    
                     </div>
@@ -75,7 +75,7 @@
 
                     <button class="buttonAddDog buttonHoversGreen" type="submit">Agregar Mascota</button>
                </form>
-               <a href="<?php echo FRONT_ROOT?> Owner/showListDog "><button class="buttonGoBackDog buttonGoBackOwner:hover">Volver</button></a>
+               <a href="<?php echo FRONT_ROOT?> Owner/showListDog "><button class="buttonGoBackDog buttonRedHovers">Volver</button></a>
           
           </div>
      </main>

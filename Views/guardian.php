@@ -13,7 +13,7 @@
         
     <body>
         <form action=" <?php echo FRONT_ROOT?> Guardian/modifyAvailability" method="post">
-            <button type='submit' value='<?php echo $_SESSION['idUser']?>' name='id'>Modificar Disponibilidad</button>
+            <button type='submit' class="buttonMenuGuardian buttonHoversGreen" value='<?php echo $_SESSION['idUser']?>' name='id'>Modificar Disponibilidad</button>
         </form>
     </body>
 </html>

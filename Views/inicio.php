@@ -19,8 +19,8 @@
                         <button class="buttonInicio buttonHoversGreen" type="submit">Iniciar Sesion</button>
                     </div>
                 </form>
-                <div>
-                    <span>¿No tenes cuenta? <form action="<?php echo FRONT_ROOT ?>createProfile/createProfile" method="post"><button type="submit">Registrate!</button></form></span>
+                <div class="createProfileLink">
+                    <h5>¿No tenes cuenta?</h5> <form action="<?php echo FRONT_ROOT ?>createProfile/createProfile" method="post"><button type="submit" class="buttonCreateLink buttonHoversGreen">Registrate!</button></form>
                 </div>
             </div>
         </div>

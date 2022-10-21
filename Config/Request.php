@@ -41,11 +41,9 @@
             }else if($_POST){
                 $this->parameters = $_POST;
             }
-            if($_FILES){
-                foreach($_FILES as $file){
-                    array_push($this->parameters, $file);
-                }
-            }
+            if($_FILES) {
+                $this->parameters[] = $_FILES;
+           }
         }
 
         private static function getMethodRequest(){

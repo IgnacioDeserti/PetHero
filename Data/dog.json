@@ -4,43 +4,10 @@
         "name": "Brandon",
         "breed": "Golden",
         "size": "Big",
-        "observations": "Jugueton capo total",
-        "photo1": "rrope.jpg",
-        "photo2": "random.jpg",
-        "video": "",
+        "observations": "12345",
+        "photo1": "http:\/\/localhost\/FacultadXampp\/PetHero\/Views\/img\/\/Foto-Perfil\/rrope.jpg",
+        "photo2": "http:\/\/localhost\/FacultadXampp\/PetHero\/Views\/img\/\/Foto-Vacunacion\/random.jpg",
+        "video": null,
         "idOwner": 1
-    },
-    {
-        "idDog": 2,
-        "name": "1",
-        "breed": "1",
-        "size": "small",
-        "observations": "1",
-        "photo1": null,
-        "photo2": null,
-        "video": null,
-        "idOwner": 3
-    },
-    {
-        "idDog": 3,
-        "name": "1",
-        "breed": "1",
-        "size": "small",
-        "observations": "1",
-        "photo1": null,
-        "photo2": null,
-        "video": null,
-        "idOwner": 3
-    },
-    {
-        "idDog": 4,
-        "name": "1",
-        "breed": "1",
-        "size": "small",
-        "observations": "1",
-        "photo1": null,
-        "photo2": null,
-        "video": null,
-        "idOwner": 3
     }
 ]

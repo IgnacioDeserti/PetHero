@@ -65,13 +65,13 @@
                          <input type="file" name="photo2" id = 'photo2' class="form-control form-control-lg" required>
                     </div>
 
-                    <div class="divOwner">
+                    <!--<div class="divOwner">
                          <label for="">Ingresar video (opcional)</label>
                     </div>
 
                     <div class="fileDog">
                          <input type="file" name="video"  class="form-control form-control-lg">
-                    </div>
+                    </div> -->
 
                     <button class="buttonAddDog buttonHoversGreen" type="submit">Agregar Mascota</button>
                </form>

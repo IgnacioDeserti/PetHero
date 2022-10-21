@@ -10,23 +10,13 @@
         "typeUser": "O"
     },
     {
-        "name": "Ignacio Tosini",
-        "address": "Castelli 2562",
-        "email": "ignaciotosini@gmail.com",
-        "number": "2234567890",
-        "userName": "1111",
-        "password": "1111",
-        "idOwner": 2,
-        "typeUser": "O"
-    },
-    {
-        "name": "Coquinia",
-        "address": "Ciudad de Rosario 1434",
-        "email": "juan@marin.com",
-        "number": "2234566789",
-        "userName": "SSoler",
+        "name": "Ignacio Muzio",
+        "address": "Fortunato de la Plaza 2455",
+        "email": "nachotemuzio@gmail.com",
+        "number": "2231231234",
+        "userName": "NachoMuzio66",
         "password": "1",
-        "idOwner": 3,
+        "idOwner": 2,
         "typeUser": "O"
     }
 ]

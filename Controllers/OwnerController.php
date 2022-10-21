@@ -42,7 +42,7 @@ class OwnerController
         require_once(VIEWS_PATH . "listGuardian.php");
     }
 
-    public function addDog($name, $breed, $size, $observations, $photo1, $photo2, $video)
+    public function addDog($name, $breed, $size, $observations, $files)
     {
         $this->dogDAO->getAll();
 
@@ -51,15 +51,26 @@ class OwnerController
         $newDog->setBreed($breed);
         $newDog->setSize($size);
         $newDog->setObservations($observations);
-        $newDog->setPhoto1($this->uploadImg($photo1));
-        $newDog->setPhoto2($this->uploadImg($photo2));
         $newDog->setIdOwner($_SESSION["idUser"]);
+        
+        $fileController = new FileController();
+        
+        if($pathFile1 = $fileController->upload($files["photo1"], "Foto-Perfil")){
+            $newDog->setPhoto1($pathFile1);
+        }
+
+        if($pathFile2 = $fileController->upload($files["photo2"], "Foto-Vacunacion")){
+            $newDog->setPhoto2($pathFile2);
+        }
 
         $this->dogDAO->add($newDog);
+
+        $this->showListDog();
     }
 
     public function showListDog()
     {
+        $arrayListDog = $this->dogDAO->getAll();
         require_once(VIEWS_PATH . "validate-session.php");
         require_once(VIEWS_PATH . "listDog.php");
     }
@@ -70,32 +81,4 @@ class OwnerController
         require_once(VIEWS_PATH . "addDog.php");
     }
 
-    private function uploadImg($name)
-    {
-        
-        if($_FILES[$name]['name']){
-            $filename = $_FILES[$name]['name'];
-            $temporal = $_FILES[$name]['tmp_name'];
-
-            $directorio = "../Views/img";
-
-            if(!file_exists($directorio)){
-                    mkdir($directorio,0777);
-            }
-
-            $dir = opendir($directorio);
-            $ruta = $directorio."/".$filename;
-
-            if(move_uploaded_file($temporal,$ruta)){
-                echo "Se cargo jej";
-            }
-            else {
-                echo "No se cargo jje";
-            }
-
-            closedir($dir);
-
-            return $ruta;
-        }
-    }
 }

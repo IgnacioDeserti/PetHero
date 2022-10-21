@@ -52,7 +52,7 @@
                     echo "<script> if(confirm('Perfil creado con éxito!'));</script>";
                     $_SESSION["idUser"] = $newOwner->getIdOwner();
                     $_SESSION["typeUser"] = $newOwner->getTypeUser();
-                    require_once(VIEWS_PATH.'owner.php');
+                    require_once(VIEWS_PATH.'addDog.php');
         
                 }else{
                     echo "<script> if(confirm('El email ingresado ya tiene una cuenta registrada, ingrese otro'));</script>";

@@ -1,12 +1,6 @@
 <?php
      include('header.php');
      include("nav.php");
-
-     use DAO\dogDAO as dogDAO;
-
-     $DAODog = new dogDAO();
-     $arrayListDog = $DAODog->getAll();
-
 ?>
 <html class="fondoMenus">
      <main>
@@ -29,8 +23,8 @@
                                    foreach ($arrayListDog as $dog) {
                                         if ($dog->getIdOwner() == $_SESSION['idUser']) { ?>
                                              <tr>
-                                                  <td class="thListGuardian"><?php echo $dog->getPhoto1() ?></td>
-                                                  <td class="thListGuardian"><?php echo $dog->getPhoto2() ?></td>
+                                                  <td class="thListGuardian"><img src="<?php echo $dog->getPhoto1() ?>" width="200px" alt=" Foto de: <?php echo $dog->getName();?>"></td>
+                                                  <td class="thListGuardian"><img src="<?php echo $dog->getPhoto2() ?>" width="200px" alt=" Plan de vacunacion de: <?php echo $dog->getName();?>"></td>
                                                   <td class="thListGuardian"><?php echo $dog->getName() ?> </td>
                                                   <td class="thListGuardian"><?php echo $dog->getBreed() ?></td>
                                                   <?php if($dog->getSize() == "Small"){?>

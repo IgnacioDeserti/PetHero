@@ -1,6 +1,6 @@
 [
     {
-        "name": "mateo capo braganza",
+        "name": "Mateo Braganza",
         "address": "Ciudad de Rosario 1455",
         "email": "mateobraganza1@gmail.com",
         "number": "2234567890",
@@ -10,8 +10,8 @@
             "small",
             "big"
         ],
-        "availabilityStart": "2022-10-22",
-        "availabilityEnd": "2022-10-31",
+        "availabilityStart": "2022-10-28",
+        "availabilityEnd": "2022-12-31",
         "reviews": [],
         "idGuardian": 1,
         "typeUser": "G"

@@ -61,14 +61,14 @@
         }
 
         public function selectView($id){
-            $dogList = array();
+            $arrayListDog = array();
             foreach($this->dogsDAO->getAll() as $dog){
                 if($dog->getIdOwner() == $id){
-                    array_push($dogList, $dog);
+                    array_push($arrayListDog, $dog);
                 }
             }
 
-            if(empty($dogList)){
+            if(empty($arrayListDog)){
                 require_once(VIEWS_PATH . "validate-session.php");
                 require_once(VIEWS_PATH . "addDog.php");
             }else{

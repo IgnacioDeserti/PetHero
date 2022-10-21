@@ -46,7 +46,7 @@
                     </div>
 
                     <div class="inputDog">
-                         <textarea name="observations" cols="10" rows="2"></textarea>
+                         <textarea name="observations" cols="10" rows="2" required></textarea>
                     </div>
 
                     <div class="divOwner">
@@ -65,13 +65,13 @@
                          <input type="file" name="photo2" id = 'photo2' class="form-control form-control-lg" required>
                     </div>
 
-                    <!--<div class="divOwner">
+                    <<div class="divOwner">
                          <label for="">Ingresar video (opcional)</label>
                     </div>
 
                     <div class="fileDog">
                          <input type="file" name="video"  class="form-control form-control-lg">
-                    </div> -->
+                    </div>
 
                     <button class="buttonAddDog buttonHoversGreen" type="submit">Agregar Mascota</button>
                </form>

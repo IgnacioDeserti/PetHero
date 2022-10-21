@@ -10,10 +10,27 @@
             "small",
             "big"
         ],
-        "availabilityStart": "2022-10-28",
-        "availabilityEnd": "2022-12-31",
+        "availabilityStart": "2022-10-27",
+        "availabilityEnd": "2022-10-29",
         "reviews": [],
         "idGuardian": 1,
+        "typeUser": "G"
+    },
+    {
+        "name": "Pepe Argento",
+        "address": "Cualquiera 1234",
+        "email": "pepe@gmail.com",
+        "number": "2234567890",
+        "userName": "PepeArgento",
+        "password": "1",
+        "size": [
+            "medium",
+            "big"
+        ],
+        "availabilityStart": "2022-10-31",
+        "availabilityEnd": "2022-11-10",
+        "reviews": [],
+        "idGuardian": 2,
         "typeUser": "G"
     }
 ]

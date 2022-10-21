@@ -18,5 +18,15 @@
         "password": "1",
         "idOwner": 2,
         "typeUser": "O"
+    },
+    {
+        "name": "Moni Argento",
+        "address": "Cualquiera 1234",
+        "email": "moni@gmail.com",
+        "number": "223456789",
+        "userName": "MoniArgento",
+        "password": "1",
+        "idOwner": 3,
+        "typeUser": "O"
     }
 ]

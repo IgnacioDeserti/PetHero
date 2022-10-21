@@ -29,7 +29,7 @@
             require_once(VIEWS_PATH . "guardian.php");
         }
         
-        public function modifyAvailability($id, $availabilityStart = null, $availabilityEnd = null){
+        public function modifyAvailability($availabilityStart = null, $availabilityEnd = null, $id = null){
             if($availabilityStart != null && $availabilityEnd != null){
                 $this->guardianDAO->UpdateAvailability($id, $availabilityStart, $availabilityEnd);
                 echo "<script> if(confirm('Cambio realizado con exito!));</script>";

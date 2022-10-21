@@ -2,14 +2,24 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Vollkorn';
+    font-family: 'Verdana';
 }
 
-html{
+.pantallaInicial{
     background-image: url("https://blog-cdn.dogbuddy.com/wp-content/uploads/2015/07/caracteristicas-de-un-buen-cuidador-chica-besando-a-un-perro-golde-retriever-e1438179668679.jpg");
     background-repeat:no-repeat;
     background-size:cover;
     height: 100vh;
+}
+
+.fondoMenus{
+    background: #c31432;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #240b36, #c31432);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #240b36, #c31432); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right top, #c31432, #a10043, #780049, #4d0845, #240b36);
+    height: 100vh;
+    width: auto;
+    color: white;
 }
 
 .loginForm{
@@ -202,7 +212,9 @@ html{
 
 
 .divListGuardian{
-    background-color: white;
+    background: #8A2387;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #F27121, #E94057, #8A2387);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #F27121, #E94057, #8A2387); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     border: 2px solid black;
     position: relative;
     width: 190vh;
@@ -268,3 +280,55 @@ html{
     border-radius: 5px;
 }
 
+.containerMenu{
+    position: relative;
+    top: 0px;
+    right: 150px;
+    width: 230vh;
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    align-items: right;
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none; 
+    background-color: #F27121;
+}
+
+.liMenu{
+    list-style: none;
+}
+
+.subMenu{
+    list-style: none;
+    position: absolute;
+    width: 350px;
+    height: 100px;
+    z-index: 9;
+    display: flex;
+    flex-direction: column;
+    background-color: aliceblue;
+    visibility: visible;
+    top: 19px;
+}
+
+.subMenu li{
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 200px;
+    height: 300px;
+    border-radius: 5px;
+}
+
+.subMenu li a{
+    list-style: none;
+    text-decoration: none;
+}

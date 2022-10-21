@@ -37,9 +37,7 @@ class OwnerController
         }
     }
 
-    public function showGuardianList()
-    {
-
+    public function showGuardianList(){
         $arrayListGuardian = $this->guardianDAO->getAll();
         require_once(VIEWS_PATH . "listGuardian.php");
     }

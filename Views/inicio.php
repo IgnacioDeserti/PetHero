@@ -1,10 +1,10 @@
 <?php
     include('header.php');
 ?>
-<html>
+<html class="pantallaInicial">
     <main>
-        <div class="content">
-            <header class="text-center">
+        <div>
+            <header>
                 <h2 class="tituloInicio ">BIENVENIDO</h2>
             </header>
             <div class="loginForm">

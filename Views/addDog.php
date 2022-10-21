@@ -65,7 +65,7 @@
                          <input type="file" name="photo2" id = 'photo2' class="form-control form-control-lg" required>
                     </div>
 
-                    <<div class="divOwner">
+                    <div class="divOwner">
                          <label for="">Ingresar video (opcional)</label>
                     </div>
 

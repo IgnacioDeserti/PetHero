@@ -42,8 +42,7 @@ class OwnerController
         require_once(VIEWS_PATH . "listGuardian.php");
     }
 
-    public function addDog($name, $breed, $size, $observations, $files)
-    {
+    public function addDog($name, $breed, $size, $observations, $files){
         $this->dogDAO->getAll();
 
         $newDog = new Dog();
@@ -61,6 +60,12 @@ class OwnerController
 
         if($pathFile2 = $fileController->upload($files["photo2"], "Foto-Vacunacion")){
             $newDog->setPhoto2($pathFile2);
+        }
+
+        if($files["video"]){
+            if($pathFile3 = $fileController->upload($files["video"], "Video")){
+                $newDog->setVideo($pathFile3);
+            }
         }
 
         $this->dogDAO->add($newDog);

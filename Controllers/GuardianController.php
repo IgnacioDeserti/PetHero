@@ -30,6 +30,10 @@
         }
         
         public function modifyAvailability($availabilityStart = null, $availabilityEnd = null, $id = null){
+            if($availabilityStart > $availabilityEnd){
+                echo "<script> if(confirm('Fechas invalidas, ingrese otras'));</script>";
+                $this->showModifyView();
+            }
             if($availabilityStart != null && $availabilityEnd != null){
                 $this->guardianDAO->UpdateAvailability($id, $availabilityStart, $availabilityEnd);
                 echo "<script> if(confirm('Cambio realizado con exito!));</script>";

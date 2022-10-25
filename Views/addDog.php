@@ -54,7 +54,7 @@
                     </div>
 
                     <div class="fileDog">
-                         <input type="file" name="photo1"  id = 'photo1' class="form-control form-control-lg" required>
+                         <input type="file" name="photo1"  id = 'photo1' required>
                     </div>
                     
                     <div class="divOwner">
@@ -62,7 +62,7 @@
                     </div>
 
                     <div class="fileDog">
-                         <input type="file" name="photo2" id = 'photo2' class="form-control form-control-lg" required>
+                         <input type="file" name="photo2" id = 'photo2' required>
                     </div>
 
                     <div class="divOwner">
@@ -70,7 +70,7 @@
                     </div>
 
                     <div class="fileDog">
-                         <input type="file" name="video"  class="form-control form-control-lg">
+                         <input type="file" name="video">
                     </div>
 
                     <button class="buttonAddDog buttonHoversGreen" type="submit">Agregar Mascota</button>

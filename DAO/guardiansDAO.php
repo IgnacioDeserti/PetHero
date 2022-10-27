@@ -7,7 +7,9 @@
     use Models\Review as Review;
 
     class guardiansDAO implements IGuardiansDAO{
+        private $connection;
 
+        //private $tableName = "";
         private $guardianList;
         private $fileName;
 
@@ -20,7 +22,7 @@
             $this->retrieveData();
             $newGuardian->setIdGuardian($this->setId());
             array_push($this->guardianList, $newGuardian);
-            $this->saveData();
+            //$this->saveData();
         }
 
         public function getGuardian(Guardian $newGuardian){
@@ -35,6 +37,13 @@
         }
         
         public function delete($id){
+            $query = "CALL Guardian_Delete(?)";
+
+            $parameters["id"] =  $id;
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
 
         }
 
@@ -73,7 +82,7 @@
             $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
 
             file_put_contents($this->GetJsonFilePath(), $jsonContent);
-        } 
+        }
 
         private function retrieveData(){
             $this->guardianList = array();
@@ -98,7 +107,6 @@
                         $review = new Review();
                         $review->setRating($value["rating"]);
                         $review->setObservations($value["observations"]);
-                        $review->setUserName($value["userName"]);
                         array_push($arrayReviews, $review);
                     }
                     $guardian->setAvailabilityStart($valuesArray["availabilityStart"]);

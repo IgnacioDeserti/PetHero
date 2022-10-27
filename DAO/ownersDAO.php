@@ -4,18 +4,18 @@
 
     use Models\Owner as Owner;
     use DAO\IOwnersDAO;
-    use DAO\dogDAO as DogDAO;
-    use Models\Dog as Dog;
+    use DAO\PetDAO as PetDAO;
+    use Models\Pet as Pet;
 
     class ownersDAO implements IOwnersDAO{
 
         private $ownerList;
         private $fileName;
-        private $dogDAO;
+        private $PetDAO;
 
         public function __construct(){
             $this->fileName = dirname(__DIR__)."/Data/owners.json";
-            $this->dogDAO = new DogDAO();
+            $this->PetDAO = new PetDAO();
         }
 
 

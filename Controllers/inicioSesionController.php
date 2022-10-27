@@ -1,19 +1,19 @@
 <?php
     namespace Controllers;
 
-    use DAO\dogDAO;
+    use DAO\petDAO;
     use DAO\guardiansDAO as guardiansDAO;
     use DAO\ownersDAO as ownersDAO;
     class InicioSesionController{
 
         private $guardianDAO;
         private $ownerDAO;
-        private $dogsDAO;
+        private $petsDAO;
 
         public function __construct(){
             $this->guardianDAO = new guardiansDAO();
             $this->ownerDAO = new ownersDAO();
-            $this->dogsDAO = new dogDAO();
+            $this->petsDAO = new petDAO();
         }
 
         public function inicioSesion($email, $password){
@@ -61,19 +61,19 @@
         }
 
         public function selectView($id){
-            $arrayListDog = array();
-            foreach($this->dogsDAO->getAll() as $dog){
-                if($dog->getIdOwner() == $id){
-                    array_push($arrayListDog, $dog);
+            $arrayListPet = array();
+            foreach($this->petsDAO->getAll() as $Pet){
+                if($Pet->getIdOwner() == $id){
+                    array_push($arrayListPet, $Pet);
                 }
             }
 
-            if(empty($arrayListDog)){
+            if(empty($arrayListPet)){
                 require_once(VIEWS_PATH . "validate-session.php");
-                require_once(VIEWS_PATH . "addDog.php");
+                require_once(VIEWS_PATH . "addPet.php");
             }else{
                 require_once(VIEWS_PATH . "validate-session.php");
-                require_once(VIEWS_PATH . "listDog.php");
+                require_once(VIEWS_PATH . "listPet.php");
             }
         }
 

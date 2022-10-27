@@ -10,13 +10,13 @@
                     <h2 style="text-align: center;">INGRESAR MASCOTA</h2>
                </header>
 
-               <form action="<?php echo FRONT_ROOT ?> Owner/addDog" method="post" class="contentForm" enctype="multipart/form-data">
+               <form action="<?php echo FRONT_ROOT ?> Owner/addPet" method="post" class="contentForm" enctype="multipart/form-data">
                     
                     <div class="divOwner">
                          <label for="">Nombre del Perro</label>
                     </div>
                     
-                    <div class="inputDog">
+                    <div class="inputPet">
                          <input type="text" name="name" class="form-control form-control-lg" placeholder="Ingresar nombre" required>
                     </div>
 
@@ -24,7 +24,7 @@
                          <label for="">Raza</label>
                     </div>
 
-                    <div class="inputDog">
+                    <div class="inputPet">
                          <input type="text" name="breed" class="form-control form-control-lg" placeholder="Ingresar raza" required>
                     </div>
                     
@@ -32,7 +32,7 @@
                          <label for="">Tamaño</label>             
                     </div>
 
-                    <div class="inputDog">
+                    <div class="inputPet">
                          <select name="size">
                               <option value="">Seleccione el tamaño de la mascota</option>
                               <option value="Small">Pequeño</option>
@@ -45,7 +45,7 @@
                          <label for="">Observaciones</label>
                     </div>
 
-                    <div class="inputDog">
+                    <div class="inputPet">
                          <textarea name="observations" cols="10" rows="2" required></textarea>
                     </div>
 
@@ -53,7 +53,7 @@
                          <label for="">Ingresar foto perfil</label>         
                     </div>
 
-                    <div class="fileDog">
+                    <div class="filePet">
                          <input type="file" name="photo1"  id = 'photo1' required>
                     </div>
                     
@@ -61,7 +61,7 @@
                          <label for="">Ingresar foto plan de vacunacion</label>
                     </div>
 
-                    <div class="fileDog">
+                    <div class="filePet">
                          <input type="file" name="photo2" id = 'photo2' required>
                     </div>
 
@@ -69,13 +69,13 @@
                          <label for="">Ingresar video (opcional)</label>
                     </div>
 
-                    <div class="fileDog">
+                    <div class="filePet">
                          <input type="file" name="video">
                     </div>
 
-                    <button class="buttonAddDog buttonHoversGreen" type="submit">Agregar Mascota</button>
+                    <button class="buttonAddPet buttonHoversGreen" type="submit">Agregar Mascota</button>
                </form>
-               <a href="<?php echo FRONT_ROOT?> Owner/showListDog "><button class="buttonGoBackDog buttonRedHovers">Volver</button></a>
+               <a href="<?php echo FRONT_ROOT?> Owner/showListPet "><button class="buttonGoBackPet buttonRedHovers">Volver</button></a>
           
           </div>
      </main>

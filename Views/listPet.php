@@ -19,24 +19,24 @@
                          <tbody>
 
                               <?php
-                              if (isset($arrayListDog)) {
-                                   foreach ($arrayListDog as $dog) {
-                                        if ($dog->getIdOwner() == $_SESSION['idUser']) { ?>
+                              if (isset($arrayListPet)) {
+                                   foreach ($arrayListDog as $Pet) {
+                                        if ($Pet->getIdOwner() == $_SESSION['idUser']) { ?>
                                              <tr>
-                                                  <td class="thListGuardian"><img src="<?php echo $dog->getPhoto1() ?>" width="200px" alt=" Foto de: <?php echo $dog->getName();?>"></td>
-                                                  <td class="thListGuardian"><img src="<?php echo $dog->getPhoto2() ?>" width="200px" alt=" Plan de vacunacion de: <?php echo $dog->getName();?>"></td>
-                                                  <td class="thListGuardian"><?php echo $dog->getName() ?> </td>
-                                                  <td class="thListGuardian"><?php echo $dog->getBreed() ?></td>
-                                                  <?php if($dog->getSize() == "Small"){?>
+                                                  <td class="thListGuardian"><img src="<?php echo $Pet->getPhoto1() ?>" width="200px" alt=" Foto de: <?php echo $Pet->getName();?>"></td>
+                                                  <td class="thListGuardian"><img src="<?php echo $Pet->getPhoto2() ?>" width="200px" alt=" Plan de vacunacion de: <?php echo $Pet->getName();?>"></td>
+                                                  <td class="thListGuardian"><?php echo $Pet->getName() ?> </td>
+                                                  <td class="thListGuardian"><?php echo $Pet->getBreed() ?></td>
+                                                  <?php if($Pet->getSize() == "Small"){?>
                                                        <td class="thListGuardian">Pequeño</td>
-                                                  <?php }else if($dog->getSize() == "Medium"){?>
+                                                  <?php }else if($Pet->getSize() == "Medium"){?>
                                                        <td class="thListGuardian">Mediano</td>
                                                   <?php }else{?>
                                                        <td class="thListGuardian">Grande</td>
                                                   <?php }?>
-                                                  <td class="thListGuardian"><?php echo $dog->getObservations() ?></td>
-                                                  <?php if ($dog->getVideo() != null) { ?>
-                                                       <td class="thListGuardian"><?php echo $dog->getVideo(); ?></td>
+                                                  <td class="thListGuardian"><?php echo $Pet->getObservations() ?></td>
+                                                  <?php if ($Pet->getVideo() != null) { ?>
+                                                       <td class="thListGuardian"><?php echo $Pet->getVideo(); ?></td>
                                              </tr>
                                                   <?php }
                                              }

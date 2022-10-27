@@ -4,19 +4,19 @@
     use DAO\guardiansDAO as GuardianDAO;
     use DAO\guardiansDAO;
     use DAO\ownersDAO;
-    use DAO\dogDAO;
-    use Models\Dog;
+    use DAO\petDAO;
+    use Models\Pet;
 
     class GuardianController{
 
         private $ownerDAO;
         private $guardianDAO;
-        private $dogDAO;
+        private $PetDAO;
 
         public function __construct(){
             $this->guardianDAO = new guardiansDAO();
             $this->ownerDAO = new ownersDAO();
-            $this->dogDAO = new dogDAO();
+            $this->PetDAO = new petDAO();
         }
 
         public function showModifyView(){

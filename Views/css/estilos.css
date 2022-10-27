@@ -6,7 +6,7 @@
 }
 
 .pantallaInicial{
-    background-image: url("https://blog-cdn.dogbuddy.com/wp-content/uploads/2015/07/caracteristicas-de-un-buen-cuidador-chica-besando-a-un-perro-golde-retriever-e1438179668679.jpg");
+    background-image: url("https://blog-cdn.Dogbuddy.com/wp-content/uploads/2015/07/caracteristicas-de-un-buen-cuidador-chica-besando-a-un-perro-golde-retriever-e1438179668679.jpg");
     background-repeat:no-repeat;
     background-size:cover;
     height: 100vh;
@@ -231,6 +231,7 @@ h5{
     border-radius: 5px;
 }
 
+Pet
 
 .divListGuardian{
     background: #8A2387;  
@@ -255,7 +256,7 @@ h5{
     padding: 0px;
 }
 
-.formAddDog{
+.formAddPet{
     position: absolute;
     left: 30%;
     top: 10%;
@@ -265,7 +266,7 @@ h5{
     border: 2px solid black;
 }
 
-.inputDog {
+.inputPet {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -276,13 +277,13 @@ h5{
     border-radius: 5px;
 }
 
-.fileDog{
+.filePet{
     position: relative;
     bottom: 8px;
     left: 100%;
 }
 
-.buttonAddDog{
+.buttonAddPet{
     position: absolute;
     top: 250px;
     left: 135%;
@@ -292,7 +293,7 @@ h5{
     border-radius: 5px;
 }
 
-.buttonGoBackDog{
+.buttonGoBackPet{
     position: absolute;
     top: 315px;
     left: 5%;

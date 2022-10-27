@@ -1,8 +1,8 @@
 <?php
 	namespace Models;
 
-    class Dog {
-		private $idDog;
+    class Pet {
+		private $idPet;
         private $name;
         private $breed; //raza
         private $size;
@@ -81,13 +81,13 @@
 			$this->idOwner = $idOwner;
 		}
 
-		function getIdDog() {
-		return $this->idDog;
+		function getIdPet() {
+		return $this->idPet;
 	}
 	
 
-	function setIdDog($id): self {
-		$this->idDog = $id;
+	function setIdPet($id): self {
+		$this->idPet = $id;
 		return $this;
 	}
 }

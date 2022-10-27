@@ -66,8 +66,8 @@
                     $value['photo1'] = $Pet->getPhoto1();
                     $value['photo2'] = $Pet->getPhoto2();
                     $value['video'] = $Pet->getVideo();
-                    $value["idOwner"] = $Pet->getIdOwner();
-
+                    $value['idOwner'] = $Pet->getIdOwner();
+                    $value['type'] = $Pet->getType();
                     array_push($arrayToEncode, $value);
                 }
 
@@ -95,7 +95,7 @@
                     $Pet->setPhoto2($valuesArray["photo2"]);
                     $Pet->setVideo($valuesArray["video"]);
                     $Pet->setIdOwner($valuesArray["idOwner"]);
-
+                    $Pet->setType($valuesArray["type"]);
                     array_push($this->PetList, $Pet);
                 }
             }

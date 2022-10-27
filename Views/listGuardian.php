@@ -26,11 +26,11 @@
                          <input type="date" name="availabilityStart">
                     </div>
 
-                    <div class="containerFecha">
+                    <div>
                          <label for="">Fecha fin</label>
                     </div>
 
-                    <div class="containerFecha">
+                    <div>
                          <input type="date" name="availabilityEnd">
                     </div>
 

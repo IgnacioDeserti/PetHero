@@ -15,6 +15,29 @@
      <main>
           <section id="listado">
                <div class="divListGuardian">
+                    
+                    <form action=" <?php echo FRONT_ROOT ?>Owner/showGuardianList" method="POST">
+               
+                    <div>
+                         <label for="">Fecha inicio</label>
+                    </div>
+                
+                    <div>
+                         <input type="date" name="availabilityStart">
+                    </div>
+
+                    <div class="containerFecha">
+                         <label for="">Fecha fin</label>
+                    </div>
+
+                    <div class="containerFecha">
+                         <input type="date" name="availabilityEnd">
+                    </div>
+
+                    <button type="submit">Filtrar</button>
+
+                    </form>
+
                     <table class="tableListGuardian">
                          <caption style="text-align: center;"Perros>Guardianes</caption>
                          <thead>
@@ -32,7 +55,9 @@
                               <?php 
                               if(isset($arrayListGuardian)){
                                    foreach($arrayListGuardian as $guardian)
-                                   {?>
+                                   {
+                                        if($guardian->getAvailabilityStart()>= $availabilityStart && $guardian->getAvailabilityEnd()<= $availabilityEnd){
+                                   ?>
                                         <tr>
                                              <td class="thListGuardian"><?php echo $guardian->getName();?> </td>
                                              <td class="thListGuardian"><?php echo $guardian->getAddress();?></td>
@@ -57,7 +82,7 @@
                                              }?>
                                              </td>                                        
                                         </tr>
-                              <?php }} ?>
+                              <?php }}} ?>
                          </tbody>
                     </table>
                </div>

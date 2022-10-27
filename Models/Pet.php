@@ -11,7 +11,7 @@
         private $photo2;
         private $video;
 		private $idOwner;
-
+		private $type;
 
         public function __construct(){
             
@@ -83,13 +83,22 @@
 
 		function getIdPet() {
 		return $this->idPet;
-	}
+	    }
 	
 
-	function setIdPet($id): self {
-		$this->idPet = $id;
-		return $this;
-	}
+		function setIdPet($id): self {
+			$this->idPet = $id;
+			return $this;
+		}
+
+		function setType($type){
+			$this->type = $type;
+			return $this;
+		}
+
+		function getType(){
+			return $this->type;
+		}
 }
 
 

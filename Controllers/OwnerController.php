@@ -37,8 +37,14 @@ class OwnerController
         }
     }
 
-    public function showGuardianList(){
+    public function showGuardianList($availabilityStart = null,$availabilityEnd = null){
+
+        if(!isset($availabilityStart) && !isset($availabilityEnd)){
+            $availabilityStart = date("1990-01-01");
+            $availabilityEnd = date("3000-12-31");
+        }
         $arrayListGuardian = $this->guardianDAO->getAll();
+        require_once(VIEWS_PATH . "validate-session.php");
         require_once(VIEWS_PATH . "listGuardian.php");
     }
 
@@ -74,7 +80,7 @@ class OwnerController
     }
 
     public function showListPet()
-    {
+    {   
         $arrayListPet = $this->PetDAO->getAll();
         require_once(VIEWS_PATH . "validate-session.php");
         require_once(VIEWS_PATH . "listPet.php");

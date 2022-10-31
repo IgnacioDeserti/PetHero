@@ -108,16 +108,6 @@
         private function setId(){
             return count($this->getAll()) + 1;
         }
-
-        public function UpdateAvailability($id, $date1, $date2){
-            foreach($this->getAll() as $Owner){
-                if($Owner->getIdOwner() == $id){
-                    $Owner->setAvailabilityStart($date1);
-                    $Owner->setAvailabilityEnd($date2);
-                }
-                
-            }
-        }
 }
 
 ?>

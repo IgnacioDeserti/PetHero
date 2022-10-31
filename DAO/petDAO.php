@@ -3,7 +3,6 @@
     namespace DAO;
 
     use Models\Pet as Pet;
-    use Models\Owner as Owner;
     use DAO\IPetDAO;
 
     class PetDAO implements IPetDAO{

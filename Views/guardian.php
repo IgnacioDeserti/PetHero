@@ -12,7 +12,7 @@
     </head>
         
     <body>
-        <form action=" <?php echo FRONT_ROOT?> Guardian/modifyAvailability" method="post">
+        <form action=" <?php echo FRONT_ROOT?> Guardian/showModifyView" method="post">
             <button type='submit' class="buttonMenuGuardian buttonHoversGreen" value='<?php echo $_SESSION['idUser']?>' name='id'>Modificar Disponibilidad</button>
         </form>
     </body>

@@ -35,9 +35,10 @@
                 $this->showModifyView();
             }
             if($availabilityStart != null && $availabilityEnd != null){
-                $this->guardianDAO->UpdateAvailability($id, $availabilityStart, $availabilityEnd);
-                echo "<script> if(confirm('Cambio realizado con exito!));</script>";
-                $this->Index();
+                $this->guardianDAO->UpdateAvailabilityStart($id, $availabilityStart);
+                $this->guardianDAO->UpdateAvailabilityEnd($id, $availabilityEnd);
+                //echo "<script> if(confirm('Cambio realizado con exito!));</script>";
+                //$this->Index();
             }else{
                 echo "<script> if(confirm('A seleccionar disponibilidad!));</script>";
                 $this->showModifyView();

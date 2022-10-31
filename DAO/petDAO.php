@@ -11,8 +11,6 @@
 
         public function __construct(){
         }
-
-
         
         public function Add(Pet $pet)
         {
@@ -61,7 +59,6 @@
 
             return $petList;
         }
-
 
         public function GetAll()
         {

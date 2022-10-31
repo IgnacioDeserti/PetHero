@@ -23,7 +23,7 @@
                     </div>
                 
                     <div>
-                         <input type="date" name="availabilityStart">
+                         <input type="date" name="availabilityStart" required>
                     </div>
 
                     <div>
@@ -31,7 +31,7 @@
                     </div>
 
                     <div>
-                         <input type="date" name="availabilityEnd">
+                         <input type="date" name="availabilityEnd" required>
                     </div>
 
                     <button type="submit">Filtrar</button>
@@ -80,7 +80,8 @@
                                                        }
                                                   }
                                              }?>
-                                             </td>                                        
+                                             </td>
+                                             <td><button class="braganza puto" name="id" value="<?php echo $guardian->getIdGuardian() ?>">Seleccionar</button></td>                                        
                                         </tr>
                               <?php }}} ?>
                          </tbody>

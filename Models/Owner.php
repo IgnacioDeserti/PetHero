@@ -2,23 +2,23 @@
 	
 	namespace Models;
 	use Models\Person as Person;
-	use Models\Dog;
+	use Models\Pet;
 
     class Owner extends Person {
-        private $dogs;
+        private $Pets;
 		private $idOwner;
 
 		public function __construct() {
 			parent::__construct();
-			$this->dogs = array();
+			$this->Pets = array();
 		}
 	
-		public function getDogs() {
-			return $this->dogs;
+		public function getPets() {
+			return $this->Pets;
 		}
 
-		public function setDogs($dogs) {
-			$this->dogs = $dogs;
+		public function setPets($Pets) {
+			$this->Pets = $Pets;
 		}
 
 

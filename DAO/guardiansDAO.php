@@ -8,32 +8,88 @@
 
     class guardiansDAO implements IGuardiansDAO{
         private $connection;
-
-        //private $tableName = "";
-        private $guardianList;
-        private $fileName;
+        private $tableName = "guardian";
 
         public function __construct(){
-            $this->fileName = dirname(__DIR__)."/Data/guardians.json";
         }
 
 
-        public function add(guardian $newGuardian){
-            $this->retrieveData();
-            $newGuardian->setIdGuardian($this->setId());
-            array_push($this->guardianList, $newGuardian);
-            //$this->saveData();
+        
+        public function Add(Guardian $guardian)
+        {
+            $query = "CALL Guardian_Add(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            $parameters["name"] =  $guardian->getName();
+            $parameters["address"] = $guardian->getAddress();
+            $parameters["email"] = $guardian->getEmail();
+            $parameters["number"] = $guardian->getNumber();
+            $parameters["userName"] = $guardian->getUserName();
+            $parameters["password"] = $guardian->getPassword();
+            $parameters["typeUser"] = $guardian->getTypeUser();
+            $parameters["availabilityStart"] = $guardian->getAvailabilityStart();
+            $parameters["availabilityEnd"] = $guardian->getAvailabilityEnd();
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
         }
 
-        public function getGuardian(Guardian $newGuardian){
-            $searched = NULL;
-            foreach($this->guardianList as $list){
-                if(strcmp($list->getEmail(), $newGuardian->getEmail()) == 0){
-                    $searched = $newGuardian;
-                }
+        public function GetAll()
+        {
+            $guardianList = array();
+
+            $query = "SELECT * FROM ".$this->tableName;
+
+            $this->connection = Connection::GetInstance();
+
+            $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+
+            foreach($result as $row){
+                $guardian = new Guardian();
+                $guardian->setIdGuardian($row["idGuardian"]);
+                $guardian->setName($row["name"]);
+                $guardian->setAddress($row["address"]);
+                $guardian->setEmail($row["email"]);
+                $guardian->setNumber($row["number"]);
+                $guardian->setUserName($row["userName"]);
+                $guardian->setPassword($row["password"]);
+                $guardian->setTypeUser($row["typeUser"]);
+                $guardian->setAvailabilityStart($row["availabilityStart"]);
+                $guardian->setAvailabilityEnd($row["availabilityEnd"]);
+                array_push($guardianList, $guardian);
             }
 
-            return $searched;
+            return $guardianList;
+        }
+
+
+        public function getGuardian(Guardian $newGuardian){
+            $result = NULL;
+
+            $parameter["idGuardian"] = $newGuardian->getEmail();
+
+            $query = "CALL Guardian_GetGuardian(?)";
+
+            $this->connection = Connection::GetInstance();
+
+            $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
+
+            $guardian = new Guardian();
+            foreach($result as $row){
+                $guardian->setIdGuardian($row["idGuardian"]);
+                $guardian->setName($row["name"]);
+                $guardian->setAddress($row["address"]);
+                $guardian->setEmail($row["email"]);
+                $guardian->setNumber($row["number"]);
+                $guardian->setUserName($row["userName"]);
+                $guardian->setPassword($row["password"]);
+                $guardian->setTypeUser($row["typeUser"]);
+                $guardian->setAvailabilityStart($row["availabilityStart"]);
+                $guardian->setAvailabilityEnd($row["availabilityEnd"]);
+            }
+            
+
+            return $guardian;
         }
         
         public function delete($id){
@@ -47,90 +103,6 @@
 
         }
 
-        public function getAll(){
-            $this->retrieveData();
-            return $this->guardianList;
-        }
-
-        private function saveData(){
-            $arrayToEncode = array();
-
-            foreach($this->guardianList as $guardian){
-                    $valuesArray["name"] = $guardian->getName();
-                    $valuesArray["address"] = $guardian->getAddress();
-                    $valuesArray["email"] = $guardian->getEmail();
-                    $valuesArray["number"] = $guardian->getNumber();
-                    $valuesArray["userName"] = $guardian->getUserName();
-                    $valuesArray["password"] = $guardian->getPassword();
-                    $valuesArray["size"] = $guardian->getSize();
-                    $aux = $guardian->getReviews();
-                    $arrayReviews = array();
-                    foreach($aux as $review){
-                        $value["rating"] = $review->getRating();
-                        $value["observations"] = $review->getObservations();
-                        $value["userName"] = $review->getUserName();
-                        array_push($arrayReviews, $value);
-                    }
-                    $valuesArray["availabilityStart"] = $guardian->getAvailabilityStart();
-                    $valuesArray["availabilityEnd"] = $guardian->getAvailabilityEnd();
-                    $valuesArray["reviews"] = $arrayReviews;
-                    $valuesArray["idGuardian"] = $guardian->getIdGuardian();
-                    $valuesArray["typeUser"] = $guardian->getTypeUser();
-                    array_push($arrayToEncode, $valuesArray);
-                }
-
-            $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
-
-            file_put_contents($this->GetJsonFilePath(), $jsonContent);
-        }
-
-        private function retrieveData(){
-            $this->guardianList = array();
-
-            if(file_exists($this->fileName)){
-                $jsonContent = file_get_contents($this->GetJsonFilePath());
-
-                $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
-
-                foreach($arrayToDecode as $valuesArray){
-                    $guardian = new guardian();
-                    $guardian->setName($valuesArray["name"]);
-                    $guardian->setAddress($valuesArray["address"]);
-                    $guardian->setEmail($valuesArray["email"]);
-                    $guardian->setNumber($valuesArray["number"]);
-                    $guardian->setUserName($valuesArray["userName"]);
-                    $guardian->setPassword($valuesArray["password"]);
-                    $guardian->setSize($valuesArray["size"]);
-                    $aux = $valuesArray["reviews"];
-                    $arrayReviews = array();
-                    foreach($aux as $value){
-                        $review = new Review();
-                        $review->setRating($value["rating"]);
-                        $review->setObservations($value["observations"]);
-                        array_push($arrayReviews, $review);
-                    }
-                    $guardian->setAvailabilityStart($valuesArray["availabilityStart"]);
-                    $guardian->setAvailabilityEnd($valuesArray["availabilityEnd"]);
-                    $guardian->setReviews($arrayReviews);
-                    $guardian->setIdGuardian($valuesArray["idGuardian"]);
-                    $guardian->setTypeUser($valuesArray["typeUser"]);
-                    array_push($this->guardianList, $guardian);
-                }
-            }
-        }
-
-        private function GetJsonFilePath(){
-
-            $initialPath = "Data/guardians.json";
-            if(file_exists($initialPath)){
-                $jsonFilePath = $initialPath;
-            }else{
-                $jsonFilePath = "../".$initialPath;
-            }
-
-            return $jsonFilePath;
-        }
-
         private function setId(){
             return count($this->getAll()) + 1;
         }
@@ -140,7 +112,6 @@
                 if($guardian->getIdGuardian() == $id){
                     $guardian->setAvailabilityStart($date1);
                     $guardian->setAvailabilityEnd($date2);
-                    $this->saveData();
                 }
                 
             }

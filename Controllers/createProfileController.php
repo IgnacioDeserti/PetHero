@@ -5,14 +5,17 @@
     use DAO\ownersDAO as ownersDAO;
     use Models\Owner as Owner;
     use Models\Guardian as Guardian;
+    use DAO\Guardian_x_SizeDAO;
     class CreateProfileController{
 
         private $guardianDAO;
         private $ownerDAO;
+        private $gxsDAO;
 
         public function __construct(){
             $this->guardianDAO = new guardiansDAO();
             $this->ownerDAO = new ownersDAO();
+            $this->gxsDAO = new Guardian_x_SizeDAO();
         }
 
         public function createProfile(){
@@ -69,7 +72,6 @@
             
             if($_POST){
 
-                $this->guardianDAO->getAll();
                 $newGuardian = new Guardian();
                 $newGuardian->setName($name);
                 $newGuardian->setAddress($address);
@@ -77,24 +79,20 @@
                 $newGuardian->setNumber($number);
                 $newGuardian->setUserName($userName);
                 $newGuardian->setPassword($password);
-                $newGuardian->setSize($size);
                 $newGuardian->setTypeUser($typeUser);
                 
-                $searched = $this->guardianDAO->getGuardian($newGuardian);
-        
-        
-                if($searched == NULL){
-                    $this->guardianDAO->add($newGuardian);
-                    echo "<script> if(confirm('Perfil creado con éxito!'));</script>";
-                    $_SESSION["idUser"] = $newGuardian->getIdGuardian();
-                    $_SESSION["typeUser"] = $newGuardian->getTypeUser();
-                    require_once(VIEWS_PATH.'guardian.php');
-                    
-        
-                }else{
-                    echo "<script> if(confirm('El email ingresado ya tiene una cuenta registrada, ingrese otro')); </script>";
-                    require_once(VIEWS_PATH.'createGuardianProfile.php');
+                $this->guardianDAO->add($newGuardian);
+                echo "<script> if(confirm('Perfil creado con éxito!'));</script>";
+                
+                $aux = $this->guardianDAO->getGuardian($newGuardian);
+
+                $_SESSION["idUser"] = $aux->getIdGuardian();
+
+                foreach($size as $aux){
+                    $this->gxsDAO->Add($_SESSION["idUser"], $aux);
                 }
+                $_SESSION["typeUser"] = $newGuardian->getTypeUser();
+                require_once(VIEWS_PATH.'guardian.php');
                 
             }else{
                 echo "<script> if(confirm('Error en el método de envio de datos'));</script>";

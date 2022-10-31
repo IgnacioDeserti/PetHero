@@ -36,7 +36,7 @@
                                                   <?php }?>
                                                   <td class="thListGuardian"><?php echo $Pet->getObservations() ?></td>
                                                   <?php if ($Pet->getVideo() != null) { ?>
-                                                       <td class="thListGuardian"><?php echo $Pet->getVideo(); ?></td>
+                                                       <td class="thListGuardian"><iframe src="<?php echo $Pet->getVideo(); ?>" frameborder="0" width="200" height="200"></iframe></td>
                                              </tr>
                                                   <?php }
                                              }

@@ -33,11 +33,11 @@
                         <input type="password" name="password" placeholder="Ingresar contraseña" class="inputForm" required>                
                     </div>                 
                     <div>
-                        <input type="checkbox" id="ch1" name="size[]" value="small" checked>
+                        <input type="checkbox" id="ch1" name="size[]" value="1" checked>
                         <label for="ch1">Pequeño</label>
-                        <input type="checkbox" id="ch2" name="size[]" value="medium">
+                        <input type="checkbox" id="ch2" name="size[]" value="2">
                         <label for="ch2">Mediano</label>
-                        <input type="checkbox" id="ch3" name="size[]" value="big">
+                        <input type="checkbox" id="ch3" name="size[]" value="3">
                         <label for="ch3">Grande</label>
                     </div>
 

@@ -99,7 +99,7 @@ DELIMITER ;
 
 DELIMITER $$
 
-CREATE PROCEDURE Guardian_GetGuardian (IN idGuardian integer)
+CREATE PROCEDURE Guardian_GetGuardian (IN email varchar(50))
 BEGIN
 	SELECT idGuardian, name, address, email, number, userName, password, typeUser, availabilityStart, availabilityEnd
     FROM guardian
@@ -116,3 +116,5 @@ CREATE PROCEDURE Update_AvailabilityStart_Guardian(IN newAvailabilityStart date,
 CREATE PROCEDURE Update_AvailabilityEnd_Guardian(IN newAvailabilityEnd date, IN idGuardianLogged integer)
 	UPDATE guardian set availabilityEnd = newAvailabilityEnd
     WHERE (idGuardian = idGuardianLogged);
+    
+INSERT INTO size (name) VALUES ('Pequeño'), ('Mediano'), ('Grande');

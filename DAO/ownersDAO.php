@@ -15,8 +15,6 @@
         public function __construct(){
         }
 
-
-        
         public function Add(Owner $owner)
         {
             $query = "CALL Owner_Add(?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -38,7 +36,7 @@
 
         public function GetAll()
         {
-            $guardianList = array();
+            $ownerList = array();
 
             $query = "SELECT * FROM ".$this->tableName;
 
@@ -65,12 +63,12 @@
         }
 
 
-        public function getowner(owner $newowner){
+        public function getOwner(owner $newowner){
             $result = NULL;
 
             $parameter["idOwner"] = $newowner->getEmail();
 
-            $query = "CALL Owner_Getowner(?)";
+            $query = "CALL Owner_GetOwner(?)";
 
             $this->connection = Connection::GetInstance();
 

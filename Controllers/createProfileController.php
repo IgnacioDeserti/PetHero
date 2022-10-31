@@ -47,7 +47,7 @@
                 $newOwner->setPassword($password);
                 $newOwner->setTypeUser($typeUser);
 
-                $searched = $this->ownerDAO->getOwner($newOwner);
+                $searched = $this->ownerDAO->getOwner($newOwner); 
         
         
                 if($searched == NULL){

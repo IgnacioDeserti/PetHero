@@ -107,14 +107,35 @@
             return count($this->getAll()) + 1;
         }
 
-        public function UpdateAvailability($id, $date1, $date2){
-            foreach($this->getAll() as $guardian){
-                if($guardian->getIdGuardian() == $id){
-                    $guardian->setAvailabilityStart($date1);
-                    $guardian->setAvailabilityEnd($date2);
-                }
-                
-            }
+        public function UpdateAvailabilityStart($id, $date){
+            $query = "CALL Update_AvailabilityStart_Guardian(?, ?)";
+
+            $parameters["newAvailabilityStart"] = $date;
+            $parameters["idGuardianLogged"] =  $id;
+
+            echo $id;
+            echo "<br><br>";
+            echo $date;
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+        }
+
+        public function UpdateAvailabilityEnd($id, $date){
+            $query = "CALL Update_AvailabilityEnd_Guardian(?, ?)";
+
+            $parameters["newAvailabilityEnd"] = $date;
+            $parameters["idGuardianLogged"] =  $id;
+            
+            echo "<br><br>";
+            echo $id;
+            echo "<br><br>";
+            echo $date;
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
         }
 
 }

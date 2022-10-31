@@ -77,13 +77,13 @@
                 $pet = new Pet();
                 $pet->setName($row["name"]);
                 $pet->setBreed($row["breed"]);
-                $pet->setName($row["IdSize"]);
-                $pet->setName($row["observations"]);
-                $pet->setName($row["photo1"]);
-                $pet->setName($row["photo2"]);
-                $pet->setName($row["video"]);
-                $pet->setName($row["idOwner"]);
-                $pet->setName($row["type"]);
+                $pet->setIdSize($row["IdSize"]);
+                $pet->setObservations($row["observations"]);
+                $pet->setPhoto1($row["photo1"]);
+                $pet->setPhoto2($row["photo2"]);
+                $pet->setVideo($row["video"]);
+                $pet->setIdOwner($row["idOwner"]);
+                $pet->setType($row["type"]);
                 array_push($petList, $pet);
             }
 

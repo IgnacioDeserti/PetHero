@@ -156,5 +156,36 @@ BEGIN
         (name, address, email, number, userName, password, typeUser);
 END$$
 
-DELIMITER;
+DELIMITER ;
 
+DELIMITER $$
+
+CREATE PROCEDURE Guardian_x_SizeGetAll ()
+BEGIN
+	SELECT idGuardianxSize, idGuardian, idSize
+    FROM guardian_x_size;
+END$$
+
+DELIMITER ;
+
+
+DELIMITER $$
+
+CREATE PROCEDURE Size_GetName (IN idSize integer)
+BEGIN
+	SELECT name
+    FROM size
+    WHERE (size.idSize = idSize);
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE PROCEDURE SizeGetAll ()
+BEGIN
+	SELECT idSize, name
+    FROM Size;
+END$$
+
+DELIMITER ;

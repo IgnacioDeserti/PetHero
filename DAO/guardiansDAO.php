@@ -63,10 +63,10 @@
         }
 
 
-        public function getGuardian(Guardian $newGuardian){
+        public function getGuardian($email){
             $result = NULL;
 
-            $parameter["idGuardian"] = $newGuardian->getEmail();
+            $parameter["email"] = $email;
 
             $query = "CALL Guardian_GetGuardian(?)";
 

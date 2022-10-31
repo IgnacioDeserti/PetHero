@@ -7,6 +7,8 @@ use DAO\guardiansDAO;
 use DAO\ownersDAO;
 use DAO\petDAO;
 use Models\Pet;
+use DAO\sizeDAO;
+use DAO\guardian_x_sizeDAO;
 
 class OwnerController
 {
@@ -14,12 +16,16 @@ class OwnerController
     private $ownerDAO;
     private $guardianDAO;
     private $PetDAO;
+    private $sizeDAO;
+    private $guardian_x_sizeDAO;
 
     public function __construct()
     {
         $this->guardianDAO = new guardiansDAO();
         $this->ownerDAO = new ownersDAO();
         $this->PetDAO = new petDAO();
+        $this->sizeDAO = new sizeDAO();
+        $this->guardian_x_sizeDAO = new guardian_x_sizeDAO();
     }
 
 
@@ -43,7 +49,12 @@ class OwnerController
             $availabilityStart = date("1990-01-01");
             $availabilityEnd = date("3000-12-31");
         }
+
         $arrayListGuardian = $this->guardianDAO->getAll();
+        $arrayListSize = $this->sizeDAO->getAll();
+        $arrayListGuardianxSize = $this->guardian_x_sizeDAO->getAll();
+
+
         require_once(VIEWS_PATH . "validate-session.php");
         require_once(VIEWS_PATH . "listGuardian.php");
     }

@@ -2,11 +2,15 @@
 
     namespace DAO;
 
+    use Models\Guardian_x_Size;
+
     class guardian_x_sizeDAO{
         private $connection;
         private $tableName = "guardian_x_size";
+        private $guardianXsizeList;
 
         public function __construct(){
+            $this->guardianXsizeList = array();
         }
 
 
@@ -23,6 +27,25 @@
             $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
         }
 
+        public function getAll(){
+            $searched = NULL;
+
+            $query = "CALL Guardian_x_SizeGetAll()";
+
+            $this->connection = Connection::GetInstance();
+
+            $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+
+            foreach($result as $row){
+                $newGXS = new Guardian_x_Size();
+                $newGXS->setIdGuardianxSize($row["idGuardianxSize"]);
+                $newGXS->setIdGuardian($row["idGuardian"]);
+                $newGXS->setIdSize($row["idSize"]);
+                array_push($this->guardianXsizeList, $newGXS);
+            }
+
+            return $this->guardianXsizeList;
+        }
 
         public function getGuardian($idGuardian){
 

@@ -54,7 +54,7 @@ class OwnerController
         $newPet = new Pet();
         $newPet->setName($name);
         $newPet->setBreed($breed);
-        $newPet->setSize($size);
+        $newPet->setIdSize($size);
         $newPet->setObservations($observations);
         $newPet->setIdOwner($_SESSION["idUser"]);
         

@@ -3,131 +3,103 @@
     namespace DAO;
 
     use Models\Pet as Pet;
-    use DAO\IPetDAO as IPetDAO;
+    use Models\Owner as Owner;
+    use DAO\IPetDAO;
 
     class PetDAO implements IPetDAO{
-
-        private $PetList;
-        private $fileName;
+        private $connection;
+        private $tableName = "pet";
 
         public function __construct(){
-            $this->fileName = dirname(__DIR__)."/Data/Pet.json";
         }
 
 
-        public function add(Pet $newPet){
-            $this->retrieveData();
-            $newPet->setIdPet($this->getNextId());
-            array_push($this->PetList, $newPet);
-            $this->saveData();
-        }
-
-        public function getPetByID($id){
-            $this->RetrieveData();
-
-            foreach($this->PetList as $Pet){
-                if($Pet->getId()==$id){
-                    return $Pet;
-                }
-            }
-
-            return null;
-        }
         
-        public function delete($id){
-            $this->retrieveData();
-        foreach($this->PetList as $index=>$item) 
+        public function Add(Pet $pet)
         {
-          if($item->getId() == $id)
-          {
-            unset($this->PetList[$index]);
-            $this->SaveData();
-            return true;
-          }
+            $query = "CALL Pet_Add(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            $parameters["name"] = $pet->getName();
+            $parameters["breed"] = $pet->getBreed();
+            $parameters["idSize"] = $pet->getIdSize();
+            $parameters["observations"] = $pet->getObservations();
+            $parameters["photo1"] = $pet->getPhoto1();
+            $parameters["photo2"] = $pet->getPhoto2();
+            $parameters["video"] = $pet->getVideo();
+            $parameters["idOwner"] = $pet->getIdOwner();
+            $parameters["type"] = $pet->getType();
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
         }
-        return false;
 
-        }
+        public function GetDogByIdOwner($idOwner)
+        {
+            $petList = array();
 
-        public function getAll(){
-            $this->retrieveData();
-            return $this->PetList;
-        }
+            $query = "SELECT * FROM ".$this->tableName;
 
-        private function saveData(){
-            $arrayToEncode = array();
+            $this->connection = Connection::GetInstance();
 
-            foreach($this->PetList as $Pet){
-                    $value['idPet'] = $Pet->getIdPet();
-                    $value['name'] = $Pet->getName();
-                    $value['breed'] = $Pet->getBreed();
-                    $value['size'] = $Pet->getSize();
-                    $value['observations'] = $Pet->getObservations();
-                    $value['photo1'] = $Pet->getPhoto1();
-                    $value['photo2'] = $Pet->getPhoto2();
-                    $value['video'] = $Pet->getVideo();
-                    $value['idOwner'] = $Pet->getIdOwner();
-                    $value['type'] = $Pet->getType();
-                    array_push($arrayToEncode, $value);
-                }
+            $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 
-            $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
-
-            file_put_contents($this->GetJsonFilePath(), $jsonContent);
-        } 
-
-        private function retrieveData(){
-            $this->PetList = array();
-
-            if(file_exists($this->fileName)){
-                $jsonContent = file_get_contents($this->GetJsonFilePath());
-
-                $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
-
-                foreach($arrayToDecode as $valuesArray){
-                    $Pet = new Pet();
-                    $Pet->setIdPet($valuesArray["idPet"]);
-                    $Pet->setName($valuesArray["name"]);
-                    $Pet->setBreed($valuesArray["breed"]);
-                    $Pet->setSize($valuesArray["size"]);
-                    $Pet->setObservations($valuesArray["observations"]);
-                    $Pet->setPhoto1($valuesArray["photo1"]);
-                    $Pet->setPhoto2($valuesArray["photo2"]);
-                    $Pet->setVideo($valuesArray["video"]);
-                    $Pet->setIdOwner($valuesArray["idOwner"]);
-                    $Pet->setType($valuesArray["type"]);
-                    array_push($this->PetList, $Pet);
+            foreach($result as $row){
+                if($row["idOwner"] == $idOwner){
+                    $pet = new Pet();
+                    $pet->setName($row["name"]);
+                    $pet->setBreed($row["breed"]);
+                    $pet->setIdSize($row["IdSize"]);
+                    $pet->setObservations($row["observations"]);
+                    $pet->setPhoto1($row["photo1"]);
+                    $pet->setPhoto2($row["photo2"]);
+                    $pet->setVideo($row["video"]);
+                    $pet->setIdOwner($row["idOwner"]);
+                    $pet->setType($row["type"]);
+                    array_push($petList, $pet);
                 }
             }
+
+            return $petList;
         }
 
-        private function GetJsonFilePath(){
 
-            $initialPath = "Data/Pet.json";
-            if(file_exists($initialPath)){
-                $jsonFilePath = $initialPath;
-            }else{
-                $jsonFilePath = "../".$initialPath;
+        public function GetAll()
+        {
+            $petList = array();
+
+            $query = "SELECT * FROM ".$this->tableName;
+
+            $this->connection = Connection::GetInstance();
+
+            $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+
+            foreach($result as $row){
+                $pet = new Pet();
+                $pet->setName($row["name"]);
+                $pet->setBreed($row["breed"]);
+                $pet->setName($row["IdSize"]);
+                $pet->setName($row["observations"]);
+                $pet->setName($row["photo1"]);
+                $pet->setName($row["photo2"]);
+                $pet->setName($row["video"]);
+                $pet->setName($row["idOwner"]);
+                $pet->setName($row["type"]);
+                array_push($petList, $pet);
             }
 
-            return $jsonFilePath;
+            return $petList;
         }
 
-        private function getNextId(){
-            $this->RetrieveData();
-            $id=0;
-            
-            foreach ($this->PetList as $Pet) 
-            {
-                $id= $Pet->getIdPet() > $id ? $Pet->getIdPet() : $id;
-            }
-    
-            return $id+1;
+        public function delete($id){
+            $query = "CALL Dog_Delete(?)";
+
+            $parameters["id"] =  $id;
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
         }
-
-
-
-
 }
 
 ?>

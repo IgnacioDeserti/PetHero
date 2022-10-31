@@ -5,7 +5,7 @@
 		private $idPet;
         private $name;
         private $breed; //raza
-        private $size;
+        private $idSize;
         private $observations;
         private $photo1;
         private $photo2;
@@ -33,12 +33,12 @@
 			$this->breed = $breed;
 		}
 
-		public function getSize() {
-			return $this->size;
+		public function getIdSize() {
+			return $this->IdSize;
 		}
 		
-		public function setSize($size){
-			$this->size = $size;
+		public function setIdSize($idSize){
+			$this->idSize = $idSize;
 		}
 
 		public function getObservations() {

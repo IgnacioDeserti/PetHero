@@ -87,6 +87,18 @@ DELIMITER;
 
 DELIMITER $$
 
+CREATE PROCEDURE Pet_Add (IN name varchar(50), IN breed varchar(50), IN idSize integer, IN observations varchar(200), IN photo1 blob, IN photo2 blob, IN video blob, IN idOwner integer, IN type varchar  (50))
+BEGIN
+	INSERT INTO pet
+        (pet.name, pet.breed, pet.idSize, pet.observations, pet.photo1, pet.photo2, pet.video, pet.idOwner, pet.type)
+    VALUES
+        (name, breed, idSize, observations, photo1, photo2, video, idOwner, type);
+END$$
+
+DELIMITER;
+
+DELIMITER $$
+
 CREATE PROCEDURE guardian_x_size_Add (IN idGuardian integer, IN idSize integer)
 BEGIN
 	INSERT INTO guardian_x_size
@@ -118,3 +130,8 @@ CREATE PROCEDURE Update_AvailabilityEnd_Guardian(IN newAvailabilityEnd date, IN 
     WHERE (idGuardian = idGuardianLogged);
     
 INSERT INTO size (name) VALUES ('Pequeño'), ('Mediano'), ('Grande');
+
+DELIMITER ;
+
+CREATE PROCEDURE Delete_Dog(in idDogToDelete integer)   
+    DELETE FROM pet WHERE idDog = idDogToDelete;

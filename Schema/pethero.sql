@@ -123,7 +123,7 @@ DELIMITER $$
 
 CREATE PROCEDURE Owner_GetOwner (IN email varchar(50))
 BEGIN
-	SELECT idOwner name, address, email, number, userName, password, typeUser, pets
+	SELECT idOwner name, address, email, number, userName, password, typeUser
     FROM owner
     WHERE (owner.email = email);
 END$$

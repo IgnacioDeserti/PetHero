@@ -26,7 +26,6 @@
             $parameters["userName"] = $owner->getUserName();
             $parameters["password"] = $owner->getPassword();
             $parameters["typeUser"] = $owner->getTypeUser();
-            $parameters["pets"] = $owner->getPets();
             $parameters["idOwner"] = $owner->getIdOwner();
 
             $this->connection = Connection::GetInstance();
@@ -54,8 +53,6 @@
                 $owner->setUserName($row["userName"]);
                 $owner->setPassword($row["password"]);
                 $owner->setTypeUser($row["typeUser"]);
-                $owner->setPets($row["pets"]);
-                $owner->setIdOwner($row["idOwner"]);
                 array_push($ownerList, $owner);
             }
 
@@ -84,8 +81,6 @@
                 $owner->setUserName($row["userName"]);
                 $owner->setPassword($row["password"]);
                 $owner->setTypeUser($row["typeUser"]);
-                $owner->setPets($row["pets"]);
-                $owner->setIdOwner($row["idOwner"]);
             }
             
 

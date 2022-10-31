@@ -118,3 +118,27 @@ CREATE PROCEDURE Update_AvailabilityEnd_Guardian(IN newAvailabilityEnd date, IN 
     WHERE (idGuardian = idGuardianLogged);
     
 INSERT INTO size (name) VALUES ('Pequeño'), ('Mediano'), ('Grande');
+
+DELIMITER $$
+
+CREATE PROCEDURE Owner_GetOwner (IN email varchar(50))
+BEGIN
+	SELECT idOwner name, address, email, number, userName, password, typeUser
+    FROM owner
+    WHERE (owner.email = email);
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE PROCEDURE Owner_Add (IN name varchar(50), IN address varchar(50), IN email varchar(50), IN number varchar(50), IN userName varchar(50), IN password varchar(50), IN typeUser char(1))
+BEGIN
+	INSERT INTO owner
+        (owner.name, owner.address, owner.email, owner.number, owner.userName, owner.password, owner.typeUser)
+    VALUES
+        (name, address, email, number, userName, password, typeUser);
+END$$
+
+DELIMITER;
+

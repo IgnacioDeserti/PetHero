@@ -9,96 +9,93 @@
 
     class ownersDAO implements IOwnersDAO{
 
-        private $ownerList;
-        private $fileName;
-        private $PetDAO;
+        private $connection;
+        private $tableName = "owner";
 
         public function __construct(){
-            $this->fileName = dirname(__DIR__)."/Data/owners.json";
-            $this->PetDAO = new PetDAO();
+        }
+
+        public function Add(Owner $owner)
+        {
+            $query = "CALL Owner_Add(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            $parameters["name"] =  $owner->getName();
+            $parameters["address"] = $owner->getAddress();
+            $parameters["email"] = $owner->getEmail();
+            $parameters["number"] = $owner->getNumber();
+            $parameters["userName"] = $owner->getUserName();
+            $parameters["password"] = $owner->getPassword();
+            $parameters["typeUser"] = $owner->getTypeUser();
+            $parameters["idOwner"] = $owner->getIdOwner();
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+        }
+
+        public function GetAll()
+        {
+            $ownerList = array();
+
+            $query = "SELECT * FROM ".$this->tableName;
+
+            $this->connection = Connection::GetInstance();
+
+            $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+
+            foreach($result as $row){
+                $owner = new Owner();
+                $owner->setIdOwner($row["idOwner"]);
+                $owner->setName($row["name"]);
+                $owner->setAddress($row["address"]);
+                $owner->setEmail($row["email"]);
+                $owner->setNumber($row["number"]);
+                $owner->setUserName($row["userName"]);
+                $owner->setPassword($row["password"]);
+                $owner->setTypeUser($row["typeUser"]);
+                array_push($ownerList, $owner);
+            }
+
+            return $ownerList;
         }
 
 
-        public function add(Owner $newOwner){
-            $this->retrieveData();
-            $newOwner->setIdOwner($this->setId());
-            array_push($this->ownerList, $newOwner);
-            $this->saveData();
+        public function getOwner(owner $newowner){
+            $result = NULL;
+
+            $parameter["idOwner"] = $newowner->getEmail();
+
+            $query = "CALL Owner_GetOwner(?)";
+
+            $this->connection = Connection::GetInstance();
+
+            $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
+
+            $owner = new Owner();
+            foreach($result as $row){
+                $owner->setIdOwner($row["idOwner"]);
+                $owner->setName($row["name"]);
+                $owner->setAddress($row["address"]);
+                $owner->setEmail($row["email"]);
+                $owner->setNumber($row["number"]);
+                $owner->setUserName($row["userName"]);
+                $owner->setPassword($row["password"]);
+                $owner->setTypeUser($row["typeUser"]);
+            }
+            
+
+            return $owner;
         }
         
         public function delete($id){
+            $query = "CALL Owner_Delete(?)";
 
-        }
+            $parameters["id"] =  $id;
 
-        public function getAll(){
-            $this->retrieveData();
-            return $this->ownerList;
-        }
+            $this->connection = Connection::GetInstance();
 
-        public function getOwner(Owner $newOwner){
-            $searched = NULL;
+            $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
 
-            foreach($this->ownerList as $list){
-                if(strcmp($list->getEmail(), $newOwner->getEmail()) == 0){
-                    $searched = $newOwner;
-                }
-            }
-
-            return $searched;
-        }
-
-        private function saveData(){
-            $arrayToEncode = array();
-
-            foreach($this->ownerList as $owner){
-                    $valuesArray["name"] = $owner->getName();
-                    $valuesArray["address"] = $owner->getAddress();
-                    $valuesArray["email"] = $owner->getEmail();
-                    $valuesArray["number"] = $owner->getNumber();
-                    $valuesArray["userName"] = $owner->getUserName();
-                    $valuesArray["password"] = $owner->getPassword();
-                    $valuesArray["idOwner"] = $owner->getIdOwner();
-                    $valuesArray["typeUser"] = $owner->getTypeUser();
-                    array_push($arrayToEncode, $valuesArray);
-                }
-
-            $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
-
-            file_put_contents($this->GetJsonFilePath(), $jsonContent);
-        } 
-
-        private function retrieveData(){
-            $this->ownerList = array();
-            if(file_exists($this->fileName)){
-                $jsonContent = file_get_contents($this->GetJsonFilePath());
-
-                $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
-
-                foreach($arrayToDecode as $valuesArray){
-                    $owner = new Owner();
-                    $owner->setName($valuesArray["name"]);
-                    $owner->setAddress($valuesArray["address"]);
-                    $owner->setEmail($valuesArray["email"]);
-                    $owner->setNumber($valuesArray["number"]);
-                    $owner->setUserName($valuesArray["userName"]);
-                    $owner->setPassword($valuesArray["password"]);
-                    $owner->setIdOwner($valuesArray["idOwner"]);
-                    $owner->setTypeUser($valuesArray["typeUser"]);
-                    array_push($this->ownerList, $owner);
-                }
-            }
-        }
-
-        private function GetJsonFilePath(){
-
-            $initialPath = "Data/owners.json";
-            if(file_exists($initialPath)){
-                $jsonFilePath = $initialPath;
-            }else{
-                $jsonFilePath = "../".$initialPath;
-            }
-
-            return $jsonFilePath;
         }
 
         private function setId(){

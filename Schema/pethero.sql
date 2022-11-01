@@ -230,6 +230,9 @@ BEGIN
     FROM Size;
 END$$
 
-
-
 DELIMITER ;
+
+DELIMITER $$
+
+CREATE PROCEDURE Reservation_Delete (in idReservation integer)
+    DELETE FROM reservation WHERE reservation.idReservation = idReservation;

@@ -47,24 +47,31 @@
                 $newOwner->setPassword($password);
                 $newOwner->setTypeUser($typeUser);
 
-                $searched = $this->ownerDAO->getOwner($newOwner); 
-        
-        
-                if($searched == NULL){
+                $searched = $this->ownerDAO->getOwner($email);
+
+
+                if($searched->getEmail() != null){
+                    echo "<script> if(confirm('Email ya registrado, ingrese otro'));</script>";
+                    $searched == null;
+                    require_once(VIEWS_PATH . "createOwnerProfile.php");
+                }else{
+                    $searched = $this->guardianDAO->getGuardian($email);
+                    if($searched->getEmail() != null){
+                        echo "<script> if(confirm('Email ya registrado, ingrese otro'));</script>";
+                        $searched == null;
+                        require_once(VIEWS_PATH . "createOwnerProfile.php");  
+                    }
+                }
+                if($searched->getEmail() == null){
                     $this->ownerDAO->add($newOwner);
                     echo "<script> if(confirm('Perfil creado con éxito!'));</script>";
-                    $_SESSION["idUser"] = $newOwner->getIdOwner();
-                    $_SESSION["typeUser"] = $newOwner->getTypeUser();
-                    require_once(VIEWS_PATH.'addDog.php');
-        
-                }else{
-                    echo "<script> if(confirm('El email ingresado ya tiene una cuenta registrada, ingrese otro'));</script>";
-                    require_once(VIEWS_PATH.'createOwnerProfile.php');
+                    $aux = $this->ownerDAO->getOwner($email);
+                    $_SESSION["idUser"] = $aux->getIdOwner();
+                    $_SESSION["typeUser"] = $aux->getTypeUser();
+                    require_once(VIEWS_PATH.'addPet.php');
                 }
+        
                 
-            }else{
-                echo "<script> if(confirm('Error en el método de envio de datos'));</script>";
-                require_once(FRONT_ROOT.'index.php');
             }
         }
 
@@ -80,27 +87,34 @@
                 $newGuardian->setUserName($userName);
                 $newGuardian->setPassword($password);
                 $newGuardian->setTypeUser($typeUser);
-                
-                $this->guardianDAO->add($newGuardian);
-                echo "<script> if(confirm('Perfil creado con éxito!'));</script>";
-                
-                $aux = $this->guardianDAO->getGuardian($newGuardian);
 
-                $_SESSION["idUser"] = $aux->getIdGuardian();
+                $searched = $this->ownerDAO->getOwner($email);
 
-                foreach($size as $aux){
-                    $this->gxsDAO->Add($_SESSION["idUser"], $aux);
+                if($searched->getEmail() != null){
+                    echo "<script> if(confirm('Email ya registrado, ingrese otro'));</script>";
+                    $searched == null;
+                    require_once(VIEWS_PATH . "createGuardianProfile.php");
+                }else{
+                    $searched = $this->guardianDAO->getGuardian($email);
+                    if($searched->getEmail() != null){
+                        echo "<script> if(confirm('Email ya registrado, ingrese otro'));</script>";
+                        $searched == null;
+                        require_once(VIEWS_PATH . "createGuardianProfile.php");  
+                    }
                 }
-                $_SESSION["typeUser"] = $newGuardian->getTypeUser();
-                require_once(VIEWS_PATH.'guardian.php');
-                
-            }else{
-                echo "<script> if(confirm('Error en el método de envio de datos'));</script>";
-                require_once(VIEWS_PATH.'inicio.php');
+                if($searched->getEmail() == null){
+                    $this->guardianDAO->add($newGuardian);
+                    echo "<script> if(confirm('Perfil creado con éxito!'));</script>";
+                    $aux = $this->guardianDAO->getGuardian($email);
+                    $_SESSION["idUser"] = $aux->getIdGuardian();
+                    foreach($size as $aux){
+                        $this->gxsDAO->Add($_SESSION["idUser"], $aux);
+                    }
+                    $_SESSION["typeUser"] = $newGuardian->getTypeUser();
+                    require_once(VIEWS_PATH.'guardian.php');
+                }     
             }
         }
-
-        
 
     }
 

@@ -5,7 +5,8 @@
     use Models\Owner as Owner;
     use DAO\IOwnersDAO;
     use DAO\PetDAO as PetDAO;
-    use Models\Pet as Pet;
+use Exception;
+use Models\Pet as Pet;
 
     class ownersDAO implements IOwnersDAO{
 
@@ -17,24 +18,26 @@
 
         public function Add(Owner $owner)
         {
-            $query = "CALL Owner_Add(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            try{
+                $query = "CALL Owner_Add(?, ?, ?, ?, ?, ?, ?)";
 
-            $parameters["name"] =  $owner->getName();
-            $parameters["address"] = $owner->getAddress();
-            $parameters["email"] = $owner->getEmail();
-            $parameters["number"] = $owner->getNumber();
-            $parameters["userName"] = $owner->getUserName();
-            $parameters["password"] = $owner->getPassword();
-            $parameters["typeUser"] = $owner->getTypeUser();
-            $parameters["idOwner"] = $owner->getIdOwner();
+                $parameters["name"] =  $owner->getName();
+                $parameters["address"] = $owner->getAddress();
+                $parameters["email"] = $owner->getEmail();
+                $parameters["number"] = $owner->getNumber();
+                $parameters["userName"] = $owner->getUserName();
+                $parameters["password"] = $owner->getPassword();
+                $parameters["typeUser"] = $owner->getTypeUser();
 
-            $this->connection = Connection::GetInstance();
+                $this->connection = Connection::GetInstance();
 
-            $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+                $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            }catch(Exception $e){
+                throw $e;
+            }
         }
 
-        public function GetAll()
-        {
+        public function GetAll(){
             $ownerList = array();
 
             $query = "SELECT * FROM ".$this->tableName;
@@ -60,10 +63,10 @@
         }
 
 
-        public function getOwner(owner $newowner){
+        public function getOwner($email){
             $result = NULL;
 
-            $parameter["idOwner"] = $newowner->getEmail();
+            $parameter["email"] = $email;
 
             $query = "CALL Owner_GetOwner(?)";
 
@@ -82,7 +85,6 @@
                 $owner->setPassword($row["password"]);
                 $owner->setTypeUser($row["typeUser"]);
             }
-            
 
             return $owner;
         }

@@ -23,7 +23,7 @@
                     </div>
                 
                     <div>
-                         <input type="date" name="availabilityStart">
+                         <input type="date" name="availabilityStart" required>
                     </div>
 
                     <div>
@@ -31,7 +31,7 @@
                     </div>
 
                     <div>
-                         <input type="date" name="availabilityEnd">
+                         <input type="date" name="availabilityEnd" required>
                     </div>
 
                     <button type="submit">Filtrar</button>
@@ -71,16 +71,17 @@
                                                   <td class="thListGuardian"><?php echo $guardian->getAvailabilityStart();?></td>
                                              <td class="thListGuardian"><?php echo $guardian->getAvailabilityEnd();?></td>
                                              <?php } ?>
-                                             <td class="thListGuardian"><?php foreach($guardian->getSize() as $size){
-                                                  if(strcmp($size, "small") == 0){
-                                                  ?> Pequeño <?php
-                                                  }else if(strcmp($size, "medium") == 0){
-                                                  ?> Mediano <?
-                                                  }else{
-                                                  ?> Grande <?php
+                                             <td class="thListGuardian"><?php foreach($arrayListGuardianxSize as $gxs){
+                                                  if($gxs->getIdGuardian() == $guardian->getIdGuardian()){
+                                                       foreach($arrayListSize as $size){
+                                                            if($gxs->getIdSize() == $size->getIdSize()){
+                                                                 echo $size->getName(), "<br>";
+                                                            }
+                                                       }
                                                   }
                                              }?>
-                                             </td>                                        
+                                             </td>
+                                             <td><button class="braganza puto" name="id" value="<?php echo $guardian->getIdGuardian() ?>">Seleccionar</button></td>                                        
                                         </tr>
                               <?php }}} ?>
                          </tbody>

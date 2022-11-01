@@ -2,34 +2,37 @@
 
     namespace DAO;
 
-    use Models\Size;
+use Models\Size;
+use SimpleXMLElement;
     
 
     class sizeDAO{
         private $connection;
         private $tableName = "size";
+        private $sizeList;
 
         public function __construct(){
+            $this->sizeList = array();
         }
 
-        public function getGuardian(Size $newSize){
+        public function getAll(){
             $searched = NULL;
 
-            $sizeList = array();
-
-            $query = "CALL Size_GetSize(?)";
+            $query = "CALL SizeGetAll()";
 
             $this->connection = Connection::GetInstance();
 
             $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 
+            $sizeList = array();
             foreach($result as $row){
-                if(strcmp($row["idSize"], $newSize->getIdSize()) == 0){
-                    $searched = $newSize;
-                }
+                $newSize = new Size();
+                $newSize->setIdSize($row['idSize']);
+                $newSize->setName($row['name']);
+                array_push($this->sizeList, $newSize);
             }
 
-            return $searched;
+            return $this->sizeList;
         }
         
 }

@@ -34,7 +34,7 @@
 		}
 
 		public function getIdSize() {
-			return $this->IdSize;
+			return $this->idSize;
 		}
 		
 		public function setIdSize($idSize){

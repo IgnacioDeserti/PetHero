@@ -1,17 +1,17 @@
 <?php
     namespace Models;
 
-    class Reserve{
+    class Reservation{
+
+        private $idReservation;
         private $idOwner;
         private $idGuardian;
-        private $idDog;
-        private $idReserve;
+        private $idPet;
         private $breed;
         private $animalType;
-        private $date;
-        private $status;
-        private $review;
-
+        private $reservationDate;
+        private $reservationStatus;
+        
         public function __construct(){
             
         }
@@ -34,20 +34,20 @@
             $this->idGuardian = $idGuardian;
         }
 
-        function getIdDog(){
-            return $this->idDog;
+        function getIdPet(){
+            return $this->idPet;
         }
         
-        function setIdDog($idDog){
-            $this->idDog = $idDog;
+        function setIdPet($idPet){
+            $this->idPet = $idPet;
         }
         
-        function getIdReserve(){
-            return $this->idReserve;
+        function getIdReservation(){
+            return $this->idReservation;
         }
 
-        function setIdReserve($idReserve){
-            $this->idReserve = $idReserve;
+        function setIdReservation($idReservation){
+            $this->idReservation = $idReservation;
         }
 
         function getBreed(){
@@ -66,24 +66,20 @@
             $this->animalType = $animalType;
         }
 
-        function getDate(){
-            return $this->date;
+        function getReservationDate(){
+            return $this->reservationDate;
         }
         
-        function setDate($date){
-            $this->date = $date;
+        function setReservationDate($reservationDate){
+            $this->reservationDate = $reservationDate;
         }
  
-        function getStatus(){
-            return $this->status;
+        function getReservationStatus(){
+            return $this->reservationStatus;
         }
         
-        function setStatus($status){
-            $this->status = $status;
-        }
- 
-        function getReview(){
-            return $this->review;
+        function setReservationStatus($reservationStatus){
+            $this->reservationStatus = $reservationStatus;
         }
 }
 

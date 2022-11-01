@@ -50,19 +50,32 @@ CREATE TABLE IF NOT EXISTS pet(
     foreign key (idOwner) references owner (idOwner)
 );
 
-/*CREATE TABLE IF NOT EXISTS reserve(
+CREATE TABLE IF NOT EXISTS reservation(
+    idReservation integer not null auto_increment,
+    idOwner integer not null,
+    idGuardian integer not null,
+    idPet integer not null,
+    breed varchar (50) not null,
+    animalType varchar(1) not null,
+    reservationDate date not null,
+    reservationStatus varchar(50) not null,
+    primary key (idReservation),
+    constraint idOwner foreign key (idOwner) references owner (idOwner),
+    constraint idGuardian foreign key (idGuardian) references guardian (idGuardian),
+);
 
-
-
-
-);*/
-
-/*CREATE TABLE IF NOT EXISTS review(
-
-
-
-
-);*/
+CREATE TABLE IF NOT EXISTS review(
+    idReview integer not null auto_increment,
+    rating float not null,
+    observations varchar(200) not null,
+    idOwner integer not null,
+    idGuardian integer not null,
+    idReservation integer not null,
+    primary key (idReview),
+    constraint idOwner foreign key (idOwner) references owner (idOwner),
+    constraint idGuardian foreign key (idGuardian) references guardian (idGuardian),
+    constraint idReservation foreign key (idReservation) references reservation (idReservation),
+);
 
 CREATE TABLE IF NOT EXISTS guardian_x_size(
     idGuardianxSize integer not null auto_increment,
@@ -158,3 +171,34 @@ END$$
 
 DELIMITER;
 
+DELIMITER $$
+
+CREATE PROCEDURE Review_Add (IN rating float, IN observations varchar(200), IN idOwner integer, IN idGuardian integer, IN idReservation integer)
+BEGIN
+    INSERT INTO review
+        (review.idOwner, review.idGuardian, review.idOwner, review.idGuardian)
+    VALUES
+        (rating, observations, idOwner, idGuardian, idReservation)
+END$$
+
+DELIMITER;
+
+DELIMITER $$
+
+CREATE PROCEDURE Review_Delete (in idReview integer)
+    DELETE FROM review WHERE review.idReview = idReview;
+
+DELIMITER;
+
+DELIMITER $$
+
+CREATE PROCEDURE Reservation_Add (IN idOwner integer, IN idGuardian integer, IN idPet integer, IN breed varchar(50), IN animalType varchar(1), IN reservationDate date, IN reservationStatus varchar(50))
+BEGIN
+    INSERT INTO reservation
+        (reservation.idOwner, reservation.idGuardian, reservation.idPet, reservation.breed,reservation.animalType, reservation.reservationDate, reservation.reservationStatus)
+    VALUES
+        (idOwner, idGuardian, idPet, breed, animalType, reservationDate, reservationStatus)
+END$$
+
+CREATE PROCEDURE Reservation_Delete (in idReservation integer)
+    DELETE FROM reservation WHERE reservation.idReservation = idReservation;

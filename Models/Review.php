@@ -3,10 +3,13 @@
 
     class Review{
         
+		private $idReview;
         private $rating;
         private $observations;
         private $idOwner;
-
+        private $idGuardian;
+		private $idReservation;
+		
     	public function __construct() {
 	
         }
@@ -33,6 +36,42 @@
 		
 		public function setIdOwner($idOwner) {
 			$this->idOwner = $idOwner;
+		}
+
+		public function getIdReview()
+		{
+				return $this->idReview;
+		}
+
+		public function setIdReview($idReview)
+		{
+				$this->idReview = $idReview;
+
+				return $this;
+		}
+
+        public function getIdGuardian()
+        {
+                return $this->idGuardian;
+        }
+
+        public function setIdGuardian($idGuardian)
+        {
+                $this->idGuardian = $idGuardian;
+
+                return $this;
+        }
+
+		public function getIdReservation()
+		{
+				return $this->idReservation;
+		}
+
+		public function setIdReservation($idReservation)
+		{
+				$this->idReservation = $idReservation;
+
+				return $this;
 		}
 }
 

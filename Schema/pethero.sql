@@ -40,8 +40,8 @@ CREATE TABLE IF NOT EXISTS pet(
     breed varchar(50) not null,
     idSize integer not null,
     observations varchar(200),
-    photo1 blob,
-    photo2 blob,
+    photo1 blob not null,
+    photo2 blob not null,
     video blob,
     idOwner integer not null,
     type varchar(50) not null,
@@ -57,11 +57,12 @@ CREATE TABLE IF NOT EXISTS reservation(
     idPet integer not null,
     breed varchar (50) not null,
     animalType varchar(1) not null,
-    reservationDate date not null,
+    reservationDateStart date not null,
+    reservationDateEnd date not null,
     reservationStatus varchar(50) not null,
     primary key (idReservation),
-    constraint idOwner foreign key (idOwner) references owner (idOwner),
-    constraint idGuardian foreign key (idGuardian) references guardian (idGuardian),
+    constraint fk_idOwner foreign key (idOwner) references owner (idOwner),
+    constraint fk_idGuardian foreign key (idGuardian) references guardian (idGuardian)
 );
 
 CREATE TABLE IF NOT EXISTS review(
@@ -74,7 +75,7 @@ CREATE TABLE IF NOT EXISTS review(
     primary key (idReview),
     constraint idOwner foreign key (idOwner) references owner (idOwner),
     constraint idGuardian foreign key (idGuardian) references guardian (idGuardian),
-    constraint idReservation foreign key (idReservation) references reservation (idReservation),
+    constraint idReservation foreign key (idReservation) references reservation (idReservation)
 );
 
 CREATE TABLE IF NOT EXISTS guardian_x_size(
@@ -178,7 +179,7 @@ BEGIN
     INSERT INTO review
         (review.idOwner, review.idGuardian, review.idOwner, review.idGuardian)
     VALUES
-        (rating, observations, idOwner, idGuardian, idReservation)
+        (rating, observations, idOwner, idGuardian, idReservation);
 END$$
 
 DELIMITER;
@@ -192,12 +193,12 @@ DELIMITER;
 
 DELIMITER $$
 
-CREATE PROCEDURE Reservation_Add (IN idOwner integer, IN idGuardian integer, IN idPet integer, IN breed varchar(50), IN animalType varchar(1), IN reservationDate date, IN reservationStatus varchar(50))
+CREATE PROCEDURE Reservation_Add (IN idOwner integer, IN idGuardian integer, IN idPet integer, IN breed varchar(50), IN animalType varchar(1), IN reservationDateStart date, IN reservationDateEnd date, IN reservationStatus varchar(50))
 BEGIN
     INSERT INTO reservation
-        (reservation.idOwner, reservation.idGuardian, reservation.idPet, reservation.breed,reservation.animalType, reservation.reservationDate, reservation.reservationStatus)
+        (reservation.idOwner, reservation.idGuardian, reservation.idPet, reservation.breed,reservation.animalType, reservation.reservationDateStart, reservation.reservationDateEnd, reservation.reservationStatus)
     VALUES
-        (idOwner, idGuardian, idPet, breed, animalType, reservationDate, reservationStatus)
+        (idOwner, idGuardian, idPet, breed, animalType, reservationDateStart, reservationDateEnd, reservationStatus);
 END$$
 
 CREATE PROCEDURE Reservation_Delete (in idReservation integer)
@@ -233,6 +234,7 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
+insert into size(name) values("Pequeño"), ("Mediano"), ("Grande");
 
 CREATE PROCEDURE Reservation_Delete (in idReservation integer)
     DELETE FROM reservation WHERE reservation.idReservation = idReservation;

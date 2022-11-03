@@ -18,7 +18,7 @@
             $query = "CALL Review_Add(?,?,?,?,?)";
 
             $parameters["rating"] = $review->getRating();
-            $parameters["observation"] = $review->getObservations();
+            $parameters["observations"] = $review->getObservations();
             $parameters["idOwner"] = $review->getIdOwner();
             $parameters["idGuardian"] = $review->getIdGuardian();
             $parameters["idReservation"] = $review->getIdReservation();
@@ -41,7 +41,7 @@
                 if($row["idGuardian"] == $idGuardian){
                     $review = new Review();
                     $review->setRating($row["rating"]);
-                    $review->setObservations($row["observation"]);
+                    $review->setObservations($row["observations"]);
                     $review->setIdOwner($row["idOwner"]);
                     $review->setIdGuardian($row["idGuardian"]);
                     $review->setIdReservation($row["idReservation"]);

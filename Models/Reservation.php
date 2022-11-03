@@ -9,7 +9,8 @@
         private $idPet;
         private $breed;
         private $animalType;
-        private $reservationDate;
+        private $reservationDateStart;
+        private $reservationDateEnd;
         private $reservationStatus;
         
         public function __construct(){
@@ -65,14 +66,6 @@
         function setAnimalType($animalType){
             $this->animalType = $animalType;
         }
-
-        function getReservationDate(){
-            return $this->reservationDate;
-        }
-        
-        function setReservationDate($reservationDate){
-            $this->reservationDate = $reservationDate;
-        }
  
         function getReservationStatus(){
             return $this->reservationStatus;
@@ -80,6 +73,22 @@
         
         function setReservationStatus($reservationStatus){
             $this->reservationStatus = $reservationStatus;
+        }
+
+        public function getReservationDateStart(){
+            return $this->reservationDateStart;
+        }
+        
+        public function setReservationDateStart($reservationDateStart){
+            $this->reservationDateStart = $reservationDateStart;
+        }
+        
+        public function getReservationDateEnd(){
+            return $this->reservationDateEnd;
+        }
+
+        public function setReservationDateEnd($reservationDateEnd){
+            $this->reservationDateEnd = $reservationDateEnd;
         }
 }
 

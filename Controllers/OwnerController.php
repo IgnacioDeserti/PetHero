@@ -2,13 +2,13 @@
 
 namespace Controllers;
 
-use DAO\guardiansDAO as GuardianDAO;
 use DAO\guardiansDAO;
 use DAO\ownersDAO;
 use DAO\petDAO;
 use Models\Pet;
 use DAO\sizeDAO;
 use DAO\guardian_x_sizeDAO;
+use DAO\ReviewDAO;
 
 class OwnerController
 {
@@ -18,6 +18,7 @@ class OwnerController
     private $PetDAO;
     private $sizeDAO;
     private $guardian_x_sizeDAO;
+    private $reviewDAO;
 
     public function __construct()
     {
@@ -26,8 +27,8 @@ class OwnerController
         $this->PetDAO = new petDAO();
         $this->sizeDAO = new sizeDAO();
         $this->guardian_x_sizeDAO = new guardian_x_sizeDAO();
+        $this->reviewDAO = new ReviewDAO();
     }
-
 
     public function menuOwner($button)
     {
@@ -93,7 +94,7 @@ class OwnerController
 
     public function showListPet()
     {   
-        $arrayListPet = $this->PetDAO->getAll();
+        $arrayListPet = $this->PetDAO->GetDogByIdOwner($_SESSION["idUser"]);
         $sizeList = $this->sizeDAO->getAll();
         require_once(VIEWS_PATH . "validate-session.php");
         require_once(VIEWS_PATH . "listPet.php");
@@ -103,6 +104,45 @@ class OwnerController
     {
         require_once(VIEWS_PATH . "validate-session.php");
         require_once(VIEWS_PATH . "addPet.php");
+    }
+
+    public function selectGuardian($email){
+        $guardian = $this->guardianDAO->getGuardian($email);
+        $arrayListSize = $this->sizeDAO->getAll();
+        $arrayListGuardianxSize = $this->guardian_x_sizeDAO->getAll();
+        $reviewsList = $this->reviewDAO->GetReviewsByGuardian($guardian->getIdGuardian());
+        $ownerList = $this->ownerDAO;
+        require_once(VIEWS_PATH . "validate-session.php");
+        require_once(VIEWS_PATH . "showGuardian.php");
+    }
+
+    public function selectPet($button, $email){
+        if(strcmp($button, "goBack") == 0){
+            $this->showGuardianList();
+        }else{
+            $guardian = $this->guardianDAO->getGuardian($email);
+            $sizeList = $this->sizeDAO->getAll();
+            $arrayListGuardianxSize = $this->guardian_x_sizeDAO->getAll();
+            $arrayListPetUser = $this->PetDAO->GetDogByIdOwner($_SESSION["idUser"]);
+            $arrayListPet = array();
+
+            foreach($arrayListPetUser as $pet){
+                foreach($arrayListGuardianxSize as $gxs){
+                    if($guardian->getIdGuardian() == $gxs->getIdGuardian()){
+                        if($gxs->getIdSize() == $pet->getIdSize()){
+                            array_push($arrayListPet, $pet);
+                        }
+                    }
+                }
+            }
+
+            require_once(VIEWS_PATH . "validate-session.php");
+            require_once(VIEWS_PATH . "createReservationOwner.php");
+        }
+    }
+
+    public function createReservationOwner(){
+
     }
 
 }

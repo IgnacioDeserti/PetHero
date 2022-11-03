@@ -40,38 +40,32 @@
 
 		public function getIdReview()
 		{
-				return $this->idReview;
+			return $this->idReview;
 		}
 
 		public function setIdReview($idReview)
 		{
-				$this->idReview = $idReview;
-
-				return $this;
+			$this->idReview = $idReview;
 		}
 
         public function getIdGuardian()
         {
-                return $this->idGuardian;
+            return $this->idGuardian;
         }
 
         public function setIdGuardian($idGuardian)
         {
-                $this->idGuardian = $idGuardian;
-
-                return $this;
+            $this->idGuardian = $idGuardian;
         }
 
 		public function getIdReservation()
 		{
-				return $this->idReservation;
+			return $this->idReservation;
 		}
 
 		public function setIdReservation($idReservation)
 		{
-				$this->idReservation = $idReservation;
-
-				return $this;
+			$this->idReservation = $idReservation;
 		}
 }
 

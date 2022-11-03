@@ -62,6 +62,25 @@
             return $ownerList;
         }
 
+        public function getNameById($id){
+            
+            $ownerList = array();
+
+            $query = "SELECT * FROM ".$this->tableName;
+
+            $this->connection = Connection::GetInstance();
+
+            $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+
+            foreach($result as $row){
+                if($row["idOwner"] == $id){
+                    $owner = new Owner();
+                    $owner->setName($row["name"]);
+                }
+            }
+
+            return $owner->getName();
+        }
 
         public function getOwner($email){
             $result = NULL;
@@ -100,9 +119,6 @@
 
         }
 
-        private function setId(){
-            return count($this->getAll()) + 1;
-        }
 }
 
 ?>

@@ -7,20 +7,10 @@
         private $availabilityStart;
 		private $availabilityEnd;
 		private $size;
-		private $reviews;
 		private $idGuardian;
 
 		public function __construct(){
 			parent::__construct();
-			$this->reviews = array();
-		}
-
-		public function getReviews(){
-			return $this->reviews;
-		}
-		
-		public function setReviews($reviews){
-			$this->reviews = $reviews;
 		}
 
 		public function getSize(){

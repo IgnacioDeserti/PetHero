@@ -18,14 +18,13 @@
                               <th class="thListGuardian">Video</th>
                          </thead>
                          <tbody>
-
-                              <?php
-                              if (isset($arrayListPet)) {
-                                   foreach ($arrayListPet as $Pet) {
-                                        if ($Pet->getIdOwner() == $_SESSION['idUser']) { ?>
+                              <form action="" method="post">
+                                   <?php
+                                   if (isset($arrayListPet)) {
+                                        foreach ($arrayListPet as $Pet) { ?>
                                              <tr>
-                                                  <td class="thListGuardian"><img src="<?php echo $Pet->getPhoto1() ?>" width="200px" height="200px" alt=" Foto de: <?php echo $Pet->getName();?>"></td>
-                                                  <td class="thListGuardian"><img src="<?php echo $Pet->getPhoto2() ?>" width="200px" height="200px" alt=" Plan de vacunacion de: <?php echo $Pet->getName();?>"></td>
+                                                  <td class="thListGuardian"><img src="<?php echo $Pet->getPhoto1() ?>" width="150px" height="150px" alt=" Foto de: <?php echo $Pet->getName();?>"></td>
+                                                  <td class="thListGuardian"><img src="<?php echo $Pet->getPhoto2() ?>" width="150px" height="150px" alt=" Plan de vacunacion de: <?php echo $Pet->getName();?>"></td>
                                                   <td class="thListGuardian"><?php echo $Pet->getName() ?> </td>
                                                   <td class="thListGuardian"><?php echo $Pet->getBreed() ?></td>
                                                   <?php foreach($sizeList as $size){ 
@@ -34,14 +33,16 @@
                                                        <?php }} ?>
                                                   <td class="thListGuardian"><?php echo $Pet->getObservations() ?></td>
                                                   <?php if ($Pet->getVideo() != null) { ?>
-                                                       <td class="thListGuardian"><iframe src="<?php echo $Pet->getVideo(); ?>" frameborder="0" width="200" height="200"></iframe></td>
+                                                       <td class="thListGuardian"><iframe src="<?php echo $Pet->getVideo(); ?>" frameborder="0" width="150" height="150"></iframe></td>
+                                                       <input type="button" value="<?php echo $Pet->getIdPet() ?>">
                                              </tr>
                                                   <?php } else { ?>
                                                        <td class="thListGuardian">No disponible</td>
-                                                 <?php } 
-                                             }
-                                        }
-                                   }?>
+                                             <?php } ?> 
+                                                  <input type="hidden" name="email" value="<?php echo $guardian->getEmail() ?>">>
+                                        <?php }
+                              } ?> 
+                              </form>
                          </tbody>
                     </table>
                </div>

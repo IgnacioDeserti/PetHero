@@ -4,16 +4,19 @@
     use DAO\petDAO;
     use DAO\guardiansDAO as guardiansDAO;
     use DAO\ownersDAO as ownersDAO;
+    use DAO\sizeDAO;
     class InicioSesionController{
 
         private $guardianDAO;
         private $ownerDAO;
         private $petsDAO;
+        private $sizeDAO;
 
         public function __construct(){
             $this->guardianDAO = new guardiansDAO();
             $this->ownerDAO = new ownersDAO();
             $this->petsDAO = new petDAO();
+            $this->sizeDAO = new sizeDAO();
         }
 
         public function inicioSesion($email, $password){
@@ -72,6 +75,7 @@
                 require_once(VIEWS_PATH . "validate-session.php");
                 require_once(VIEWS_PATH . "addPet.php");
             }else{
+                $sizeList = $this->sizeDAO->getAll();
                 require_once(VIEWS_PATH . "validate-session.php");
                 require_once(VIEWS_PATH . "listPet.php");
             }

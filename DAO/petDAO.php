@@ -46,7 +46,7 @@
                     $pet = new Pet();
                     $pet->setName($row["name"]);
                     $pet->setBreed($row["breed"]);
-                    $pet->setIdSize($row["IdSize"]);
+                    $pet->setIdSize($row["idSize"]);
                     $pet->setObservations($row["observations"]);
                     $pet->setPhoto1($row["photo1"]);
                     $pet->setPhoto2($row["photo2"]);
@@ -74,7 +74,7 @@
                 $pet = new Pet();
                 $pet->setName($row["name"]);
                 $pet->setBreed($row["breed"]);
-                $pet->setIdSize($row["IdSize"]);
+                $pet->setIdSize($row["idSize"]);
                 $pet->setObservations($row["observations"]);
                 $pet->setPhoto1($row["photo1"]);
                 $pet->setPhoto2($row["photo2"]);

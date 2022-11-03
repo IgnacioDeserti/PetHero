@@ -113,10 +113,6 @@
             $parameters["newAvailabilityStart"] = $date;
             $parameters["idGuardianLogged"] =  $id;
 
-            echo $id;
-            echo "<br><br>";
-            echo $date;
-
             $this->connection = Connection::GetInstance();
 
             $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
@@ -127,11 +123,6 @@
 
             $parameters["newAvailabilityEnd"] = $date;
             $parameters["idGuardianLogged"] =  $id;
-            
-            echo "<br><br>";
-            echo $id;
-            echo "<br><br>";
-            echo $date;
 
             $this->connection = Connection::GetInstance();
 

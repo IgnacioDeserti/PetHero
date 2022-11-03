@@ -13,11 +13,23 @@
                <form action="<?php echo FRONT_ROOT ?> Owner/addPet" method="post" class="contentForm" enctype="multipart/form-data">
                     
                     <div class="divOwner">
-                         <label for="">Nombre del Perro</label>
+                         <label for="">Nombre del animal</label>
                     </div>
                     
                     <div class="inputPet">
                          <input type="text" name="name" class="form-control form-control-lg" placeholder="Ingresar nombre" required>
+                    </div>
+
+                    <div class="divOwner">
+                         <label for="">Tipo de animal</label>
+                    </div>
+
+                    <div class="inputPet">
+                         <select name="type">
+                              <option value="">Seleccione el tipo de mascota</option>
+                              <option value="Dog">Perro</option>
+                              <option value="Cat">Gato</option>
+                         </select>    
                     </div>
 
                     <div class="divOwner">
@@ -35,9 +47,9 @@
                     <div class="inputPet">
                          <select name="size">
                               <option value="">Seleccione el tamaño de la mascota</option>
-                              <option value="Small">Pequeño</option>
-                              <option value="Medium">Medio</option>
-                              <option value="Big">Grande</option>
+                              <option value="1">Pequeño</option>
+                              <option value="2">Medio</option>
+                              <option value="3">Grande</option>
                          </select>    
                     </div>
 
@@ -46,7 +58,7 @@
                     </div>
 
                     <div class="inputPet">
-                         <textarea name="observations" cols="10" rows="2" required></textarea>
+                         <textarea name="observations" cols="10" rows="2" maxlength="200" required></textarea>
                     </div>
 
                     <div class="divOwner">

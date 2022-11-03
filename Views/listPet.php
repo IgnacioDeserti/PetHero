@@ -15,30 +15,30 @@
                               <th class="thListGuardian">Raza</th>
                               <th class="thListGuardian">Tamaño</th>
                               <th class="thListGuardian">Observaciones</th>
+                              <th class="thListGuardian">Video</th>
                          </thead>
                          <tbody>
 
                               <?php
                               if (isset($arrayListPet)) {
-                                   foreach ($arrayListDog as $Pet) {
+                                   foreach ($arrayListPet as $Pet) {
                                         if ($Pet->getIdOwner() == $_SESSION['idUser']) { ?>
                                              <tr>
-                                                  <td class="thListGuardian"><img src="<?php echo $Pet->getPhoto1() ?>" width="200px" alt=" Foto de: <?php echo $Pet->getName();?>"></td>
-                                                  <td class="thListGuardian"><img src="<?php echo $Pet->getPhoto2() ?>" width="200px" alt=" Plan de vacunacion de: <?php echo $Pet->getName();?>"></td>
+                                                  <td class="thListGuardian"><img src="<?php echo $Pet->getPhoto1() ?>" width="200px" height="200px" alt=" Foto de: <?php echo $Pet->getName();?>"></td>
+                                                  <td class="thListGuardian"><img src="<?php echo $Pet->getPhoto2() ?>" width="200px" height="200px" alt=" Plan de vacunacion de: <?php echo $Pet->getName();?>"></td>
                                                   <td class="thListGuardian"><?php echo $Pet->getName() ?> </td>
                                                   <td class="thListGuardian"><?php echo $Pet->getBreed() ?></td>
-                                                  <?php if($Pet->getSize() == "Small"){?>
-                                                       <td class="thListGuardian">Pequeño</td>
-                                                  <?php }else if($Pet->getSize() == "Medium"){?>
-                                                       <td class="thListGuardian">Mediano</td>
-                                                  <?php }else{?>
-                                                       <td class="thListGuardian">Grande</td>
-                                                  <?php }?>
+                                                  <?php foreach($sizeList as $size){ 
+                                                       if($Pet->getIdSize() == $size->getIdSize()){?>
+                                                            <td class="thListGuardian"><?php echo $size->getName() ?></td>
+                                                       <?php }} ?>
                                                   <td class="thListGuardian"><?php echo $Pet->getObservations() ?></td>
                                                   <?php if ($Pet->getVideo() != null) { ?>
                                                        <td class="thListGuardian"><iframe src="<?php echo $Pet->getVideo(); ?>" frameborder="0" width="200" height="200"></iframe></td>
                                              </tr>
-                                                  <?php }
+                                                  <?php } else { ?>
+                                                       <td class="thListGuardian">No disponible</td>
+                                                 <?php } 
                                              }
                                         }
                                    }?>

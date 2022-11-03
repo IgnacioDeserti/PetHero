@@ -59,11 +59,12 @@ class OwnerController
         require_once(VIEWS_PATH . "listGuardian.php");
     }
 
-    public function addPet($name, $breed, $size, $observations, $files){
+    public function addPet($name, $type, $breed, $size, $observations, $files){
         $this->PetDAO->getAll();
 
         $newPet = new Pet();
         $newPet->setName($name);
+        $newPet->setType($type);
         $newPet->setBreed($breed);
         $newPet->setIdSize($size);
         $newPet->setObservations($observations);
@@ -93,6 +94,7 @@ class OwnerController
     public function showListPet()
     {   
         $arrayListPet = $this->PetDAO->getAll();
+        $sizeList = $this->sizeDAO->getAll();
         require_once(VIEWS_PATH . "validate-session.php");
         require_once(VIEWS_PATH . "listPet.php");
     }

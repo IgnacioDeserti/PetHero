@@ -5,8 +5,8 @@
     use Models\Owner as Owner;
     use DAO\IOwnersDAO;
     use DAO\PetDAO as PetDAO;
-use Exception;
-use Models\Pet as Pet;
+    use Exception;
+    use Models\Pet as Pet;
 
     class ownersDAO implements IOwnersDAO{
 

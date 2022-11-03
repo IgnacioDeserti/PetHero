@@ -285,7 +285,7 @@ Pet
 
 .buttonAddPet{
     position: absolute;
-    top: 250px;
+    top: 300px;
     left: 135%;
     padding: 15px;
     width: 200px;
@@ -295,7 +295,7 @@ Pet
 
 .buttonGoBackPet{
     position: absolute;
-    top: 315px;
+    top: 379px;
     left: 5%;
     padding: 15px;
     width: 200px;

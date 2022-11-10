@@ -27,21 +27,16 @@
                                                   <td class="thListGuardian"><img src="<?php echo $Pet->getPhoto2() ?>" width="150px" height="150px" alt=" Plan de vacunacion de: <?php echo $Pet->getName();?>"></td>
                                                   <td class="thListGuardian"><?php echo $Pet->getName() ?> </td>
                                                   <td class="thListGuardian"><?php echo $Pet->getBreed() ?></td>
-                                                  <?php foreach($sizeList as $size){ 
-                                                       if($Pet->getIdSize() == $size->getIdSize()){?>
-                                                            <td class="thListGuardian"><?php echo $size->getName() ?></td>
-                                                       <?php }} ?>
+                                                  <td class="thListGuardian"><?php echo $size->getName($Pet->getIdSize()) ?></td>
                                                   <td class="thListGuardian"><?php echo $Pet->getObservations() ?></td>
                                                   <?php if ($Pet->getVideo() != null) { ?>
-                                                       <td class="thListGuardian"><iframe src="<?php echo $Pet->getVideo(); ?>" frameborder="0" width="150" height="150"></iframe></td>
-                                                       <input type="button" value="<?php echo $Pet->getIdPet() ?>">
-                                             </tr>
+                                                  <td class="thListGuardian"><iframe src="<?php echo $Pet->getVideo(); ?>" frameborder="0" width="150" height="150"></iframe></td>
                                                   <?php } else { ?>
                                                        <td class="thListGuardian">No disponible</td>
-                                             <?php } ?> 
-                                                  <input type="hidden" name="email" value="<?php echo $guardian->getEmail() ?>">>
+                                                       </tr>
+                                                  <?php } ?> 
                                         <?php }
-                              } ?> 
+                                   } ?>      </tr>
                               </form>
                          </tbody>
                     </table>

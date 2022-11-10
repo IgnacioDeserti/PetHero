@@ -43,14 +43,9 @@ use SimpleXMLElement;
 
             $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 
-            foreach($result as $row){
-                $newSize = new Size();
-                $newSize->setIdSize($row['idSize']);
-                $newSize->setName($row['name']);
-                array_push($this->sizeList, $newSize);
-            }
+            $name = $result['name'];
 
-            return $this->sizeList;
+            return $name;
         }
         
 }

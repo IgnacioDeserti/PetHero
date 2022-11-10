@@ -87,12 +87,8 @@
         }
 
         public function selectView($id){
-            $arrayListPet = array();
-            foreach($this->petsDAO->getAll() as $Pet){
-                if($Pet->getIdOwner() == $id){
-                    array_push($arrayListPet, $Pet);
-                }
-            }
+
+            $arrayListPet = $this->petsDAO->GetPetByIdOwner($id);
 
             if(empty($arrayListPet)){
                 require_once(VIEWS_PATH . "validate-session.php");

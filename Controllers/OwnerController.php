@@ -52,9 +52,7 @@ class OwnerController
         }
 
         $arrayListGuardian = $this->guardianDAO->getAll();
-        $arrayListSize = $this->sizeDAO->getAll();
-        $arrayListGuardianxSize = $this->guardian_x_sizeDAO->getAll();
-
+        $gxsDAO = $this->guardian_x_sizeDAO;
 
         require_once(VIEWS_PATH . "validate-session.php");
         require_once(VIEWS_PATH . "listGuardian.php");
@@ -95,7 +93,7 @@ class OwnerController
     public function showListPet()
     {   
         $arrayListPet = $this->PetDAO->GetPetByIdOwner($_SESSION["idUser"]);
-        $sizeList = $this->sizeDAO->getAll();
+        $size = $this->sizeDAO;
         require_once(VIEWS_PATH . "validate-session.php");
         require_once(VIEWS_PATH . "listPet.php");
     }
@@ -116,7 +114,7 @@ class OwnerController
         require_once(VIEWS_PATH . "showGuardian.php");
     }
 
-    public function selectPet($button, $email){
+    /*public function selectPet($button, $email){
         if(strcmp($button, "goBack") == 0){
             $this->showGuardianList();
         }else{
@@ -139,10 +137,10 @@ class OwnerController
             require_once(VIEWS_PATH . "validate-session.php");
             require_once(VIEWS_PATH . "createReservationOwner.php");
         }
-    }
+    }*/
 
     public function createReservationOwner(){
-
+    
     }
 
 }

@@ -55,75 +55,25 @@
                                    </tr>
                               </thead>
                               <tbody>
-                                   <?php 
-                                   if(isset($arrayListGuardian)){
-                                        foreach($arrayListGuardian as $guardian)
-                                        {
-                                             if($guardian->getAvailabilityEnd() == null && $guardian->getAvailabilityStart() == null && ($availabilityStart == "1990-01-01" && $availabilityEnd == "3000-12-31")){
-                                        ?>
-                                             <tr>
-                                                  <td class="thListGuardian"><?php echo $guardian->getName();?> </td>
-                                                  <td class="thListGuardian"><?php echo $guardian->getAddress();?></td>
-                                                  <td class="thListGuardian"><?php echo $guardian->getEmail();?></td>
-                                                  <td class="thListGuardian"><?php echo $guardian->getNumber();?></td>
-                                                  <td class="thListGuardian">No disponible</td> 
-                                                  <td class="thListGuardian">No disponible</td>
-                                                  <td class="thListGuardian"><?php foreach($arrayListGuardianxSize as $gxs){
-                                                       if($gxs->getIdGuardian() == $guardian->getIdGuardian()){
-                                                            foreach($arrayListSize as $size){
-                                                                 if($gxs->getIdSize() == $size->getIdSize()){
-                                                                      echo $size->getName(), "<br>";
-                                                                 }
-                                                            }
-                                                       }
-                                                  }?>
-                                                  </td>
-                                                  <td><button class="" name="id" value="<?php echo $guardian->getEmail() ?>">Seleccionar</button></td>                                        
-                                             </tr>
-                                   <?php }else if($availabilityStart == "1990-01-01" && $availabilityEnd == "3000-12-31"){ ?>
+                                   <?php
+                                        foreach($arrayListGuardian as $guardian){
+                                        if($availabilityStart <= $guardian->getAvailabilityStart() && $availabilityEnd >= $guardian->getAvailabilityEnd()){ ?>
                                         <tr>
-                                                  <td class="thListGuardian"><?php echo $guardian->getName();?> </td>
-                                                  <td class="thListGuardian"><?php echo $guardian->getAddress();?></td>
-                                                  <td class="thListGuardian"><?php echo $guardian->getEmail();?></td>
-                                                  <td class="thListGuardian"><?php echo $guardian->getNumber();?></td>
-                                                  <td class="thListGuardian"><?php echo $guardian->getAvailabilityStart();?></td>
-                                                  <td class="thListGuardian"><?php echo $guardian->getAvailabilityEnd();?></td>
-                                                  <td class="thListGuardian"><?php foreach($arrayListGuardianxSize as $gxs){
-                                                       if($gxs->getIdGuardian() == $guardian->getIdGuardian()){
-                                                            foreach($arrayListSize as $size){
-                                                                 if($gxs->getIdSize() == $size->getIdSize()){
-                                                                      echo $size->getName(), "<br>";
-                                                                 }
-                                                            }
-                                                       }
-                                                  }?>
-                                                  </td>
-                                                  <td class="thListGuardian"><?php echo $guardian->getPrice();?></td>      
-                                                  <td><button class="" name="id" value="<?php echo $guardian->getEmail() ?>">Seleccionar</button></td>                                  
-                                             </tr>
-                                   <?php }else{
-                                             if($availabilityStart <= $guardian->getAvailabilityStart() && $availabilityEnd >= $guardian->getAvailabilityEnd()){ ?>
-                                                  <tr>
-                                                       <td class="thListGuardian"><?php echo $guardian->getName();?> </td>
-                                                       <td class="thListGuardian"><?php echo $guardian->getAddress();?></td>
-                                                       <td class="thListGuardian"><?php echo $guardian->getEmail();?></td>
-                                                       <td class="thListGuardian"><?php echo $guardian->getNumber();?></td>
-                                                       <td class="thListGuardian"><?php echo $guardian->getAvailabilityStart();?></td>
-                                                       <td class="thListGuardian"><?php echo $guardian->getAvailabilityEnd();?></td>
-                                                       <td class="thListGuardian"><?php foreach($arrayListGuardianxSize as $gxs){
-                                                            if($gxs->getIdGuardian() == $guardian->getIdGuardian()){
-                                                                 foreach($arrayListSize as $size){
-                                                                      if($gxs->getIdSize() == $size->getIdSize()){
-                                                                           echo $size->getName(), "<br>";
-                                                                      }
-                                                                 }
-                                                            }
-                                                       }?>
-                                                       </td>
-                                                       <td class="thListGuardian"><?php echo $guardian->getPrice();?></td>      
-                                                       <td><button class="" name="id" value="<?php echo $guardian->getEmail() ?>">Seleccionar</button></td>                                        
-                                                  </tr>
-                                   <?php }}}} ?>
+                                             <td class="thListGuardian"><?php echo $guardian->getName();?> </td>
+                                             <td class="thListGuardian"><?php echo $guardian->getAddress();?></td>
+                                             <td class="thListGuardian"><?php echo $guardian->getEmail();?></td>
+                                             <td class="thListGuardian"><?php echo $guardian->getNumber();?></td>
+                                             <td class="thListGuardian"><?php echo $guardian->getAvailabilityStart();?></td>
+                                             <td class="thListGuardian"><?php echo $guardian->getAvailabilityEnd();?></td>
+                                             <td class="thListGuardian"><?php 
+                                                  foreach ($gxsDAO->getSizeById($guardian->getIdGuardian()) as $size){?>
+                                                       <td class="thListGuardian"><?php echo $size;?></td>    
+                                             <?php } ?>
+                                             </td>
+                                             <td class="thListGuardian"><?php echo $guardian->getPrice();?></td>      
+                                             <td><button class="" name="id" value="<?php echo $guardian->getEmail() ?>">Seleccionar</button></td>                                        
+                                        </tr> <?php }?>
+                                   <?php }?>
                               </tbody>
                          </table>
                     </form>

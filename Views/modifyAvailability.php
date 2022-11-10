@@ -24,6 +24,12 @@
                     <input type="date" name="availabilityEnd">
                 </div>
 
+                <div class="containerFecha">
+                    <?php if(isset($exception)){?>
+                    <td><?php echo $exception->getMessage();?></td>
+                    <?php }?>
+                </div>
+
                 <button type="submit" class="buttonModify buttonHoversGreen" name="id" value="<?php echo $_SESSION["idUser"] ?>">Modificar</button>
             </form>
         </main>

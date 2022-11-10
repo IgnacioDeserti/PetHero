@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS guardian(
     availabilityStart date,
     availabilityEnd date,
     price float,
+    status int default 1,
     primary key (idGuardian)
 );
 
@@ -32,6 +33,7 @@ CREATE TABLE IF NOT EXISTS owner(
     userName varchar(50) not null unique,
     password varchar(50) not null,
     typeUser char(1) not null,
+    status int default 1,
     primary key (idOwner)
 );
 
@@ -46,6 +48,7 @@ CREATE TABLE IF NOT EXISTS pet(
     video blob,
     idOwner integer not null,
     type varchar(50) not null,
+    status int default 1,
     primary key (idPet),
     constraint pet_x_size foreign key (idSize) references size (idSize),
     foreign key (idOwner) references owner (idOwner)
@@ -90,12 +93,12 @@ CREATE TABLE IF NOT EXISTS guardian_x_size(
 
 DELIMITER //
 
-CREATE PROCEDURE Guardian_Add (IN name varchar(50), IN address varchar(50), IN email varchar(50), IN number varchar(50), IN userName varchar(50), IN password varchar(50), IN typeUser char(1), IN availabilityStart date, IN availabilityEnd date)
+CREATE PROCEDURE Guardian_Add (IN name varchar(50), IN address varchar(50), IN email varchar(50), IN number varchar(50), IN userName varchar(50), IN password varchar(50), IN typeUser char(1), IN availabilityStart date, IN availabilityEnd date, IN price float)
 BEGIN
 	INSERT INTO guardian
-        (guardian.name, guardian.address, guardian.email, guardian.number, guardian.userName, guardian.password, guardian.typeUser, guardian.availabilityStart, guardian.availabilityEnd)
+        (guardian.name, guardian.address, guardian.email, guardian.number, guardian.userName, guardian.password, guardian.typeUser, guardian.availabilityStart, guardian.availabilityEnd, guardian.price)
     VALUES
-        (name, address, email, number, userName, password, typeUser, availabilityStart, availabilityEnd);
+        (name, address, email, number, userName, password, typeUser, availabilityStart, availabilityEnd,price);
 END//
 
 

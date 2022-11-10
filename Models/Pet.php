@@ -12,6 +12,7 @@
         private $video;
 		private $idOwner;
 		private $type;
+		private $status;
 
         public function __construct(){
             
@@ -98,6 +99,17 @@
 
 		function getType(){
 			return $this->type;
+		}
+
+		public function getStatus()
+		{
+			return $this->status;
+		}
+
+		public function setStatus($status)
+		{
+			$this->status = $status;
+
 		}
 }
 

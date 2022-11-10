@@ -179,7 +179,7 @@
 
         }
 
-        public function createGuardianProfile($name, $address, $email, $number, $userName, $password, $size, $typeUser){
+        public function createGuardianProfile($name, $address, $email, $number, $userName, $password, $size,$price, $typeUser){
             
             if($_POST){
 
@@ -190,7 +190,9 @@
                 $newGuardian->setNumber($number);
                 $newGuardian->setUserName($userName);
                 $newGuardian->setPassword($password);
+                $newGuardian->setPrice($price);
                 $newGuardian->setTypeUser($typeUser);
+                
             
                 try{
                     $this->verifyEmailUser($email, $userName);

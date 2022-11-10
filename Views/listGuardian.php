@@ -50,6 +50,8 @@
                                         <th class="thListGuardian">Comienzo estadía</th>
                                         <th class="thListGuardian">Fin estadía</th>
                                         <th class="thListGuardian">Tamaños</th>
+                                        <th class="thListGuardian">Precio por dia</th>
+
                                    </tr>
                               </thead>
                               <tbody>
@@ -96,7 +98,8 @@
                                                        }
                                                   }?>
                                                   </td>
-                                                  <td><button class="" name="id" value="<?php echo $guardian->getEmail() ?>">Seleccionar</button></td>                                        
+                                                  <td class="thListGuardian"><?php echo $guardian->getPrice();?></td>      
+                                                  <td><button class="" name="id" value="<?php echo $guardian->getEmail() ?>">Seleccionar</button></td>                                  
                                              </tr>
                                    <?php }else{
                                              if($availabilityStart <= $guardian->getAvailabilityStart() && $availabilityEnd >= $guardian->getAvailabilityEnd()){ ?>
@@ -117,6 +120,7 @@
                                                             }
                                                        }?>
                                                        </td>
+                                                       <td class="thListGuardian"><?php echo $guardian->getPrice();?></td>      
                                                        <td><button class="" name="id" value="<?php echo $guardian->getEmail() ?>">Seleccionar</button></td>                                        
                                                   </tr>
                                    <?php }}}} ?>

@@ -11,6 +11,7 @@
 		private $userName;
 		private $password;
 		private $typeUser;
+		private $status;
 
 		public function __construct() {
 			
@@ -70,6 +71,16 @@
 
 		public function getTypeUser() {
 			return $this->typeUser;
+		}
+
+		public function getStatus()
+		{
+				return $this->status;
+		}
+
+		public function setStatus($status)
+		{
+			$this->status = $status;
 		}
 }
 

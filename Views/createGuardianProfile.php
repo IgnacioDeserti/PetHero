@@ -41,6 +41,11 @@
                         <label for="ch3">Grande</label>
                     </div>
 
+                    <div class='divForm'>
+                        <label> Precio por dia</label>
+                        <input type="number" name='price' placeholder="Ingrese el monto deseado por dia" class="inputForm" required>
+                    </div>
+
                     <div>
                         <input type="hidden" name="typeUser" value="G">
                         <button type="submit" class="buttonForm buttonHoversGreen">Registrarse</button>

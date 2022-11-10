@@ -17,7 +17,7 @@
         
         public function Add(Guardian $guardian)
         {
-            $query = "CALL Guardian_Add(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $query = "CALL Guardian_Add(?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
 
             $parameters["name"] =  $guardian->getName();
             $parameters["address"] = $guardian->getAddress();
@@ -28,6 +28,7 @@
             $parameters["typeUser"] = $guardian->getTypeUser();
             $parameters["availabilityStart"] = $guardian->getAvailabilityStart();
             $parameters["availabilityEnd"] = $guardian->getAvailabilityEnd();
+            $parameters["price"] = $guardian->getPrice();
 
             $this->connection = Connection::GetInstance();
 
@@ -56,6 +57,7 @@
                 $guardian->setTypeUser($row["typeUser"]);
                 $guardian->setAvailabilityStart($row["availabilityStart"]);
                 $guardian->setAvailabilityEnd($row["availabilityEnd"]);
+                $guardian->setPrice($row['price']);
                 array_push($guardianList, $guardian);
             }
 

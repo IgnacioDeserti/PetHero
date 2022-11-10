@@ -94,7 +94,7 @@ class OwnerController
 
     public function showListPet()
     {   
-        $arrayListPet = $this->PetDAO->GetDogByIdOwner($_SESSION["idUser"]);
+        $arrayListPet = $this->PetDAO->GetPetByIdOwner($_SESSION["idUser"]);
         $sizeList = $this->sizeDAO->getAll();
         require_once(VIEWS_PATH . "validate-session.php");
         require_once(VIEWS_PATH . "listPet.php");
@@ -123,7 +123,7 @@ class OwnerController
             $guardian = $this->guardianDAO->getGuardian($email);
             $sizeList = $this->sizeDAO->getAll();
             $arrayListGuardianxSize = $this->guardian_x_sizeDAO->getAll();
-            $arrayListPetUser = $this->PetDAO->GetDogByIdOwner($_SESSION["idUser"]);
+            $arrayListPetUser = $this->PetDAO->GetPetByIdOwner($_SESSION["idUser"]);
             $arrayListPet = array();
 
             foreach($arrayListPetUser as $pet){

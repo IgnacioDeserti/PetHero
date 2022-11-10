@@ -7,6 +7,7 @@
         private $availabilityStart;
 		private $availabilityEnd;
 		private $idGuardian;
+		private $price;
 
 		public function __construct(){
 			parent::__construct();
@@ -34,6 +35,16 @@
 
 		public function setIdGuardian($idGuardian){
 			$this->idGuardian = $idGuardian;
+		}
+
+		public function getPrice()
+		{
+			return $this->price;
+		}
+	
+		public function setPrice($price)
+		{
+			$this->price = $price;
 		}
 }
 

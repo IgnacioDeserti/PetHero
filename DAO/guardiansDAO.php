@@ -103,10 +103,6 @@
 
         }
 
-        private function setId(){
-            return count($this->getAll()) + 1;
-        }
-
         public function UpdateAvailabilityStart($id, $date){
             $query = "CALL Update_AvailabilityStart_Guardian(?, ?)";
 

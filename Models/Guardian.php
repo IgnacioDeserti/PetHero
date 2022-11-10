@@ -6,19 +6,10 @@
     class Guardian extends Person{
         private $availabilityStart;
 		private $availabilityEnd;
-		private $size;
 		private $idGuardian;
 
 		public function __construct(){
 			parent::__construct();
-		}
-
-		public function getSize(){
-			return $this->size;
-		}
-
-		public function setSize($size){
-			$this->size = $size;
 		}
 
 		public function getAvailabilityStart(){

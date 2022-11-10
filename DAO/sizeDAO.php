@@ -16,15 +16,33 @@ use SimpleXMLElement;
         }
 
         public function getAll(){
-            $searched = NULL;
 
-            $query = "CALL SizeGetAll()";
+            $query = "CALL Size_GetAll()";
 
             $this->connection = Connection::GetInstance();
 
             $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 
-            $sizeList = array();
+            foreach($result as $row){
+                $newSize = new Size();
+                $newSize->setIdSize($row['idSize']);
+                $newSize->setName($row['name']);
+                array_push($this->sizeList, $newSize);
+            }
+
+            return $this->sizeList;
+        }
+
+        public function getName ($idSize){
+
+            $query = "CALL Size_GetName(?)";
+
+            $this->connection = Connection::GetInstance();
+
+            $parameters["idSizeS"] = $idSize;
+
+            $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+
             foreach($result as $row){
                 $newSize = new Size();
                 $newSize->setIdSize($row['idSize']);

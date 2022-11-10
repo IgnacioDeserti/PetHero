@@ -214,15 +214,15 @@ END//
 
 DELIMITER //
 
-CREATE PROCEDURE Size_GetName (IN idSize integer)
+CREATE PROCEDURE Size_GetName (IN idSizeS integer)
 BEGIN
 	SELECT name
-    FROM size
-    WHERE (size.idSize = idSize);
+    FROM Size
+    WHERE Size.idSize = idSizeS;
 END//
 
 DELIMITER //
-CREATE PROCEDURE SizeGetAll ()
+CREATE PROCEDURE Size_GetAll ()
 BEGIN
 	SELECT idSize, name
     FROM Size;
@@ -241,3 +241,58 @@ BEGIN
     WHERE (owner.userName = userName);
 END//
 
+DELIMITER //
+CREATE PROCEDURE Owner_GetOwnerById (IN idS int)
+BEGIN
+	SELECT name
+    FROM owner
+    WHERE (owner.id = idS);
+END//
+
+DELIMITER //
+CREATE PROCEDURE Owner_GetPetByIdOwner (IN idS int)
+BEGIN
+	SELECT *
+    FROM Pet 
+    WHERE Pet.ownerId = idS;
+END//
+
+DELIMITER //
+CREATE PROCEDURE Reservation_GetReservationsByIdGuardian (in idGuadianS int)
+BEGIN
+	SELECT *
+    FROM Reservation  
+    WHERE Reservation.idGuadian = idGuardianS;
+END//
+
+DELIMITER //
+CREATE PROCEDURE Reservation_GetReservationsByIdOwner (in idOwnerS int)
+BEGIN
+	SELECT *
+    FROM Reservation  
+    WHERE Reservation.idOwner = idOwnerS;
+END//
+
+DELIMITER //
+CREATE PROCEDURE Reservation_GetDates (in idGuardianS int)
+BEGIN
+	SELECT Reservation.reservationDateStart, Reservation.reservationDateEnd
+    FROM Reservation  
+    WHERE Reservation.idGuardian = idGuardianS;
+END//
+
+DELIMITER //
+CREATE PROCEDURE Review_GetReviewsByGuardian (in idGuardianS int)
+BEGIN
+	SELECT *
+    FROM Review 
+    WHERE Review.idGuardian = idGuardianS;
+END//
+
+DELIMITER //
+CREATE PROCEDURE guardian_x_size_GetSizeByIdGuardian (in idGuardianS int)
+BEGIN
+	SELECT idSize
+    FROM guardian_x_size 
+    WHERE guardian_x_size.idGuardian = idGuardianS;
+END//

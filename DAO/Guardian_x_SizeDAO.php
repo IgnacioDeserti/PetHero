@@ -3,6 +3,7 @@
     namespace DAO;
 
     use Models\Guardian_x_Size;
+    use DAO\sizeDAO;
 
     class guardian_x_sizeDAO{
         private $connection;
@@ -47,21 +48,24 @@
             return $this->guardianXsizeList;
         }
 
-        public function getGuardian($idGuardian){
+        public function getSizeById($idGuardian){
 
-            $idSizeList = array();
+            $SizeList = array();
+            $sizeDAO = new  sizeDAO();
 
-            $query = "CALL Guardian_GetGuardian(?)";
+            $query = "CALL guardian_x_size_GetSizeByIdGuardian (?)";
 
+            $parameters["idGuardianS"] =  $idGuardian;
+            
             $this->connection = Connection::GetInstance();
 
             $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 
             foreach($result as $row){
-                array_push($idSizeList, $row["idSize"]);
+                array_push($SizeList, $sizeDAO->getName($row['idSize']));
             }
 
-            return $idSizeList;
+            return $SizeList;
         }
         
         public function delete($id){

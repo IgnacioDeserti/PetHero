@@ -8,7 +8,7 @@
                 <h2 class="tituloInicio ">BIENVENIDO</h2>
             </header>
             <div class="loginForm">
-                <form action=" <?php echo FRONT_ROOT?> inicioSesion/inicioSesion" method="post">
+                <form action=" <?php echo FRONT_ROOT?> Home/inicioSesion" method="post">
                     <div class = "contenidoForm">
                         <label for="email"> <h3>Usuario</h3></label>
                         <input type="email" name="email" placeholder="email" class="inputLogin"><br><br>
@@ -32,7 +32,7 @@
                     
                 </form>
                 <div class="createProfileLink">
-                    <h5>¿No tenes cuenta?</h5> <form action="<?php echo FRONT_ROOT ?>createProfile/createProfile" method="post"><button type="submit" class="buttonCreateLink buttonHoversGreen">Registrate!</button></form>
+                    <h5>¿No tenes cuenta?</h5> <form action="<?php echo FRONT_ROOT ?>Home/createProfile" method="post"><button type="submit" class="buttonCreateLink buttonHoversGreen">Registrate!</button></form>
                 </div>
             </div>
         </div>

@@ -31,22 +31,20 @@
         {
             $reviewList = array();
 
-            $query = "SELECT * FROM ".$this->tableName;
+            $query = "CALL Review_GetReviewsByGuardian(?)";
 
             $this->connection = Connection::GetInstance();
 
             $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 
             foreach($result as $row){
-                if($row["idGuardian"] == $idGuardian){
-                    $review = new Review();
-                    $review->setRating($row["rating"]);
-                    $review->setObservations($row["observations"]);
-                    $review->setIdOwner($row["idOwner"]);
-                    $review->setIdGuardian($row["idGuardian"]);
-                    $review->setIdReservation($row["idReservation"]);
-                    array_push($reviewList, $review);
-                }
+                $review = new Review();
+                $review->setRating($row["rating"]);
+                $review->setObservations($row["observations"]);
+                $review->setIdOwner($row["idOwner"]);
+                $review->setIdGuardian($row["idGuardian"]);
+                $review->setIdReservation($row["idReservation"]);
+                array_push($reviewList, $review);
             }
 
             return $reviewList;
@@ -61,6 +59,8 @@
 
             $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
         }
+        
+
         
 }
 

@@ -57,22 +57,17 @@
 
         public function getNameById($id){
             
-            $ownerList = array();
+            $result = NULL;
 
-            $query = "SELECT * FROM ".$this->tableName;
+            $parameter["idS"] = $id;
+
+            $query = "CALL Owner_GetOwnerById(?)";
 
             $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+            $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
 
-            foreach($result as $row){
-                if($row["idOwner"] == $id){
-                    $owner = new Owner();
-                    $owner->setName($row["name"]);
-                }
-            }
-
-            return $owner->getName();
+            return $result['name'];
         }
 
         public function getOwner($email){

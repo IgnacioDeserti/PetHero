@@ -7,7 +7,7 @@
             <header>            
                 <h3 class="tituloForm">Create un nuevo perfil como dueño</h3>        
             </header>          
-            <form action=" <?php echo FRONT_ROOT ?>createProfile/createOwnerProfile" method="POST" class="contentForm"> 
+            <form action=" <?php echo FRONT_ROOT ?>Home/createOwnerProfile" method="POST" class="contentForm"> 
                     <div class="divOwner">                    
                         <label for="">Name</label>                                     
                     </div>
@@ -69,7 +69,7 @@
                     </div>
                 </form>
             
-            <form action="<?php echo FRONT_ROOT . "createProfile/createProfile"?>">
+            <form action="<?php echo FRONT_ROOT . "Home/createProfile"?>">
                 <button class="buttonGoBackOwner buttonRedHovers">Volver</button>        
             </form>
         </div>

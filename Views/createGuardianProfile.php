@@ -7,7 +7,7 @@
             <header>            
                 <h3 class="tituloForm">Create un nuevo perfil como guardian</h3>        
             </header>          
-            <form action=" <?php echo FRONT_ROOT ?>createProfile/createGuardianProfile" method="POST" class="contentForm"> 
+            <form action=" <?php echo FRONT_ROOT ?>Home/createGuardianProfile" method="POST" class="contentForm"> 
                     <div class="divForm">                    
                         <label for="">Name</label>                     
                         <input type="text" name="name" placeholder="Ingresar nombre" class="inputForm" required>                
@@ -55,7 +55,7 @@
 
             </form>
             
-            <form action="<?php echo FRONT_ROOT . "createProfile/createProfile"?>">
+            <form action="<?php echo FRONT_ROOT . "Home/createProfile"?>">
                 <button class="buttonGoBackGuardian buttonRedHovers">Volver</button>        
             </form>
         </div>

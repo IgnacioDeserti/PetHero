@@ -31,7 +31,7 @@
             $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
         }
 
-        public function GetDogByIdOwner($idOwner)
+        public function GetPetByIdOwner($idOwner)
         {
             $petList = array();
 
@@ -42,19 +42,17 @@
             $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 
             foreach($result as $row){
-                if($row["idOwner"] == $idOwner){
-                    $pet = new Pet();
-                    $pet->setName($row["name"]);
-                    $pet->setBreed($row["breed"]);
-                    $pet->setIdSize($row["idSize"]);
-                    $pet->setObservations($row["observations"]);
-                    $pet->setPhoto1($row["photo1"]);
-                    $pet->setPhoto2($row["photo2"]);
-                    $pet->setVideo($row["video"]);
-                    $pet->setIdOwner($row["idOwner"]);
-                    $pet->setType($row["type"]);
-                    array_push($petList, $pet);
-                }
+                $pet = new Pet();
+                $pet->setName($row["name"]);
+                $pet->setBreed($row["breed"]);
+                $pet->setIdSize($row["idSize"]);
+                $pet->setObservations($row["observations"]);
+                $pet->setPhoto1($row["photo1"]);
+                $pet->setPhoto2($row["photo2"]);
+                $pet->setVideo($row["video"]);
+                $pet->setIdOwner($row["idOwner"]);
+                $pet->setType($row["type"]);
+                array_push($petList, $pet);
             }
 
             return $petList;

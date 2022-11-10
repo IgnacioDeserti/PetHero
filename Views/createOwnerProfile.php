@@ -2,7 +2,7 @@
     include("header.php");
 ?>
 <html class="pantallaInicial">
-    <main>        
+    <main>
         <div class="formCreateProfile">         
             <header>            
                 <h3 class="tituloForm">Create un nuevo perfil como dueño</h3>        
@@ -61,11 +61,16 @@
                         <button type="submit" class="buttonOwner buttonHoversGreen">Registrarse</button>
                     </div>
 
-
-            </form>
+                    <div class="exceptionCreateProfile">
+                        <?php if (isset($e)) { ?>
+                            <p class="psException"><?php echo $e->getMessage(); ?></p><br>
+                            <p class="psException">Intente de nuevo</p>
+                        <?php } ?>
+                    </div>
+                </form>
             
             <form action="<?php echo FRONT_ROOT . "createProfile/createProfile"?>">
-                <button class="buttonGoBackOwner">Volver</button>        
+                <button class="buttonGoBackOwner buttonRedHovers">Volver</button>        
             </form>
         </div>
 

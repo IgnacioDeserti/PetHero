@@ -16,25 +16,18 @@
         public function __construct(){
         }
 
-        public function Add(Owner $owner)
-        {
-            try{
-                $query = "CALL Owner_Add(?, ?, ?, ?, ?, ?, ?)";
-
-                $parameters["name"] =  $owner->getName();
-                $parameters["address"] = $owner->getAddress();
-                $parameters["email"] = $owner->getEmail();
-                $parameters["number"] = $owner->getNumber();
-                $parameters["userName"] = $owner->getUserName();
-                $parameters["password"] = $owner->getPassword();
-                $parameters["typeUser"] = $owner->getTypeUser();
-
-                $this->connection = Connection::GetInstance();
-
-                $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
-            }catch(Exception $e){
-                throw $e;
-            }
+        public function Add(Owner $owner){            
+            $query = "CALL Owner_Add(?, ?, ?, ?, ?, ?, ?)";
+            $parameters["name"] =  $owner->getName();
+            $parameters["address"] = $owner->getAddress();
+            $parameters["email"] = $owner->getEmail();
+            $parameters["number"] = $owner->getNumber();
+            $parameters["userName"] = $owner->getUserName();
+            $parameters["password"] = $owner->getPassword();
+            $parameters["typeUser"] = $owner->getTypeUser();
+            $this->connection = Connection::GetInstance();
+            $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            
         }
 
         public function GetAll(){
@@ -119,6 +112,50 @@
 
         }
 
+        public function getOwnerByUserName($userName){
+            $result = NULL;
+
+            $parameter["userName"] = $userName;
+
+            $query = "CALL Owner_GetOwnerByUserName(?)";
+
+            $this->connection = Connection::GetInstance();
+
+            $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
+
+            $owner = new Owner();
+            foreach($result as $row){
+                $owner->setIdOwner($row["idOwner"]);
+                $owner->setName($row["name"]);
+                $owner->setAddress($row["address"]);
+                $owner->setEmail($row["email"]);
+                $owner->setNumber($row["number"]);
+                $owner->setUserName($row["userName"]);
+                $owner->setPassword($row["password"]);
+                $owner->setTypeUser($row["typeUser"]);
+            }
+
+            return $owner;
+        }
+        
+        public function GetIdOwner($email){
+            $result = NULL;
+
+            $parameter["email"] = $email;
+
+            $query = "CALL Owner_GetIdOwner(?)";
+
+            $this->connection = Connection::GetInstance();
+
+            $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
+
+            $owner = new Owner();
+            foreach($result as $row){
+                $owner->setIdOwner($row["idOwner"]);
+            }
+
+            return $owner;
+        }
 }
 
 ?>

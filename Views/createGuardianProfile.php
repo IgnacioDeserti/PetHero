@@ -46,10 +46,17 @@
                         <button type="submit" class="buttonForm buttonHoversGreen">Registrarse</button>
                     </div>
 
+                    <div class="exceptionCreateProfileGuardian">
+                        <?php if (isset($e)) { ?>
+                            <p class="psException"><?php echo $e->getMessage(); ?></p><br>
+                            <p class="psException">Intente de nuevo</p>
+                        <?php } ?>
+                    </div>
+
             </form>
             
             <form action="<?php echo FRONT_ROOT . "createProfile/createProfile"?>">
-                <button class="buttonGoBackGuardian buttonGoBackOwner:hover">Volver</button>        
+                <button class="buttonGoBackGuardian buttonRedHovers">Volver</button>        
             </form>
         </div>
 

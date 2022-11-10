@@ -23,8 +23,8 @@
 }
 
 .loginForm{
-    height: 300px;
-    width: 300px;
+    height: 350px;
+    width: 350px;
     background-color: rgba(255, 242, 183, 0.599);
     border: 2px solid black;
     display: flex;
@@ -41,8 +41,8 @@
 
 .buttonInicio{
     position: absolute;
-    top: 135%;
-    left: 85%;
+    top: 72%;
+    left: 55%;
     width: 115px;
     padding: 5px 10px;
     text-align: center;
@@ -52,6 +52,11 @@
     border-radius: 5px;
 }
 
+.selectUser{
+    position: relative;
+    top: 40%;
+    left: -50%;
+}
 
 .buttonHoversGreen:hover{
     background-color :chartreuse;
@@ -65,13 +70,13 @@
 
 .contenidoForm{
     position: absolute;
-    top: 10%;
+    top: 5%;
     left: 2%;
 }
 
 .createProfileLink{
     position: absolute;
-    top: 59%;
+    top: 69%;
     left: -2%;
     width: 58%;
     padding: 0 10px 0 10px;
@@ -210,11 +215,12 @@ h5{
 
 
 .buttonGoBackOwner{
-    padding: 15px;
     position: absolute;
     top: 55%;
-    left: 4%;
+    left: 5%;
+    padding: 15px;
     font-size: 16px;
+    border-radius: 5px;
 }
 
 
@@ -417,4 +423,37 @@ Pet
     padding: 10px;
     font-size: 14px;
     border-radius: 5px;
+}
+
+.exceptionCreateProfile{
+    position: absolute;
+    bottom: -75%;
+    left: 75%;
+    width: 175px;
+    font-size: large;
+    background-color:#d1b056;
+    text-align: center;
+}
+
+.exceptionCreateProfileGuardian{
+    position: absolute;
+    bottom: -70%;
+    left: 50%;
+    width: 175px;
+    font-size: large;
+    background-color:#d1b056;
+    text-align: center;
+    border-radius: 1px;
+    border-color: black;
+}
+
+.exceptionLogin{
+    position: relative;
+    top: 45%;
+    left: -40%;
+}
+
+.psException{
+    position: absolute;
+    background-color:#d1b056;
 }

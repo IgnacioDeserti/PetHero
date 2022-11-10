@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS guardian(
     typeUser char(1) not null,
     availabilityStart date,
     availabilityEnd date,
+    price float,
     primary key (idGuardian)
 );
 
@@ -87,7 +88,7 @@ CREATE TABLE IF NOT EXISTS guardian_x_size(
     constraint FK_guardianSize_x_size foreign key (idSize) references size (idSize)
 );
 
-DELIMITER $$
+DELIMITER //
 
 CREATE PROCEDURE Guardian_Add (IN name varchar(50), IN address varchar(50), IN email varchar(50), IN number varchar(50), IN userName varchar(50), IN password varchar(50), IN typeUser char(1), IN availabilityStart date, IN availabilityEnd date)
 BEGIN
@@ -95,23 +96,20 @@ BEGIN
         (guardian.name, guardian.address, guardian.email, guardian.number, guardian.userName, guardian.password, guardian.typeUser, guardian.availabilityStart, guardian.availabilityEnd)
     VALUES
         (name, address, email, number, userName, password, typeUser, availabilityStart, availabilityEnd);
-END$$
+END//
 
-DELIMITER;
 
-DELIMITER $$
+DELIMITER //
 
-CREATE PROCEDURE Pet_Add (IN name varchar(50), IN breed varchar(50), IN idSize integer, IN observations varchar(200), IN photo1 blob, IN photo2 blob, IN video blob, IN idOwner integer, IN type varchar  (50))
+CREATE PROCEDURE Pet_Add (IN name varchar(50), IN breed varchar(50), IN idSize integer, IN observations varchar(200), IN photo1 blob, IN photo2 blob, IN video blob, IN idOwner integer, IN type varchar (50))
 BEGIN
 	INSERT INTO pet
         (pet.name, pet.breed, pet.idSize, pet.observations, pet.photo1, pet.photo2, pet.video, pet.idOwner, pet.type)
     VALUES
         (name, breed, idSize, observations, photo1, photo2, video, idOwner, type);
-END$$
+END//
 
-DELIMITER;
-
-DELIMITER $$
+DELIMITER //
 
 CREATE PROCEDURE guardian_x_size_Add (IN idGuardian integer, IN idSize integer)
 BEGIN
@@ -119,48 +117,50 @@ BEGIN
         (guardian_x_size.idGuardian, guardian_x_size.idSize)
     VALUES
         (idGuardian, idSize);
-END$$
+END//
 
-DELIMITER ;
-
-DELIMITER $$
+DELIMITER //
 
 CREATE PROCEDURE Guardian_GetGuardian (IN email varchar(50))
 BEGIN
 	SELECT idGuardian, name, address, email, number, userName, password, typeUser, availabilityStart, availabilityEnd
     FROM guardian
     WHERE (guardian.email = email);
-END$$
+END//
 
-DELIMITER ;
-
-DELIMITER $$
+DELIMITER //
 CREATE PROCEDURE Update_AvailabilityStart_Guardian(IN newAvailabilityStart date, IN idGuardianLogged integer)
+BEGIN
 	UPDATE guardian set availabilityStart = newAvailabilityStart
     WHERE (idGuardian = idGuardianLogged);
+END//
 
+DELIMITER //
 CREATE PROCEDURE Update_AvailabilityEnd_Guardian(IN newAvailabilityEnd date, IN idGuardianLogged integer)
+BEGIN
 	UPDATE guardian set availabilityEnd = newAvailabilityEnd
     WHERE (idGuardian = idGuardianLogged);
+END//
     
 INSERT INTO size (name) VALUES ('Pequeño'), ('Mediano'), ('Grande');
 
-DELIMITER ;
-
+DELIMITER //
 CREATE PROCEDURE Delete_Dog(in idDogToDelete integer)   
+BEGIN
     DELETE FROM pet WHERE idDog = idDogToDelete;
-DELIMITER $$
+END//
 
+
+DELIMITER //
 CREATE PROCEDURE Owner_GetOwner (IN email varchar(50))
 BEGIN
-	SELECT idOwner name, address, email, number, userName, password, typeUser
+	SELECT idOwner, name, address, email, number, userName, password, typeUser
     FROM owner
     WHERE (owner.email = email);
-END$$
+END//
 
-DELIMITER ;
 
-DELIMITER $$
+DELIMITER //
 
 CREATE PROCEDURE Owner_Add (IN name varchar(50), IN address varchar(50), IN email varchar(50), IN number varchar(50), IN userName varchar(50), IN password varchar(50), IN typeUser char(1))
 BEGIN
@@ -168,11 +168,10 @@ BEGIN
         (owner.name, owner.address, owner.email, owner.number, owner.userName, owner.password, owner.typeUser)
     VALUES
         (name, address, email, number, userName, password, typeUser);
-END$$
+END//
 
-DELIMITER ;
 
-DELIMITER $$
+DELIMITER //
 
 CREATE PROCEDURE Review_Add (IN rating float, IN observations varchar(200), IN idOwner integer, IN idGuardian integer, IN idReservation integer)
 BEGIN
@@ -180,18 +179,17 @@ BEGIN
         (review.idOwner, review.idGuardian, review.idOwner, review.idGuardian)
     VALUES
         (rating, observations, idOwner, idGuardian, idReservation);
-END$$
+END//
 
-DELIMITER;
-
-DELIMITER $$
+DELIMITER //
 
 CREATE PROCEDURE Review_Delete (in idReview integer)
+BEGIN
     DELETE FROM review WHERE review.idReview = idReview;
+END//
 
-DELIMITER;
 
-DELIMITER $$
+DELIMITER //
 
 CREATE PROCEDURE Reservation_Add (IN idOwner integer, IN idGuardian integer, IN idPet integer, IN breed varchar(50), IN animalType varchar(1), IN reservationDateStart date, IN reservationDateEnd date, IN reservationStatus varchar(50))
 BEGIN
@@ -199,42 +197,47 @@ BEGIN
         (reservation.idOwner, reservation.idGuardian, reservation.idPet, reservation.breed,reservation.animalType, reservation.reservationDateStart, reservation.reservationDateEnd, reservation.reservationStatus)
     VALUES
         (idOwner, idGuardian, idPet, breed, animalType, reservationDateStart, reservationDateEnd, reservationStatus);
-END$$
+END//
 
+DELIMITER //
 CREATE PROCEDURE Reservation_Delete (in idReservation integer)
+BEGIN
     DELETE FROM reservation WHERE reservation.idReservation = idReservation;
+END//
+
+DELIMITER //
 CREATE PROCEDURE Guardian_x_SizeGetAll ()
 BEGIN
 	SELECT idGuardianxSize, idGuardian, idSize
     FROM guardian_x_size;
-END$$
+END//
 
-DELIMITER ;
-
-
-DELIMITER $$
+DELIMITER //
 
 CREATE PROCEDURE Size_GetName (IN idSize integer)
 BEGIN
 	SELECT name
     FROM size
     WHERE (size.idSize = idSize);
-END$$
+END//
 
-DELIMITER ;
-
-DELIMITER $$
-
+DELIMITER //
 CREATE PROCEDURE SizeGetAll ()
 BEGIN
 	SELECT idSize, name
     FROM Size;
-END$$
+END//
 
-DELIMITER ;
+insert into reservation (idOwner, idGuardian, idPet, breed, animalType, reservationDateStart, reservationDateEnd, reservationStatus) values (1, 1, 1, "Golden", "Dog", "2022-11-3", "2022-11-10", "Confirmed");
+insert into review (rating, observations, idOwner, idGuardian, idReservation) VALUES (5, "Capo total, genio de los perros", 1, 1, 1);
 
-DELIMITER $$
 insert into size(name) values("Pequeño"), ("Mediano"), ("Grande");
 
-CREATE PROCEDURE Reservation_Delete (in idReservation integer)
-    DELETE FROM reservation WHERE reservation.idReservation = idReservation;
+DELIMITER //
+CREATE PROCEDURE GetOwnerByUserName (IN userName varchar(50))
+BEGIN
+	SELECT idOwner, name, address, email, number, userName, password, typeUser
+    FROM owner
+    WHERE (owner.userName = userName);
+END//
+

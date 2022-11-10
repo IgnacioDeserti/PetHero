@@ -129,6 +129,36 @@
             $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
         }
 
+        
+        public function getGuardianByUserName($userName){
+            $result = NULL;
+
+            $parameter["userName"] = $userName;
+
+            $query = "CALL Guardian_GetGuardianByUserName(?)";
+
+            $this->connection = Connection::GetInstance();
+
+            $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
+
+            $guardian = new Guardian();
+            foreach($result as $row){
+                $guardian->setIdGuardian($row["idGuardian"]);
+                $guardian->setName($row["name"]);
+                $guardian->setAddress($row["address"]);
+                $guardian->setEmail($row["email"]);
+                $guardian->setNumber($row["number"]);
+                $guardian->setUserName($row["userName"]);
+                $guardian->setPassword($row["password"]);
+                $guardian->setTypeUser($row["typeUser"]);
+                $guardian->setAvailabilityStart($row["availabilityStart"]);
+                $guardian->setAvailabilityEnd($row["availabilityEnd"]);
+            }
+            
+
+            return $guardian;
+        }
+
 }
 
 ?>

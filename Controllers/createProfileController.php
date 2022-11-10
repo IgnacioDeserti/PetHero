@@ -1,11 +1,14 @@
 <?php
     namespace Controllers;
+    include(VIEWS_PATH . "header.php");
 
     use DAO\guardiansDAO as guardiansDAO;
     use DAO\ownersDAO as ownersDAO;
     use Models\Owner as Owner;
     use Models\Guardian as Guardian;
     use DAO\Guardian_x_SizeDAO;
+    use Exception;
+
     class CreateProfileController{
 
         private $guardianDAO;
@@ -47,32 +50,42 @@
                 $newOwner->setPassword($password);
                 $newOwner->setTypeUser($typeUser);
 
-                $searched = $this->ownerDAO->getOwner($email);
-
-
-                if($searched->getEmail() != null){
-                    echo "<script> if(confirm('Email ya registrado, ingrese otro'));</script>";
-                    $searched == null;
-                    require_once(VIEWS_PATH . "createOwnerProfile.php");
-                }else{
-                    $searched = $this->guardianDAO->getGuardian($email);
-                    if($searched->getEmail() != null){
-                        echo "<script> if(confirm('Email ya registrado, ingrese otro'));</script>";
-                        $searched == null;
-                        require_once(VIEWS_PATH . "createOwnerProfile.php");  
-                    }
-                }
-                if($searched->getEmail() == null){
-                    $this->ownerDAO->add($newOwner);
-                    echo "<script> if(confirm('Perfil creado con éxito!'));</script>";
+                try{
+                    $this->verifyEmailUser($email, $userName);
+                    $this->ownerDAO->Add($newOwner);
                     $aux = $this->ownerDAO->getOwner($email);
                     $_SESSION["idUser"] = $aux->getIdOwner();
                     $_SESSION["typeUser"] = $aux->getTypeUser();
+                    echo "<script> if(confirm('Perfil creado con exito!')); </script>";
                     require_once(VIEWS_PATH.'addPet.php');
+                }catch (Exception $e){
+                    require_once(VIEWS_PATH . "createOwnerProfile.php");
                 }
-        
                 
             }
+        }
+
+        private function verifyEmailUser($email, $userName){
+            $searched = $this->ownerDAO->getOwner($email);
+            if($searched->getEmail() != null){
+                throw new Exception("Email ya registrado");
+            }else{
+                $searched = $this->guardianDAO->getGuardian($email);
+                if($searched->getEmail() != null){
+                    throw new Exception("Email ya registrado");
+                }
+            }
+
+            $searched = $this->ownerDAO->getOwnerByUserName($userName);
+            if($searched->getUserName() != null){
+                throw new Exception("Nombre de usuario ya registrado");
+            }else{
+                $searched = $this->guardianDAO->getGuardianByUserName($userName);
+                if($searched->getUserName() != null){
+                    throw new Exception("Nombre de usuario ya registrado");
+                }
+            }
+
         }
 
         public function createGuardianProfile($name, $address, $email, $number, $userName, $password, $size, $typeUser){
@@ -87,32 +100,21 @@
                 $newGuardian->setUserName($userName);
                 $newGuardian->setPassword($password);
                 $newGuardian->setTypeUser($typeUser);
-
-                $searched = $this->ownerDAO->getOwner($email);
-
-                if($searched->getEmail() != null){
-                    echo "<script> if(confirm('Email ya registrado, ingrese otro'));</script>";
-                    $searched == null;
-                    require_once(VIEWS_PATH . "createGuardianProfile.php");
-                }else{
-                    $searched = $this->guardianDAO->getGuardian($email);
-                    if($searched->getEmail() != null){
-                        echo "<script> if(confirm('Email ya registrado, ingrese otro'));</script>";
-                        $searched == null;
-                        require_once(VIEWS_PATH . "createGuardianProfile.php");  
-                    }
-                }
-                if($searched->getEmail() == null){
-                    $this->guardianDAO->add($newGuardian);
-                    echo "<script> if(confirm('Perfil creado con éxito!'));</script>";
+            
+                try{
+                    $this->verifyEmailUser($email, $userName);
+                    $this->guardianDAO->Add($newGuardian);
                     $aux = $this->guardianDAO->getGuardian($email);
                     $_SESSION["idUser"] = $aux->getIdGuardian();
+                    $_SESSION["typeUser"] = $aux->getTypeUser();
                     foreach($size as $aux){
                         $this->gxsDAO->Add($_SESSION["idUser"], $aux);
                     }
-                    $_SESSION["typeUser"] = $newGuardian->getTypeUser();
-                    require_once(VIEWS_PATH.'guardian.php');
-                }     
+                    echo "<script> if(confirm('Perfil creado con exito!')); </script>";
+                    require_once(VIEWS_PATH.'modifyAvailability.php');
+                }catch (Exception $e){
+                    require_once(VIEWS_PATH . "createGuardianProfile.php");
+                }   
             }
         }
 

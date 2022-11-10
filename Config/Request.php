@@ -43,7 +43,7 @@
             }
             if($_FILES) {
                 $this->parameters[] = $_FILES;
-           }
+            }
         }
 
         private static function getMethodRequest(){
@@ -53,7 +53,7 @@
         public function getController(){
             return $this->controller;
         }
-       
+        
         public function setController($controller){
             $this->controller = $controller;
         }
@@ -65,11 +65,11 @@
         public function setMethod($method){
             $this->method = $method;
         }
-       
+    
         public function getParameters(){
             return $this->parameters;
         }
-       
+    
         public function setParameters($parameters){
             $this->parameters = $parameters;
         }

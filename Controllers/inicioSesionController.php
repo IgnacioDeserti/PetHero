@@ -5,6 +5,7 @@
     use DAO\guardiansDAO as guardiansDAO;
     use DAO\ownersDAO as ownersDAO;
     use DAO\sizeDAO;
+    use Exception;
     class InicioSesionController{
 
         private $guardianDAO;
@@ -19,48 +20,55 @@
             $this->sizeDAO = new sizeDAO();
         }
 
-        public function inicioSesion($email, $password){
-        
-            $loggedUser = NULL;
-            
-            if($_POST){
-                foreach($this->ownerDAO->getAll() as $owner){
-                    if($email == $owner->getEmail()){
-                        if($password == $owner->getPassword()){
-                            $loggedUser = $owner;
-                            $_SESSION['idUser'] = $loggedUser->getIdOwner();
-                            $_SESSION['typeUser'] = $loggedUser->getTypeUser();
-                            $_SESSION['name'] = $loggedUser->getName();
-                            echo "<script> if(confirm('Iniciaste sesion como Dueño con Exito!'));</script>";
-                            $this->selectView($loggedUser->getIdOwner());
-                        }
-                    }
-                }
-                if($loggedUser == NULL){
-                    foreach($this->guardianDAO->getAll() as $guardian){
-                        if($email == $guardian->getEmail()){
-                            if($password == $guardian->getPassword()){
-                                $loggedUser = $guardian;
-
-                                $_SESSION['idUser'] = $loggedUser->getIdGuardian();
-                                $_SESSION['typeUser'] = $loggedUser->getTypeUser();
-                                $_SESSION['name'] = $loggedUser->getName();
-                                echo "<script> if(confirm('Iniciaste sesion como Guardian con Exito!'));</script>";
-                               require_once(VIEWS_PATH. "guardian.php");
-                            }
-                        }
-                    }
-                }
-                if($loggedUser == null){
-                    echo "<script> if(confirm('Verifique que los datos ingresados sean correctos'));</script>";
+        public function inicioSesion($email, $password, $typeUser){
+            if($typeUser == 'G'){
+                try{
+                    $aux = $this->searchGuardian($email, $password);
+                    $_SESSION["idUser"] = $aux->getIdGuardian();
+                    $_SESSION["typeUser"] = $aux->getTypeUser();
+                    $this->selectViewGuardian($aux);
+                }catch(Exception $e){
                     require_once(VIEWS_PATH . "inicio.php");
                 }
-        
             }else{
-                echo "<script> if(confirm('Error en el método de envio de datos'));</script>";
-                require_once(VIEWS_PATH . "inicio.php");
+                try{
+                    $aux = $this->searchOwner($email, $password);
+                    $_SESSION["idUser"] = $aux->getIdOwner();
+                    $_SESSION["typeUser"] = $aux->getTypeUser();
+                    $this->selectView($aux->getIdOwner());
+                }catch(Exception $e){
+                    require_once(VIEWS_PATH . "inicio.php");
+                }
             }
         
+        }
+
+        public function searchOwner($email, $password){
+            $aux = $this->ownerDAO->getOwner($email);
+
+            if($aux->getEmail() != null){
+                if(strcmp($aux->getPassword(), $password) == 0){
+                    return $aux;
+                }else{
+                    throw new Exception("Password invalida");
+                }
+            }else{
+                throw new Exception("Email invalido");
+            }
+        }
+
+        public function searchGuardian($email, $password){
+            $aux = $this->guardianDAO->getGuardian($email);
+
+            if($aux->getEmail() != null){
+                if(strcmp($aux->getPassword(), $password) == 0){
+                    return $aux;
+                }else{
+                    throw new Exception("Password invalida");
+                }
+            }else{
+                throw new Exception("Email invalido");
+            }
         }
 
         public function selectView($id){
@@ -81,9 +89,15 @@
             }
         }
 
+        public function selectViewGuardian($aux){
+            if($aux->getAvailabilityStart() == null && $aux->getAvailabilityEnd() == null){
+                require_once(VIEWS_PATH . "modifyAvailability.php");
+            }else{
+                require_once(VIEWS_PATH . "guardian.php");
+            }
+        }
+
         
-
-
     }
 
 ?>

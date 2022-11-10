@@ -15,9 +15,21 @@
                     
                         <label for="password"><h3>Password</h3></label>
                         <input type="password" name="password" placeholder="password" class="inputLogin">
-                    
-                        <button class="buttonInicio buttonHoversGreen" type="submit">Iniciar Sesion</button>
                     </div>
+
+                    <div class="selectUser">
+                        <label for="">Guardian</label>
+                        <input type="radio" name="typeUser" value="G">
+
+                        <label for="">Dueño</label>
+                        <input type="radio" name="typeUser" value="O">
+                    </div>
+
+                    <div class="exceptionLogin">
+                        <p class="psException"><?php if(isset($e)){ echo $e->getMessage();}  ?></td>
+                    </div>
+                        <button class="buttonInicio buttonHoversGreen" type="submit">Iniciar Sesion</button>
+                    
                 </form>
                 <div class="createProfileLink">
                     <h5>¿No tenes cuenta?</h5> <form action="<?php echo FRONT_ROOT ?>createProfile/createProfile" method="post"><button type="submit" class="buttonCreateLink buttonHoversGreen">Registrate!</button></form>

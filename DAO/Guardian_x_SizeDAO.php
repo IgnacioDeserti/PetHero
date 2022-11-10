@@ -51,7 +51,7 @@
         public function getSizeById($idGuardian){
 
             $SizeList = array();
-            $sizeDAO = new  sizeDAO();
+            $sizeDAO = new sizeDAO();
 
             $query = "CALL guardian_x_size_GetSizeByIdGuardian (?)";
 
@@ -59,7 +59,7 @@
             
             $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+            $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
 
             foreach($result as $row){
                 array_push($SizeList, $sizeDAO->getName($row['idSize']));

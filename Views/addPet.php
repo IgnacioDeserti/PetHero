@@ -5,7 +5,7 @@
 
 <html class="fondoMenus">
      <main class="d-flex align-items-center justify-content-center height-100">
-          <div class="formAddDog">
+          <div class="formAddPet">
                <header>
                     <h2 style="text-align: center;">INGRESAR MASCOTA</h2>
                </header>

@@ -70,6 +70,11 @@ class OwnerController
         $newPet->setIdOwner($_SESSION["idUser"]);
         
         $fileController = new FileController();
+
+        $this->PetDAO->add($newPet);
+
+        echo "<pre>";
+        print_r($files);
         
         if($pathFile1 = $fileController->upload($files["photo1"], "Foto-Perfil")){
             $newPet->setPhoto1($pathFile1);
@@ -85,9 +90,7 @@ class OwnerController
             }
         }
 
-        $this->PetDAO->add($newPet);
-
-        $this->showListPet();
+        //$this->showListPet();
     }
 
     public function showListPet()
@@ -138,6 +141,9 @@ class OwnerController
             require_once(VIEWS_PATH . "createReservationOwner.php");
         }
     }*/
+
+    //TODO: filtrado guardian por raza
+    //TODO: hacer reservas
 
     public function createReservationOwner(){
     

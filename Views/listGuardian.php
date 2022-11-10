@@ -65,11 +65,9 @@
                                              <td class="thListGuardian"><?php echo $guardian->getNumber();?></td>
                                              <td class="thListGuardian"><?php echo $guardian->getAvailabilityStart();?></td>
                                              <td class="thListGuardian"><?php echo $guardian->getAvailabilityEnd();?></td>
-                                             <td class="thListGuardian"><?php 
-                                                  foreach ($gxsDAO->getSizeById($guardian->getIdGuardian()) as $size){?>
-                                                       <td class="thListGuardian"><?php echo $size;?></td>    
+                                             <?php foreach ($gxsDAO->getSizeById($guardian->getIdGuardian()) as $size){?>
+                                                  <td class="thListGuardian"><?php echo $size;?></td>    
                                              <?php } ?>
-                                             </td>
                                              <td class="thListGuardian"><?php echo $guardian->getPrice();?></td>      
                                              <td><button class="" name="id" value="<?php echo $guardian->getEmail() ?>">Seleccionar</button></td>                                        
                                         </tr> <?php }?>

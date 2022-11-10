@@ -32,7 +32,7 @@
                         <label for="">Password</label>        
                         <input type="password" name="password" placeholder="Ingresar contraseña" class="inputForm" required>                
                     </div>                 
-                    <div>
+                    <div class='divForm'>
                         <input type="checkbox" id="ch1" name="size[]" value="1" checked>
                         <label for="ch1">Pequeño</label>
                         <input type="checkbox" id="ch2" name="size[]" value="2">
@@ -43,7 +43,7 @@
 
                     <div class='divForm'>
                         <label> Precio por dia</label>
-                        <input type="number" name='price' placeholder="Ingrese el monto deseado por dia" class="inputForm" required>
+                        <input type="number" name='price' placeholder="Ingrese el monto" class="inputForm" required>
                     </div>
 
                     <div>

@@ -112,7 +112,7 @@
 
             $parameter["userName"] = $userName;
 
-            $query = "CALL Owner_GetOwnerByUserName(?)";
+            $query = "CALL GetOwnerByUserName(?)";
 
             $this->connection = Connection::GetInstance();
 

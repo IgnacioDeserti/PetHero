@@ -175,7 +175,7 @@
 
         }
 
-        public function createGuardianProfile($name, $address, $email, $number, $userName, $password, $size,$price, $typeUser){
+        public function createGuardianProfile($name, $address, $email, $number, $userName, $password, $size, $price, $typeUser){
             
             if($_POST){
 

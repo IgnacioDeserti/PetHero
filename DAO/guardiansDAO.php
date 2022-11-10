@@ -133,7 +133,7 @@
 
             $parameter["userName"] = $userName;
 
-            $query = "CALL Guardian_GetGuardianByUserName(?)";
+            $query = "CALL GetGuardianByUserName(?)";
 
             $this->connection = Connection::GetInstance();
 

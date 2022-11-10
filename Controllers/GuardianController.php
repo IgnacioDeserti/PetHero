@@ -36,6 +36,7 @@
                     $this->verifyAvailability($availabilityStart,$availabilityEnd);
                     $this->guardianDAO->UpdateAvailabilityStart($id, $availabilityStart);
                     $this->guardianDAO->UpdateAvailabilityEnd($id, $availabilityEnd);
+                    $this->Index();
                 }catch (Exception $e) {
                     $this->showModifyView($e);
                 } 
@@ -46,6 +47,9 @@
                 throw new Exception ("Fechas invalidas, ingrese otras");
             }
         }
+
+        //TODO: aceptar reservas
+        //TODO: hacer el arreglo de disponibilidad
     }
 
 ?>

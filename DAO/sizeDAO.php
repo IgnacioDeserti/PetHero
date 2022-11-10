@@ -41,9 +41,11 @@ use SimpleXMLElement;
 
             $parameters["idSizeS"] = $idSize;
 
-            $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+            $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
 
-            $name = $result['name'];
+            foreach($result as $row){
+                $name = $row['name'];
+            }
 
             return $name;
         }

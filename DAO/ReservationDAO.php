@@ -112,6 +112,7 @@
             foreach($result as $date){
                 array_push($dates, $date['availabilityStart']);
                 array_push($dates, $date['availabilityEnd']);
+                array_push($dates, $date['breed']);
             }
 
             return $dates;

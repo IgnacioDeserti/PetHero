@@ -72,9 +72,6 @@ class OwnerController
         $fileController = new FileController();
 
         $this->PetDAO->add($newPet);
-
-        echo "<pre>";
-        print_r($files);
         
         if($pathFile1 = $fileController->upload($files["photo1"], "Foto-Perfil")){
             $newPet->setPhoto1($pathFile1);
@@ -90,7 +87,7 @@ class OwnerController
             }
         }
 
-        //$this->showListPet();
+        $this->showListPet();
     }
 
     public function showListPet()

@@ -164,7 +164,6 @@ class OwnerController
                     array_push($listAvailability,$startAv);
                     array_push($listAvailability,$endAv);
                     array_push($listAvailability,$breedAv);
-                       
                 }
                 $startAv = $listReservationsGuardian[$start];
                 $endAv = $listReservationsGuardian[$end];

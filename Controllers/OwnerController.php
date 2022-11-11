@@ -194,7 +194,7 @@ class OwnerController
                 $endAv=$date;
                 $date = strtotime("+1 day", $date);
             }
-            else if($date == $this->guardianDAO->getReservationEnd($idGuardian)){
+            if($date == $this->guardianDAO->getReservationEnd($idGuardian)){
                 array_push($listAvailability,$startAv);
                 array_push($listAvailability,$endAv);
                 array_push($listAvailability,$breed);

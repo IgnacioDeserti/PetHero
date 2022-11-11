@@ -200,7 +200,8 @@ class OwnerController
                 array_push($listAvailability,$breed);
             }
         }
-
+        
+        return $listAvailability;
     }
 
 }

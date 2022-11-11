@@ -157,6 +157,46 @@
             return $guardian;
         }
 
+        public function getReservationStart($idGuardian){
+            
+            $result = NULL;
+
+            $parameter["idGuardianS"] = $idGuardian;
+
+            $query = "CALL Guardian_GetAvailabilityStart(?)";
+
+            $this->connection = Connection::GetInstance();
+
+            $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
+
+            $avStart = null;
+            foreach($result as $row){
+                $avStart = $row["availabilityStart"];
+            }
+    
+            return $avStart;
+        }
+
+        public function getReservationEnd($idGuardian){
+            
+            $result = NULL;
+
+            $parameter["idGuardianS"] = $idGuardian;
+
+            $query = "CALL Guardian_GetAvailabilityEnd(?)";
+
+            $this->connection = Connection::GetInstance();
+
+            $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
+
+            $avEnd = null;
+            foreach($result as $row){
+                $avEnd = $row["availabilityEnd"];
+            }
+    
+            return $avEnd;
+        }
+
 }
 
 ?>

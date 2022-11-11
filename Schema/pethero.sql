@@ -279,7 +279,7 @@ END//
 DELIMITER //
 CREATE PROCEDURE Reservation_GetDates (in idGuardianS int)
 BEGIN
-	SELECT Reservation.reservationDateStart, Reservation.reservationDateEnd
+	SELECT Reservation.reservationDateStart, Reservation.reservationDateEnd, Reservation.breed
     FROM Reservation  
     WHERE Reservation.idGuardian = idGuardianS;
 END//
@@ -298,4 +298,20 @@ BEGIN
 	SELECT idSize
     FROM guardian_x_size 
     WHERE guardian_x_size.idGuardian = idGuardianS;
+END//
+
+DELIMITER //
+CREATE PROCEDURE Guardian_GetAvailabilityStart (in idGuardianS int)
+BEGIN
+	SELECT availabilityStart
+    FROM guardian
+    WHERE guardian.idGuardian = idGuardianS;
+END//
+
+DELIMITER //
+CREATE PROCEDURE Guardian_GetAvailabilityEnd (in idGuardianS int)
+BEGIN
+	SELECT AvailabilityEnd
+    FROM guardian
+    WHERE guardian.idGuardian = idGuardianS;
 END//

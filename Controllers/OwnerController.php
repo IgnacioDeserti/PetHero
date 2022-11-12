@@ -263,7 +263,7 @@ class OwnerController
     }
 
     public function makeReservation($availabilityStart, $availabilityEnd, $idPet, $idGuardian){
-        
+    //TODO: validar que la fecha de inicio sea menor a la de fin, y que esta este disponible en el guardian, despues crear la reserva o mandar de nuevo a la pagina de creacion.
     }
 
 }

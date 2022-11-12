@@ -36,7 +36,7 @@
                     <input type="hidden" name="size" value="<?php echo $pet->getType()?>">
                </div>
 
-               <button type="submit">Filtrar</button>
+               <button type="submit">Filtrar guardianes</button>
 
         </form>
 </html>

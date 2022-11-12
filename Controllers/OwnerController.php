@@ -247,6 +247,25 @@ class OwnerController
         return $listAvailability;
     }
 
+    public function createReservation($idGuardian){
+        $petList = $this->PetDAO->GetPetByIdOwner($_SESSION["idUser"]);
+        $petChecked = array();
+        $sizesGuardian = $this->guardian_x_sizeDAO->getSizeById($idGuardian);
+        foreach($petList as $pet){
+            foreach( $sizesGuardian as $size){
+                if(strcmp($this->sizeDAO->getName($pet->getIdSize()),$size)){
+                    array_push($petChecked,$pet);
+                }
+            }
+        }
+        require_once(VIEWS_PATH . "validate-session.php");
+        require_once(VIEWS_PATH . "createReservationOwner.php");
+    }
+
+    public function makeReservation($availabilityStart, $availabilityEnd, $idPet, $idGuardian){
+        
+    }
+
 }
 
 

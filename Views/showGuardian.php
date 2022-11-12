@@ -8,7 +8,7 @@
           <section id="listado">
                <div class="divListGuardian">
                     
-                    <form action="<?php echo FRONT_ROOT ?>Owner/selectPet" method="post">
+                    <form action="<?php echo FRONT_ROOT ?>Owner/createReservation" method="post">
                          <table class="tableListGuardian">
                               <caption style="text-align: center;"Perros>Guardianes</caption>
                               <thead>
@@ -49,7 +49,7 @@
                                              <td><button class="" name="button" value="reserve">Hacer reserva</button></td>
                                         <?php } ?>
                                         <td><button class="" name="button" value="goBack">Volver</button></td>   
-                                        <td><input type="hidden" name="email" value="<?php echo $guardian->getEmail() ?>"></td>
+                                        <td><input type="hidden" name="email" value="<?php echo $guardian->getIdGuardian()?>"></td>
                                    </tr>
                          </table>
 

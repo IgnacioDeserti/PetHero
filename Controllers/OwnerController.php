@@ -75,6 +75,9 @@ class OwnerController
         $fileController = new FileController();
 
         $this->PetDAO->add($newPet);
+
+        echo "<pre>";
+        print_r($files);
         
         if($pathFile1 = $fileController->upload($files["photo1"], "Foto-Perfil")){
             $newPet->setPhoto1($pathFile1);
@@ -90,7 +93,7 @@ class OwnerController
             }
         }
 
-        $this->showListPet();
+        //$this->showListPet();
     }
 
     public function showListPet()
@@ -145,7 +148,7 @@ class OwnerController
     //TODO: filtrado guardian por raza
     //TODO: hacer reservas
 
-    public function getDisponibily ($idGuardian){
+    public function getDisponibilityByGuardian ($idGuardian){
         
         $listReservationsGuardian = $this->reservationDAO->GetReservationDates($idGuardian);
         $start=0;
@@ -155,31 +158,42 @@ class OwnerController
         $startAv = null;
         $endAv = null;
         $breedAv = 'all';
-        $date = $startAv;
+        $date = $this->guardianDAO->getReservationStart($idGuardian);
 
 
         while($date<=$this->guardianDAO->getReservationEnd($idGuardian)){
+
             if(count($listReservationsGuardian)>=3 && $listReservationsGuardian[$start] == $date){
                 if($startAv != null && $endAv != null){
                     array_push($listAvailability,$startAv);
                     array_push($listAvailability,$endAv);
                     array_push($listAvailability,$breedAv);
                 }
-                $startAv = $listReservationsGuardian[$start];
-                $endAv = $listReservationsGuardian[$end];
-                $breedAv = $listReservationsGuardian[$breed];
-                $date = strtotime("+1 day", $endAv);
-                if(($breed + 3) < count($listReservationsGuardian)){
-                    $start = $start + 3;
-                    $end = $end + 3;
-                    $breed = $breed + 3;
+                if(count($listAvailability)>=3 && strcmp($listAvailability[(count($listAvailability))-1],$listReservationsGuardian[$breed]) && (($listAvailability[(count($listAvailability)-2)])+1)>=$listReservationsGuardian[$start]){
+                    $listAvailability[(count($listAvailability))-2]=$listReservationsGuardian[$end];
                 }
-                array_push($listAvailability,$startAv);
-                array_push($listAvailability,$endAv);
-                array_push($listAvailability,$breedAv);
-                $startAv = null;
-                $endAv = null;
-                $breedAv = 'all';
+                else {
+                    $startAv = $listReservationsGuardian[$start];
+                    $endAv = $listReservationsGuardian[$end];
+                    $breedAv = $listReservationsGuardian[$breed];
+                    if(($breed + 3) < count($listReservationsGuardian)){
+                        $start = $start + 3;
+                        $end = $end + 3;
+                        $breed = $breed + 3;
+                    }
+                    array_push($listAvailability,$startAv);
+                    array_push($listAvailability,$endAv);
+                    array_push($listAvailability,$breedAv);
+                    $startAv = null;
+                    $endAv = null;
+                    $breedAv = 'all';
+                }
+                if($listReservationsGuardian[$start]!=$date){
+                    $date = strtotime("+1 day", $date);
+                }
+            }
+            else if($listAvailability[(count($listAvailability))-3]<$date<=$listAvailability[(count($listAvailability)-2)]){
+                $date = strtotime("+1 day", $date);
             }
             else if ($startAv == null && $endAv == null){
                 $startAv=$date;
@@ -201,3 +215,5 @@ class OwnerController
     }
 
 }
+
+

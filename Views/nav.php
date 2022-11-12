@@ -8,7 +8,7 @@
               <ul class="subMenu">
                 <li><a href="<?php echo FRONT_ROOT . "Owner/showAddPet" ?>">Agregar perro</a></li>
                 <li><a href="<?php echo FRONT_ROOT . "Owner/showListPet" ?>">Ver listado perros</a></li>
-                <li><a href="<?php echo FRONT_ROOT . "Owner/showGuardianList" ?>">Ver listado guardianes</a></li>
+                <li><a href="<?php echo FRONT_ROOT . "Owner/filterGuardians" ?>">Ver listado guardianes</a></li>
                 <li><a href="<?php echo FRONT_ROOT . "Home/logOut" ?>">Cerrar Sesion</a></li>
               </ul>
             </li>

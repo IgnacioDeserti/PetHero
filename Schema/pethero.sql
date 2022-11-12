@@ -279,7 +279,7 @@ END//
 DELIMITER //
 CREATE PROCEDURE Reservation_GetDates (in idGuardianS int)
 BEGIN
-	SELECT Reservation.reservationDateStart, Reservation.reservationDateEnd, Reservation.breed
+	SELECT Reservation.reservationDateStart, Reservation.reservationDateEnd, Reservation.breed, Reservation.type, Reservation.size
     FROM Reservation  
     WHERE Reservation.idGuardian = idGuardianS
     ORDER BY Reservation.reservationDateStart ASC;

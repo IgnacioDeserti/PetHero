@@ -113,6 +113,8 @@
                 array_push($dates, $date['availabilityStart']);
                 array_push($dates, $date['availabilityEnd']);
                 array_push($dates, $date['breed']);
+                array_push($dates, $date['type']);
+                array_push($dates, $date['size']);
             }
 
             return $dates;

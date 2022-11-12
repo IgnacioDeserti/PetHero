@@ -1,43 +1,12 @@
 <?php
        include('header.php');
        include("nav.php");
-
-       use Models\Guardian as guardian;
-       use DAO\guardiansDAO as guardiansDAO;
-
-       $daoGuardian = new guardiansDAO();
-
-       $arrayListGuardian = $daoGuardian->getAll();
-
 ?>
 
 <html class="fondoMenus">
      <main>
           <section id="listado">
                <div class="divListGuardian">
-                    
-                    <form action=" <?php echo FRONT_ROOT ?>Owner/showGuardianList" method="POST">
-               
-                    <div>
-                         <label for="">Fecha inicio</label>
-                    </div>
-                
-                    <div>
-                         <input type="date" name="availabilityStart" required>
-                    </div>
-
-                    <div>
-                         <label for="">Fecha fin</label>
-                    </div>
-
-                    <div>
-                         <input type="date" name="availabilityEnd" required>
-                    </div>
-
-                    <button type="submit">Filtrar</button>
-
-                    </form>
-                    
                     <form action="<?php echo FRONT_ROOT ?>Owner/selectGuardian" method="post">
                          <table class="tableListGuardian">
                               <caption style="text-align: center;"Perros>Guardianes</caption>
@@ -56,8 +25,7 @@
                               </thead>
                               <tbody>
                                    <?php
-                                        foreach($arrayListGuardian as $guardian){
-                                        if($availabilityStart <= $guardian->getAvailabilityStart() && $availabilityEnd >= $guardian->getAvailabilityEnd()){ ?>
+                                        foreach($arrayListGuardian as $guardian){?>
                                         <tr>
                                              <td class="thListGuardian"><?php echo $guardian->getName();?> </td>
                                              <td class="thListGuardian"><?php echo $guardian->getAddress();?></td>
@@ -71,7 +39,6 @@
                                              <td class="thListGuardian"><?php echo $guardian->getPrice();?></td>      
                                              <td><button class="" name="id" value="<?php echo $guardian->getEmail() ?>">Seleccionar</button></td>                                        
                                         </tr> <?php }?>
-                                   <?php }?>
                               </tbody>
                          </table>
                     </form>

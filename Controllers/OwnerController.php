@@ -37,7 +37,7 @@ class OwnerController
     {
         if ($button == "listGuardian") {
             require_once(VIEWS_PATH . "validate-session.php");
-            $this->showGuardianList();
+            $this->filterGuardians();
         } else if ($button == "addPet") {
             require_once(VIEWS_PATH . "validate-session.php");
             require_once(VIEWS_PATH . "addPet.php");
@@ -47,18 +47,35 @@ class OwnerController
         }
     }
 
-    public function showGuardianList($availabilityStart = null,$availabilityEnd = null){
+    public function filterGuardians(){
+        $listPets = $this->PetDAO->GetPetByIdOwner($_SESSION["idUser"]);
+        require_once(VIEWS_PATH . "validate-session.php");
+        require_once(VIEWS_PATH . "filterGuardianList.php");
+    }
 
-        if(!isset($availabilityStart) && !isset($availabilityEnd)){
-            $availabilityStart = date("1990-01-01");
-            $availabilityEnd = date("3000-12-31");
+    public function showGuardianList($availabilityStart ,$availabilityEnd, $breed, $type, $size){
+        $listGuardian = $this->guardianDAO->getAll();
+        $listChecked = array();
+        foreach($listGuardian as $guardian){
+            if ($this->checkGuardian($availabilityStart ,$availabilityEnd, $breed, $type, $size, $guardian->getIdGuardian())){
+                array_push($listChecked,$guardian);
+            }
         }
-
-        $arrayListGuardian = $this->guardianDAO->getAll();
-        $gxsDAO = $this->guardian_x_sizeDAO;
-
         require_once(VIEWS_PATH . "validate-session.php");
         require_once(VIEWS_PATH . "listGuardian.php");
+       
+    }
+
+    public function checkGuardian($availabilityStart ,$availabilityEnd, $breed, $type, $size , $idGuardian){
+        $flag = 0;
+        $listDisponibility = $this->getDisponibilityByGuardian($idGuardian);
+
+        for($i=0; $i<count($listDisponibility);$i+5){
+            if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && (strcmp($listDisponibility[$i+2],$breed)) && (strcmp($listDisponibility[$i+3],$type)) && ((strcmp($listDisponibility[$i+4],$size)) || (strcmp($listDisponibility[$i+4],'all')))){
+                $flag=1;
+            }
+        }
+        return $flag;
     }
 
     public function addPet($name, $type, $breed, $size, $observations, $files){
@@ -154,39 +171,53 @@ class OwnerController
         $start=0;
         $end=1;
         $breed=2;
+        $type= 3;
+        $size = 4;
         $listAvailability = array();
         $startAv = null;
         $endAv = null;
         $breedAv = 'all';
+        $typeAv = 'all';
+        $sizeAv = 'all';
         $date = $this->guardianDAO->getReservationStart($idGuardian);
 
 
         while($date<=$this->guardianDAO->getReservationEnd($idGuardian)){
 
-            if(count($listReservationsGuardian)>=3 && $listReservationsGuardian[$start] == $date){
+            if(count($listReservationsGuardian)>=5 && $listReservationsGuardian[$start] == $date){
                 if($startAv != null && $endAv != null){
                     array_push($listAvailability,$startAv);
                     array_push($listAvailability,$endAv);
                     array_push($listAvailability,$breedAv);
+                    array_push($listAvailability,$typeAv);
+                    array_push($listAvailability,$sizeAv);
                 }
-                if(count($listAvailability)>=3 && strcmp($listAvailability[(count($listAvailability))-1],$listReservationsGuardian[$breed]) && (($listAvailability[(count($listAvailability)-2)])+1)>=$listReservationsGuardian[$start]){
-                    $listAvailability[(count($listAvailability))-2]=$listReservationsGuardian[$end];
+                if(count($listAvailability)>=5 && strcmp($listAvailability[(count($listAvailability))-3],$listReservationsGuardian[$breed]) && (($listAvailability[(count($listAvailability)-4)])+1)>=$listReservationsGuardian[$start] && strcmp($listAvailability[(count($listAvailability))-2],$listReservationsGuardian[$type]) && strcmp($listAvailability[(count($listAvailability))-1],$listReservationsGuardian[$size])){
+                    $listAvailability[(count($listAvailability))-4]=$listReservationsGuardian[$end];
                 }
                 else {
                     $startAv = $listReservationsGuardian[$start];
                     $endAv = $listReservationsGuardian[$end];
                     $breedAv = $listReservationsGuardian[$breed];
-                    if(($breed + 3) < count($listReservationsGuardian)){
-                        $start = $start + 3;
-                        $end = $end + 3;
-                        $breed = $breed + 3;
+                    $typeAv = $listReservationsGuardian[$type];
+                    $sizeAv = $listReservationsGuardian[$size];
+                    if(($size + 5) < count($listReservationsGuardian)){
+                        $start = $start + 5;
+                        $end = $end + 5;
+                        $breed = $breed + 5;
+                        $type = $type + 5;
+                        $size = $size + 5;
                     }
                     array_push($listAvailability,$startAv);
                     array_push($listAvailability,$endAv);
                     array_push($listAvailability,$breedAv);
+                    array_push($listAvailability,$typeAv);
+                    array_push($listAvailability,$sizeAv);
                     $startAv = null;
                     $endAv = null;
                     $breedAv = 'all';
+                    $typeAv = 'all';
+                    $sizeAv = 'all';
                 }
                 if($listReservationsGuardian[$start]!=$date){
                     $date = strtotime("+1 day", $date);
@@ -207,7 +238,9 @@ class OwnerController
             if($date == $this->guardianDAO->getReservationEnd($idGuardian)){
                 array_push($listAvailability,$startAv);
                 array_push($listAvailability,$endAv);
-                array_push($listAvailability,$breed);
+                array_push($listAvailability,$breedAv);
+                array_push($listAvailability,$typeAv);
+                array_push($listAvailability,$sizeAv);
             }
         }
         

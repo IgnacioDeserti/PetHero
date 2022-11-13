@@ -240,6 +240,9 @@ class OwnerController
                         $type = $type + 5;
                         $size = $size + 5;
                     }
+                    else{
+                        $date= strtotime("+1 day",$date);
+                    }
                     array_push($listAvailability,$startAv);
                     array_push($listAvailability,$endAv);
                     array_push($listAvailability,$breedAv);

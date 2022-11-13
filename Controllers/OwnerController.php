@@ -194,7 +194,7 @@ class OwnerController
                     array_push($listAvailability,$typeAv);
                     array_push($listAvailability,$sizeAv);
                 }
-                if(count($listAvailability)>=5 && strcmp($listAvailability[(count($listAvailability))-3],$listReservationsGuardian[$breed]) && (($listAvailability[(count($listAvailability)-4)])+1)>=$listReservationsGuardian[$start] && (((strcmp($listAvailability[(count($listAvailability))-2],$listReservationsGuardian[$type])) || ((strcmp($listAvailability[(count($listAvailability))-2],'all'))))) && strcmp($listAvailability[(count($listAvailability))-1],$listReservationsGuardian[$size])){
+                if(count($listAvailability)>=5 && strcmp($listAvailability[(count($listAvailability))-3],$listReservationsGuardian[$breed]) && (($listAvailability[(count($listAvailability)-4)])+1)<=$listReservationsGuardian[$start] && (((strcmp($listAvailability[(count($listAvailability))-2],$listReservationsGuardian[$type])) || ((strcmp($listAvailability[(count($listAvailability))-2],'all'))))) && strcmp($listAvailability[(count($listAvailability))-1],$listReservationsGuardian[$size])){
                     $listAvailability[(count($listAvailability))-4]=$listReservationsGuardian[$end]; 
                 }
                 else {
@@ -225,7 +225,7 @@ class OwnerController
                     $date = strtotime("+1 day", $date);
                 }
             }
-            else if($listAvailability[(count($listAvailability))-3]<$date<=$listAvailability[(count($listAvailability)-2)]){
+            else if($listAvailability[(count($listAvailability))-5]<$date<=$listAvailability[(count($listAvailability)-4)]){
                 $date = strtotime("+1 day", $date);
             }
             else if ($startAv == null && $endAv == null){
@@ -237,7 +237,7 @@ class OwnerController
                 $endAv=$date;
                 $date = strtotime("+1 day", $date);
             }
-            if($date == $this->guardianDAO->getReservationEnd($idGuardian)){
+            if($date > $this->guardianDAO->getReservationEnd($idGuardian)){
                 array_push($listAvailability,$startAv);
                 array_push($listAvailability,$endAv);
                 array_push($listAvailability,$breedAv);
@@ -289,12 +289,27 @@ class OwnerController
     private function checkReservationDate($availabilityStart, $availabilityEnd, $idPet, $idGuardian){
         $pet = $this->PetDAO->getPetByIdPet($idPet);
         $listDisponibility = $this->getDisponibilityByGuardian($idGuardian);
+        $flag = 0;
+        if($availabilityStart<$this->guardianDAO->getReservationStart($idGuardian) || $availabilityEnd>$this->guardianDAO->getReservationEnd($idGuardian)){
+            throw new Exception ('Fechas invalidas');
+        }
         for($i=0; $i<count($listDisponibility);$i+5){
-            if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && (strcmp($listDisponibility[$i+2],$pet->getBreed())) && ((strcmp($listDisponibility[$i+3],$pet->getType())) || ((strcmp($listDisponibility[$i+3],'all')))) && ((strcmp($listDisponibility[$i+4],$this->sizeDAO->getName($pet->getIdSize()))) || (strcmp($listDisponibility[$i+4],'all')))){
+            if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$pet->getBreed())) || ((strcmp($listDisponibility[$i+2],'all')))) && ((strcmp($listDisponibility[$i+3],$pet->getType())) || ((strcmp($listDisponibility[$i+3],'all')))) && ((strcmp($listDisponibility[$i+4],$this->sizeDAO->getName($pet->getIdSize()))) || (strcmp($listDisponibility[$i+4],'all')))){
                 $flag=1;
             }
-            else {
-                throw new Exception ('Fechas invalidas');
+            else if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityStart<=$listDisponibility[$i=1]) && ($availabilityEnd>$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$pet->getBreed())) || ((strcmp($listDisponibility[$i+2],'all')))) && ((strcmp($listDisponibility[$i+3],$pet->getType())) || ((strcmp($listDisponibility[$i+3],'all')))) && ((strcmp($listDisponibility[$i+4],$this->sizeDAO->getName($pet->getIdSize()))) || (strcmp($listDisponibility[$i+4],'all')))){
+                $flag=2;
+            }
+            if($flag=2){
+                if(($availabilityStart<$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$pet->getBreed())) || ((strcmp($listDisponibility[$i+2],'all')))) && ((strcmp($listDisponibility[$i+3],$pet->getType())) || ((strcmp($listDisponibility[$i+3],'all')))) && ((strcmp($listDisponibility[$i+4],$this->sizeDAO->getName($pet->getIdSize()))) || (strcmp($listDisponibility[$i+4],'all')))){
+                    $flag=1;
+                }
+                else if(($availabilityStart<$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && (!(strcmp($listDisponibility[$i+2],$pet->getBreed())) && (!(strcmp($listDisponibility[$i+2],'all')))) && (!(strcmp($listDisponibility[$i+3],$pet->getType())) && (!(strcmp($listDisponibility[$i+3],'all')))) && (!(strcmp($listDisponibility[$i+4],$this->sizeDAO->getName($pet->getIdSize()))) && !(strcmp($listDisponibility[$i+4],'all')))){
+                    $flag=0;
+                }
+            }
+            if(($i=4)==(count($listDisponibility)-1) && $flag==2){
+                $flag=0;
             }
         }
         return $flag;

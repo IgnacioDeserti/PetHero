@@ -74,8 +74,8 @@ class OwnerController
     public function checkGuardian($availabilityStart ,$availabilityEnd, $breed, $type, $size , $idGuardian){
         $flag = 0;
         $listDisponibility = $this->getDisponibilityByGuardian($idGuardian);
-
-        for($i=0; $i<count($listDisponibility);$i+5){
+        $i = 0;
+        while($i<count($listAvailability)){
             if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed)) || ((strcmp($listDisponibility[$i+2],'all')))) && ((strcmp($listDisponibility[$i+3],$type)) || ((strcmp($listDisponibility[$i+3],'all')))) && ((strcmp($listDisponibility[$i+4],$this->sizeDAO->getName($size))) || (strcmp($listDisponibility[$i+4],'all')))){
                 $flag=1;
             }
@@ -93,6 +93,7 @@ class OwnerController
             if(($i=4)==(count($listDisponibility)-1) && $flag==2){
                 $flag=0;
             }
+            $i=$i+5;
         }
         return $flag;
     }

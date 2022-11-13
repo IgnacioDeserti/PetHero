@@ -225,7 +225,7 @@ class OwnerController
                     }
                     else{
                         $date = strtotime($date);
-                        $date = strtotime('+1 day',$date);
+                        $date= strtotime("+1 day",$date);
                         $date = strtotime($formato,$date);
                     }
                     array_push($listAvailability,$startAv);
@@ -240,11 +240,13 @@ class OwnerController
                     $sizeAv = 'all';
                 }
                 if($listReservationsGuardian[$start]!=$date){
+                    $date = strtotime($date);
                     $date = strtotime('+1 day',$date);
                     $date = strtotime($formato,$date);
                 }
             }
             else if(count($listAvailability) > 0 && $listAvailability[(count($listAvailability)-5)] <$date && $date <=$listAvailability[(count($listAvailability)-4)]){
+                $date = strtotime($date);
                 $date = strtotime('+1 day',$date);
                 $date = strtotime($formato,$date);
             }
@@ -257,6 +259,7 @@ class OwnerController
             }
             else if($endAv != null){
                 $endAv=$date;
+                $date = strtotime($date);
                 $date = strtotime('+1 day',$date);
                 $date = strtotime($formato,$date);
             }

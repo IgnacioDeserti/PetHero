@@ -258,7 +258,7 @@ class OwnerController
                     $date = strtotime("+1 day", (integer) $date);
                 }
             }
-            else if(count($listAvailability) > 0 && $listAvailability[(count($listAvailability)) -5] <$date && $date <=$listAvailability[(count($listAvailability)) -4]){
+            else if(count($listAvailability) > 0 && $listAvailability[(count($listAvailability)-5)] <$date && $date <=$listAvailability[(count($listAvailability)-4)]){
                 $date = strtotime("+1 day", (integer) $date);
             }
             else if ($startAv == null && $endAv == null){

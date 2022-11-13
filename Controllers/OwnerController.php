@@ -75,7 +75,7 @@ class OwnerController
         $flag = 0;
         $listDisponibility = $this->getDisponibilityByGuardian($idGuardian);
         $i = 0;
-        while($i<count($listAvailability)){
+        while($i<count($listDisponibility)){
             if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed)) || ((strcmp($listDisponibility[$i+2],'all')))) && ((strcmp($listDisponibility[$i+3],$type)) || ((strcmp($listDisponibility[$i+3],'all')))) && ((strcmp($listDisponibility[$i+4],$this->sizeDAO->getName($size))) || (strcmp($listDisponibility[$i+4],'all')))){
                 $flag=1;
             }

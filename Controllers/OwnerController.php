@@ -333,6 +333,7 @@ class OwnerController
             if(($i=4)==(count($listDisponibility)-1) && $flag==2){
                 $flag=0;
             }
+            $i= $i +5;
         }
         if($flag==0){
             throw new Exception ('Fechas invalidas');

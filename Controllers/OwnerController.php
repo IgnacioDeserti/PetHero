@@ -220,6 +220,7 @@ class OwnerController
                     }
                     else{
                         $date= strtotime("+1 day",$date);
+                        
                     }
                     array_push($listAvailability,$startAv);
                     array_push($listAvailability,$endAv);

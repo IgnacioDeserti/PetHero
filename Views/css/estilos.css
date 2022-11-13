@@ -243,8 +243,6 @@ h5{
     border-radius: 5px;
 }
 
-Pet
-
 .divListGuardian{
     background: #8A2387;  
     background: -webkit-linear-gradient(to left, #F27121, #E94057, #8A2387); 
@@ -453,6 +451,18 @@ Pet
     position: relative;
     left: 60%;
     bottom: 40px;
+}
+
+.containerFilter{
+    position: relative;
+    left: 10%;
+    bottom: 40px;
+}
+
+.containerFilter2{
+    position: relative;
+    left: 60%;
+    bottom: 81px;
 }
 
 .buttonModify{

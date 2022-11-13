@@ -22,9 +22,9 @@
             $parameters["idPet"] = $reservation->getIdPet();
             $parameters["breed"] = $reservation->getBreed();
             $parameters["animalType"] = $reservation->getAnimalType();
-            $parameters["size"] = $reservation->getSize();
             $parameters["reservationDateStart"] = $reservation->getReservationDateStart();
             $parameters["reservationDateEnd"] = $reservation->getReservationDateEnd();
+            $parameters["size"] = $reservation->getSize();
             $this->connection = Connection::GetInstance();
 
             $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
@@ -57,6 +57,32 @@
             }
 
             return $reservationList;
+        }
+
+        public function GetReservationsById($idRes)
+        {
+            $query = "CALL Reservation_GetReservationById(?)";
+
+            $parameters["idRes"] = $idRes;
+
+            $this->connection = Connection::GetInstance();
+
+            $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+
+            foreach($result as $row){
+                $reservation = new Reservation();
+                $reservation->setIdReservation($row["idReservation"]);
+                $reservation->setIdOwner($row["idOwner"]);
+                $reservation->setIdGuardian($row["idGuardian"]);
+                $reservation->setIdPet($row["idPet"]);
+                $reservation->setBreed($row["breed"]);
+                $reservation->setAnimalType($row["animalType"]);
+                $reservation->setReservationDateStart($row["reservationDateStart"]);
+                $reservation->setReservationDateEnd($row["reservationDateEnd"]);
+                $reservation->setReservationStatus($row["reservationStatus"]);
+            }
+
+            return $reservation;
         }
 
         public function GetReservationsByOwner($idOwner)

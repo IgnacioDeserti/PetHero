@@ -7,7 +7,7 @@
      <div class="containerFilterGuardian">
           <form action=" <?php echo FRONT_ROOT ?>Owner/showGuardianList" method="POST">
                     
-                    <div class="containerFecha">
+                    <div class="containerFilter">
                          <label for="">Fecha inicio</label>
                     </div>
                
@@ -15,7 +15,7 @@
                          <input type="date" name="availabilityStart" required>
                     </div>
 
-                    <div class="containerFecha">
+                    <div class="containerFilter2">
                          <label for="">Fecha fin</label>
                     </div>
 

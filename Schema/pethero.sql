@@ -61,14 +61,16 @@ CREATE TABLE IF NOT EXISTS reservation(
     idPet integer not null,
     breed varchar (50) not null,
     animalType varchar(1) not null,
-    size varchar(50) not null,
     reservationDateStart date not null,
     reservationDateEnd date not null,
-    reservationStatus varchar(50) default 'Esperando Confirmacion',
+    reservationStatus varchar(50) null default 'Esperando Confirmacion',
+    size varchar(50) not null,
+    price float not null,
     primary key (idReservation),
     constraint fk_idOwner foreign key (idOwner) references owner (idOwner),
     constraint fk_idGuardian foreign key (idGuardian) references guardian (idGuardian)
 );
+
 
 CREATE TABLE IF NOT EXISTS review(
     idReview integer not null auto_increment,
@@ -195,13 +197,15 @@ END//
 
 DELIMITER //
 
-CREATE PROCEDURE Reservation_Add (IN idOwner integer, IN idGuardian integer, IN idPet integer, IN breed varchar(50), IN animalType varchar(1), IN size varchar(30), IN reservationDateStart date, IN reservationDateEnd date, IN reservationStatus varchar(50))
+CREATE PROCEDURE Reservation_Add (IN idOwner integer, IN idGuardian integer, IN idPet integer, IN breed varchar(50), IN animalType varchar(1), IN reservationDateStart date, IN reservationDateEnd date, IN size varchar(30), IN price float)
 BEGIN
     INSERT INTO reservation
-        (reservation.idOwner, reservation.idGuardian, reservation.idPet, reservation.breed, reservation.animalType, reservation.size,reservation.reservationDateStart, reservation.reservationDateEnd, reservation.reservationStatus)
+        (reservation.idOwner, reservation.idGuardian, reservation.idPet, reservation.breed, reservation.animalType, reservation.reservationDateStart, reservation.reservationDateEnd, reservation.size, reservation.price)
     VALUES
-        (idOwner, idGuardian, idPet, breed, animalType, size, reservationDateStart, reservationDateEnd, reservationStatus);
+        (idOwner, idGuardian, idPet, breed, animalType, reservationDateStart, reservationDateEnd, size, price);
 END//
+
+
 
 DELIMITER //
 CREATE PROCEDURE Reservation_Delete (in idReservation integer)
@@ -232,9 +236,6 @@ BEGIN
     FROM Size;
 END//
 
-insert into reservation (idOwner, idGuardian, idPet, breed, animalType, reservationDateStart, reservationDateEnd, reservationStatus) values (1, 1, 1, "Golden", "Dog", "2022-11-3", "2022-11-10", "Confirmed");
-insert into review (rating, observations, idOwner, idGuardian, idReservation) VALUES (5, "Capo total, genio de los perros", 1, 1, 1);
-
 insert into size(name) values("Pequeño"), ("Mediano"), ("Grande");
 
 DELIMITER //
@@ -243,6 +244,14 @@ BEGIN
 	SELECT idOwner, name, address, email, number, userName, password, typeUser
     FROM owner
     WHERE (owner.userName = userName);
+END//
+
+DELIMITER //
+CREATE PROCEDURE GetGuardianByUserName (IN userName varchar(50))
+BEGIN
+	SELECT idGuardian, name, address, email, number, userName, password, typeUser
+    FROM guardian
+    WHERE (guardian.userName = userName);
 END//
 
 DELIMITER //
@@ -262,19 +271,27 @@ BEGIN
 END//
 
 DELIMITER //
-CREATE PROCEDURE Reservation_GetReservationsByIdGuardian (in idGuadianS integer)
+CREATE PROCEDURE Reservation_GetReservationsByIdGuardian (in idGuardianS integer)
 BEGIN
 	SELECT *
-    FROM Reservation  
-    WHERE Reservation.idGuadian = idGuardianS;
+    FROM reservation  
+    WHERE reservation.idGuardian = idGuardianS;
 END//
 
 DELIMITER //
 CREATE PROCEDURE Reservation_GetReservationsByIdOwner (in idOwnerS integer)
 BEGIN
 	SELECT *
-    FROM Reservation  
-    WHERE Reservation.idOwner = idOwnerS;
+    FROM reservation  
+    WHERE reservation.idOwner = idOwnerS;
+END//
+
+DELIMITER //
+CREATE PROCEDURE Reservation_GetReservationById (in idRes integer)
+BEGIN
+	SELECT *
+    FROM reservation  
+    WHERE reservation.idReservation = idRes;
 END//
 
 DELIMITER //
@@ -313,7 +330,7 @@ END//
 DELIMITER //
 CREATE PROCEDURE Guardian_GetAvailabilityEnd (in idGuardianS int)
 BEGIN
-	SELECT AvailabilityEnd
+	SELECT availabilityEnd
     FROM guardian
     WHERE guardian.idGuardian = idGuardianS;
 END//
@@ -332,11 +349,4 @@ BEGIN
 	UPDATE reservation SET status = statusS WHERE reservation.idReservation = idReservationS;
 END//
 
- 
-DELIMITER //
-CREATE PROCEDURE GetGuardianByUserName (IN userName varchar(50))
-BEGIN
-	SELECT idGuardian, name, address, email, number, userName, password, typeUser
-    FROM guardian
-    WHERE (guardian.userName = userName);
-END//
+

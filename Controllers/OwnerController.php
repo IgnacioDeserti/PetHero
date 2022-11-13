@@ -248,6 +248,7 @@ class OwnerController
             else if ($startAv == null && $endAv == null){
                 $startAv=$date;
                 $endAv=$date;
+                $date = strtotime($date);
                 $date = strtotime('+1 day',$date);
                 $date = strtotime($formato,$date);
             }

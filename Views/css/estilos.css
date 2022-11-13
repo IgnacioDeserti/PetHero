@@ -505,3 +505,19 @@ Pet
     position: absolute;
     background-color:#d1b056;
 }
+
+.containerFilterGuardian{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    top: 12rem;
+    left: 35%; 
+    width: 400px;
+    height: 200px;
+    background: #FDC830;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #F37335, #FDC830); 
+    background: linear-gradient(to right, #F37335, #FDC830); 
+    padding-left: 18px;
+    padding-top: 50px;
+    border-radius: 10px;
+}

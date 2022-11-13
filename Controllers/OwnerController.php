@@ -219,8 +219,9 @@ class OwnerController
                         $size = $size + 5;
                     }
                     else{
-                        $date= strtotime("+1 day",$date);
-                        
+                        $date = strtotime($date);
+                        $date = strtotime('+1 day',$date);
+                        $date = strtotime($formato,$date);
                     }
                     array_push($listAvailability,$startAv);
                     array_push($listAvailability,$endAv);

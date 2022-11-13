@@ -49,12 +49,14 @@ class OwnerController
         }
     }
 
+    //permite mandar los parametros para filtrar guardianes
     public function filterGuardians(){
         $listPets = $this->PetDAO->GetPetByIdOwner($_SESSION["idUser"]);
         require_once(VIEWS_PATH . "validate-session.php");
         require_once(VIEWS_PATH . "filterGuardianList.php");
     }
 
+    //llama al checkeo 
     public function showGuardianList($availabilityStart ,$availabilityEnd, $breed, $type, $size){
         $listGuardian = $this->guardianDAO->getAll();
         $listChecked = array();
@@ -68,13 +70,28 @@ class OwnerController
        
     }
 
+    //checkea que la disponibilidad deseada este dentro de la disponibilidad del guardian
     public function checkGuardian($availabilityStart ,$availabilityEnd, $breed, $type, $size , $idGuardian){
         $flag = 0;
         $listDisponibility = $this->getDisponibilityByGuardian($idGuardian);
 
         for($i=0; $i<count($listDisponibility);$i+5){
-            if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && (strcmp($listDisponibility[$i+2],$breed)) && (strcmp($listDisponibility[$i+3],$type)) && ((strcmp($listDisponibility[$i+4],$size)) || (strcmp($listDisponibility[$i+4],'all')))){
+            if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed)) || ((strcmp($listDisponibility[$i+2],'all')))) && ((strcmp($listDisponibility[$i+3],$type)) || ((strcmp($listDisponibility[$i+3],'all')))) && ((strcmp($listDisponibility[$i+4],$this->sizeDAO->getName($size))) || (strcmp($listDisponibility[$i+4],'all')))){
                 $flag=1;
+            }
+            else if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityStart<=$listDisponibility[$i=1]) && ($availabilityEnd>$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed)) || ((strcmp($listDisponibility[$i+2],'all')))) && ((strcmp($listDisponibility[$i+3],$type)) || ((strcmp($listDisponibility[$i+3],'all')))) && ((strcmp($listDisponibility[$i+4],$this->sizeDAO->getName($size))) || (strcmp($listDisponibility[$i+4],'all')))){
+                $flag=2;
+            }
+            if($flag=2){
+                if(($availabilityStart<$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed)) || ((strcmp($listDisponibility[$i+2],'all')))) && ((strcmp($listDisponibility[$i+3],$type)) || ((strcmp($listDisponibility[$i+3],'all')))) && ((strcmp($listDisponibility[$i+4],$this->sizeDAO->getName($size))) || (strcmp($listDisponibility[$i+4],'all')))){
+                    $flag=1;
+                }
+                else if(($availabilityStart<$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && (!(strcmp($listDisponibility[$i+2],$breed)) && (!(strcmp($listDisponibility[$i+2],'all')))) && (!(strcmp($listDisponibility[$i+3],$type)) && (!(strcmp($listDisponibility[$i+3],'all')))) && (!(strcmp($listDisponibility[$i+4],$this->sizeDAO->getName($size))) && !(strcmp($listDisponibility[$i+4],'all')))){
+                    $flag=0;
+                }
+            }
+            if(($i=4)==(count($listDisponibility)-1) && $flag==2){
+                $flag=0;
             }
         }
         return $flag;
@@ -278,6 +295,9 @@ class OwnerController
                     $reservation->setReservationDateStart($availabilityStart);
                     $reservation->setReservationDateEnd($availabilityEnd);
                     $this->reservationDAO->Add($reservation);
+                    $reservationList = $this->reservationDAO->GetReservationsByOwner($_SESSION['idUser']);
+                    require_once(VIEWS_PATH . "validate-session.php");
+                    require_once(VIEWS_PATH . "listReservationOwner.php");
                 }
 
             }catch (Exception $e){
@@ -311,6 +331,9 @@ class OwnerController
             if(($i=4)==(count($listDisponibility)-1) && $flag==2){
                 $flag=0;
             }
+        }
+        if($flag==0){
+            throw new Exception ('Fechas invalidas');
         }
         return $flag;
     }

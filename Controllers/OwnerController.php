@@ -311,10 +311,11 @@ class OwnerController
         $pet = $this->PetDAO->getPetByIdPet($idPet);
         $listDisponibility = $this->getDisponibilityByGuardian($idGuardian);
         $flag = 0;
+        $i = 0;
         if($availabilityStart<$this->guardianDAO->getReservationStart($idGuardian) || $availabilityEnd>$this->guardianDAO->getReservationEnd($idGuardian)){
             throw new Exception ('Fechas invalidas');
         }
-        for($i=0; $i<count($listDisponibility);$i+5){
+        while($i<count($listDisponibility)){
             if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$pet->getBreed())) || ((strcmp($listDisponibility[$i+2],'all')))) && ((strcmp($listDisponibility[$i+3],$pet->getType())) || ((strcmp($listDisponibility[$i+3],'all')))) && ((strcmp($listDisponibility[$i+4],$this->sizeDAO->getName($pet->getIdSize()))) || (strcmp($listDisponibility[$i+4],'all')))){
                 $flag=1;
             }

@@ -51,11 +51,20 @@
             }
         }
 
-        private function showReservationsList (){
+        public function showReservationsList (){
             $reservationList = $this->reservationDAO->GetReservationsByGuardian($_SESSION['idUser']);
             require_once(VIEWS_PATH . "validate-session.php");
             require_once(VIEWS_PATH . "listReservationGuardian.php");
         }
+
+        public function aceptReservation ($idReservation){
+            $this->reservationDAO->changeReservationStatus($idReservation,'Aceptada');
+        }
+
+        public function declineReservation ($idReservation){
+            $this->reservationDAO->changeReservationStatus($idReservation,'Rechazada');
+        }
+
 
 
         //TODO: aceptar reservas

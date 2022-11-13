@@ -1,6 +1,6 @@
 <?php
-       include('header.php');
-       include("nav.php");
+     include('header.php');
+     include("nav.php");
 ?>
 
 <html class="fondoMenus">
@@ -11,7 +11,7 @@
                          <label for="">Fecha inicio</label>
                     </div>
                
-                    <div>
+                    <div class="inputFilter">
                          <input type="date" name="availabilityStart" required>
                     </div>
 
@@ -19,26 +19,27 @@
                          <label for="">Fecha fin</label>
                     </div>
 
-                    <div>
+                    <div class="inputFilter2">
                          <input type="date" name="availabilityEnd" required>
                     </div>
 
-                    <div>
+                    <div class="containerFilter3">
                          <label for="">Mascota a cuidar</label>
                     </div>
 
-                    <div>
+                    <div class="inputFilter3">
                          <select name="breed" required>
                               <option value="">Selecciona mascota</option>
                               <?php foreach($listPets as $pet){?>
                               <option value="<?php $pet->getBreed()?>"><?php echo $pet->getName() .'('.$pet->getBreed().')'?></option>
                               <?php }?>
                          </select>
-                         <input type="hidden" name="type" value="<?php echo $pet->getType()?>">
-                         <input type="hidden" name="size" value="<?php echo $pet->getType()?>">
                     </div>
-
-                    <button type="submit">Filtrar guardianes</button>
+                    <input type="hidden" name="type" value="<?php echo $pet->getType()?>">
+                    <input type="hidden" name="size" value="<?php echo $pet->getIdSize()?>">
+                    <input type="hidden" name="idPet" value="<?php echo $pet->getIdPet()?>">
+                    <button class="buttonFilter buttonHoversGreen" type="submit">Filtrar guardianes</button>
+                    
 
           </form>
      </div>

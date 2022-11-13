@@ -3,43 +3,47 @@
     include("nav.php");
 ?>
 
-<html>
-
-    <form action=" <?php echo FRONT_ROOT ?>Owner/makeReservation" method = 'post'>
-        <div>
-            <label for="">Fecha inicio</label>
-        </div>
-    
-        <div>
-            <input type="date" name="availabilityStart" required>
-        </div>
-
-        <div>
-            <label for="">Fecha fin</label>
-        </div>
-
-        <div>
-            <input type="date" name="availabilityEnd" required>
-        </div>
+<html class="fondoMenus">
+    <div class="containerFilterGuardian">
+        <form action=" <?php echo FRONT_ROOT ?>Owner/makeReservation" method = 'post'>
+            
+            <div class="containerFilter">
+                <label for="">Fecha inicio</label>
+            </div>
         
-        <div>
-            <label for="">Mascota a cuidar</label>
-        </div>
+            
+            <div class="inputFilter">
+                <input type="date" name="availabilityStart" required>
+            </div>
 
-        <div>
-        <select name="breed" required>
-            <option value="">Seleccione mascota</option>
-            <?php foreach($petChecked as $pet){?>
-            <option value="<?php echo $pet->getIdPet()?>"><?php echo $pet->getName() .'('.$pet->getBreed().')'?></option>
-            <?php }?>
-        </select>
+            <div class="containerFilter2">
+                <label for="">Fecha fin</label>
+            </div>
 
-        <?php if(isset($e)){
-            echo $e->getMessage();
-        }?>
+            
+            <div class="inputFilter2">
+                <input type="date" name="availabilityEnd" required>
+            </div>
+            
+            <div class="containerFilter3">
+                <label for="">Mascota a cuidar</label>
+            </div>
 
-        <input type="hidden" name="idGuardian" value="<?php echo $idGuardian?>">
-        </div>
-        <button type="submit">Hacer Reserva</button>
-    </form>
+            <div class="inputFilter3">
+            <select name="breed" required>
+                <option value="">Seleccione mascota</option>
+                <?php foreach($petChecked as $pet){?>
+                <option value="<?php echo $pet->getIdPet()?>"><?php echo $pet->getName() .'('.$pet->getBreed().')'?></option>
+                <?php }?>
+            </select>
+
+            <?php if(isset($e)){
+                echo $e->getMessage();
+            }?>
+
+            <input type="hidden" name="idGuardian" value="<?php echo $idGuardian?>">
+            </div>
+            <button type="submit" class="buttonFilter buttonHoversGreen">Hacer Reserva</button>
+        </form>
+    </div>
 </html>

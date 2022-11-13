@@ -46,11 +46,15 @@
                                         }?>
                                         </td>
                                         <?php if($guardian->getAvailabilityStart() != null && $guardian->getAvailabilityEnd() != null){ ?>
-                                             <td><button class="" name="button" value="reserve">Hacer reserva</button></td>
+                                             <td><button class="buttonSelectG">Hacer reserva</button></td>
                                         <?php } ?>
                                         <td><input type="hidden" name="idGuardian" value="<?php echo $guardian->getIdGuardian()?>"></td>
-                                        <td><button class="" name="button" value="goBack">Volver</button></td>   
+                    </form>
+                    
+                    <form action="<?php echo FRONT_ROOT?> Owner/filterGuardians">
+                                        <td><button class="buttonSelectG" type="submit">Volver</button>
                                    </tr>
+                    </form>
                          </table>
 
                          <table>
@@ -63,7 +67,6 @@
                                    </tr>
                           <?php } ?>
                          </table>
-                    </form>
                </div>
           </section>
      </main>

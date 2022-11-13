@@ -37,8 +37,9 @@
                                                   <?php echo $size. "<br>";?>   
                                              <?php } ?></td> 
                                              <td class="thListGuardian"><?php echo $guardian->getPrice();?></td>      
-                                             <td><button class="" name="id" value="<?php echo $guardian->getEmail() ?>">Seleccionar</button></td>                                        
-                                        </tr> <?php }?>
+                                             <td><button class="buttonSelectG" name="id" value="<?php echo $guardian->getEmail() ?>">Seleccionar</button></td>                                     
+                                        </tr> 
+                                        <?php }?>
                               </tbody>
                          </table>
                     </form>

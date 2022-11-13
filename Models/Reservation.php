@@ -13,6 +13,7 @@
         private $reservationDateStart;
         private $reservationDateEnd;
         private $reservationStatus;
+        private $price;
         
         public function __construct(){
             
@@ -102,6 +103,14 @@
                 $this->size = $size;
 
                 return $this;
+        }
+
+        public function getPrice() {
+            return $this->price;
+        }
+        
+        public function setPrice($price){
+            $this->price = $price;
         }
 }
 

@@ -35,19 +35,6 @@ class OwnerController
         $this->reservationDAO = new ReservationDAO();
     }
 
-    public function menuOwner($button)
-    {
-        if ($button == "listGuardian") {
-            require_once(VIEWS_PATH . "validate-session.php");
-            $this->filterGuardians();
-        } else if ($button == "addPet") {
-            require_once(VIEWS_PATH . "validate-session.php");
-            require_once(VIEWS_PATH . "addPet.php");
-        } else if ($button == "listPet") {
-            require_once(VIEWS_PATH . "validate-session.php");
-            require_once(VIEWS_PATH . "listPet.php");
-        }
-    }
 
     //permite mandar los parametros para filtrar guardianes
     public function filterGuardians(){
@@ -67,12 +54,12 @@ class OwnerController
             }
         }
         $gxsDAO = $this->guardian_x_sizeDAO;
-        require_once(VIEWS_PATH . "validate-session.php");
-        require_once(VIEWS_PATH . "listGuardian.php");
+        //require_once(VIEWS_PATH . "validate-session.php");
+        //require_once(VIEWS_PATH . "listGuardian.php");
     }
 
     //checkea que la disponibilidad deseada este dentro de la disponibilidad del guardian
-    public function checkGuardian($availabilityStart ,$availabilityEnd, $breed, $type, $size , $idGuardian){
+    public function checkGuardian($availabilityStart ,$availabilityEnd, $breed, $type, $size, $idGuardian){
         $flag = 0;
         $listDisponibility = $this->getDisponibilityByGuardian($idGuardian);
 
@@ -191,6 +178,7 @@ class OwnerController
         $sizeAv = 'all';
         $formato = 'Y-m-d';
         $date = $this->guardianDAO->getReservationStart($idGuardian);
+        $aux = 0;
 
 
         while($date<=$this->guardianDAO->getReservationEnd($idGuardian)){
@@ -202,8 +190,34 @@ class OwnerController
                     array_push($listAvailability,$typeAv);
                     array_push($listAvailability,$sizeAv);
                 }
-                if(count($listAvailability)>=5 && strcmp($listAvailability[(count($listAvailability))-3],$listReservationsGuardian[$breed]) && (($listAvailability[(count($listAvailability)-4)])+1)<=$listReservationsGuardian[$start] && (((strcmp($listAvailability[(count($listAvailability))-2],$listReservationsGuardian[$type])) || ((strcmp($listAvailability[(count($listAvailability))-2],'all'))))) && strcmp($listAvailability[(count($listAvailability))-1],$listReservationsGuardian[$size])){
+                //)) || ((strcmp($listAvailability[(count($listAvailability))-2],'all'))))) && strcmp($listAvailability[(count($listAvailability))-1],$listReservationsGuardian[$size])
+
+                /*echo "<br>";
+                print_r($listAvailability[(count($listAvailability))-3]);
+                echo "<br>";
+                print_r($listReservationsGuardian[$breed]);
+                echo "<br>";
+                print_r($listAvailability[(count($listAvailability)-4)]);
+                echo "<br>";
+                print_r( $listReservationsGuardian[$start]);
+                echo "<br>";
+                print_r($listAvailability[(count($listAvailability))-2]);
+                echo "<br>";
+                $listReservationsGuardian[$type]*/
+
+                if(count($listAvailability)>=5 && strcmp($listAvailability[(count($listAvailability))-3],$listReservationsGuardian[$breed]) && (($listAvailability[(count($listAvailability)-4)]))<=$listReservationsGuardian[$start] && (((strcmp($listAvailability[(count($listAvailability))-2],$listReservationsGuardian[$type])))) && strcmp($listAvailability[(count($listAvailability))-1],$listReservationsGuardian[$size])){
                     $listAvailability[(count($listAvailability))-4]=$listReservationsGuardian[$end]; 
+                    if(($size + 5) < count($listReservationsGuardian)){
+                        $start = $start + 5;
+                        $end = $end + 5;
+                        $breed = $breed + 5;
+                        $type = $type + 5;
+                        $size = $size + 5;
+                    }else{
+                        $date = strtotime($date);
+                        $date= strtotime("+1 day",$date);
+                        $date = date($formato,$date);
+                    }
                 }
                 else {
                     $startAv = $listReservationsGuardian[$start];
@@ -233,6 +247,8 @@ class OwnerController
                     $breedAv = 'all';
                     $typeAv = 'all';
                     $sizeAv = 'all';
+                    $aux = 1;
+                    echo "ANTES DE LA CACA <br>" ;
                 }
                 if($listReservationsGuardian[$start]!=$date){
                     $date = strtotime($date);
@@ -240,12 +256,16 @@ class OwnerController
                     $date = date($formato,$date);
                 }
             }
-            else if(count($listAvailability) > 0 && $listAvailability[(count($listAvailability)-5)] <$date && $date <=$listAvailability[(count($listAvailability)-4)]){
-                $date = strtotime($date);
+            else if(count($listAvailability) > 0 && $listAvailability[(count($listAvailability)-5)] <= $date && $date <=$listAvailability[(count($listAvailability)-4)]){
+                $date = strtotime($listAvailability[count($listAvailability) - 4]);
                 $date = strtotime('+1 day',$date);
-                $date = strtotime($formato,$date);
+                $date = date($formato,$date);
+                $aux = 1;
+                echo "<br>AUX " . $aux . "<br>";
             }
-            else if ($startAv == null && $endAv == null){
+            else if ($startAv == null && $endAv == null && $aux == 0){
+                echo $aux . "<br>";
+                echo "AAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
                 $startAv=$date;
                 $endAv=$date;
                 $date = strtotime($date);
@@ -266,17 +286,14 @@ class OwnerController
                 array_push($listAvailability,$sizeAv);
             }
         }
+
+        echo "<pre>";
+        print_r($listAvailability);
         
         return $listAvailability;
     }
 
-    public function createReservation($button = null, $idGuardian = null){
-        if(isset($button)){
-            if(strcmp($button, "goBack") == 0){
-                $this->filterGuardians();
-            }
-        }
-
+    public function createReservation($idGuardian){
         $petList = $this->PetDAO->GetPetByIdOwner($_SESSION["idUser"]);
         $sizesGuardian = $this->guardian_x_sizeDAO->getSizeById($idGuardian);
         $petChecked = array();  
@@ -287,18 +304,17 @@ class OwnerController
                 }
             }
         }
+
         require_once(VIEWS_PATH . "validate-session.php");
         require_once(VIEWS_PATH . "createReservationOwner.php");
-        
-        
     }
 
     public function makeReservation($availabilityStart, $availabilityEnd, $idPet, $idGuardian){
             $pet = $this->PetDAO->GetPetByIdPet($idPet);
+            $guardian = $this->guardianDAO->getGuardianById($idGuardian);
             try{
-                echo "<br> ANTES DEL IF<br>";
                 if($this->checkReservationDate($availabilityStart, $availabilityEnd, $idPet, $idGuardian)){
-                    echo "<br> ENTRO AL IF";
+                    
                     $reservation = new Reservation();
                     $reservation->setIdOwner($_SESSION['idUser']);
                     $reservation->setIdGuardian($idGuardian);
@@ -308,6 +324,7 @@ class OwnerController
                     $reservation->setReservationDateStart($availabilityStart);
                     $reservation->setReservationDateEnd($availabilityEnd);
                     $reservation->setSize($this->sizeDAO->getName($pet->getIdSize()));
+                    $reservation->setPrice($this->totalPrice($guardian->getPrice(), $availabilityStart, $availabilityEnd));
                     $this->reservationDAO->Add($reservation);
                     $reservationList = $this->reservationDAO->GetReservationsByOwner($_SESSION['idUser']);
                     require_once(VIEWS_PATH . "validate-session.php");
@@ -315,8 +332,22 @@ class OwnerController
                 }
 
             }catch (Exception $e){
-                $this->createReservation("", $idGuardian);
+                $this->createReservation($idGuardian);
             }
+    }
+
+    private function totalPrice($priePD, $availabilityStart, $availabilityEnd){
+        $date = $availabilityStart;
+        $formato = 'Y-m-d';
+        $i = 0;
+        while($date <= $availabilityEnd){
+            $date = strtotime($date);
+            $date = strtotime('+1 day',$date);
+            $date = date($formato,$date);
+            $i++;
+        }
+
+        return ($i * $priePD);
     }
 
     private function checkReservationDate($availabilityStart, $availabilityEnd, $idPet, $idGuardian){

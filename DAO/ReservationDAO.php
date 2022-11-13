@@ -15,7 +15,7 @@
         
         public function Add(Reservation $reservation)
         {
-            $query = "CALL Reservation_Add(?,?,?,?,?,?,?,?)";
+            $query = "CALL Reservation_Add(?,?,?,?,?,?,?,?,?)";
 
             $parameters["idOwner"] = $reservation->getIdOwner();
             $parameters["idGuardian"] = $reservation->getIdGuardian();
@@ -25,6 +25,7 @@
             $parameters["reservationDateStart"] = $reservation->getReservationDateStart();
             $parameters["reservationDateEnd"] = $reservation->getReservationDateEnd();
             $parameters["size"] = $reservation->getSize();
+            $parameters["price"] = $reservation->getPrice();
             $this->connection = Connection::GetInstance();
 
             $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
@@ -139,10 +140,10 @@
             $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
 
             foreach($result as $date){
-                array_push($dates, $date['availabilityStart']);
-                array_push($dates, $date['availabilityEnd']);
+                array_push($dates, $date['reservationDateStart']);
+                array_push($dates, $date['reservationDateEnd']);
                 array_push($dates, $date['breed']);
-                array_push($dates, $date['type']);
+                array_push($dates, $date['animalType']);
                 array_push($dates, $date['size']);
             }
 

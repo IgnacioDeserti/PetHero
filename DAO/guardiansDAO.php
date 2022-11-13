@@ -4,7 +4,8 @@
 
     use Models\Guardian as Guardian;
     use DAO\IGuardiansDAO as IGuardiansDAO;
-    use Models\Review as Review;
+use DateTime;
+use Models\Review as Review;
 
     class guardiansDAO implements IGuardiansDAO{
         private $connection;
@@ -171,6 +172,7 @@
 
             $avStart = null;
             foreach($result as $row){
+                $avStart = new DateTime();
                 $avStart = $row["availabilityStart"];
             }
     

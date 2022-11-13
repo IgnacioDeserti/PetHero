@@ -3,11 +3,11 @@
        include("nav.php");
 ?>
 
-<html>
+<html class="fondoMenus">
      <div class="containerFilterGuardian">
           <form action=" <?php echo FRONT_ROOT ?>Owner/showGuardianList" method="POST">
                     
-                    <div>
+                    <div class="containerFecha">
                          <label for="">Fecha inicio</label>
                     </div>
                
@@ -15,7 +15,7 @@
                          <input type="date" name="availabilityStart" required>
                     </div>
 
-                    <div>
+                    <div class="containerFecha">
                          <label for="">Fecha fin</label>
                     </div>
 

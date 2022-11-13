@@ -332,7 +332,7 @@ BEGIN
 	UPDATE reservation SET status = statusS WHERE reservation.idReservation = idReservationS;
 END//
 
-
+ 
 DELIMITER //
 CREATE PROCEDURE GetGuardianByUserName (IN userName varchar(50))
 BEGIN

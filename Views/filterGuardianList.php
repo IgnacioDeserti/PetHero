@@ -28,6 +28,7 @@
 
                <div>
                     <select name="breed" required>
+                         <option value="">Selecciona mascota</option>
                             <?php foreach($listPets as $pet){?>
                             <option value="<?php $pet->getBreed()?>"><?php echo $pet->getName() .'('.$pet->getBreed().')'?></option>
                             <?php }?>

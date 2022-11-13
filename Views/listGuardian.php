@@ -25,7 +25,7 @@
                               </thead>
                               <tbody>
                                    <?php
-                                        foreach($arrayListGuardian as $guardian){?>
+                                        foreach($listChecked as $guardian){?>
                                         <tr>
                                              <td class="thListGuardian"><?php echo $guardian->getName();?> </td>
                                              <td class="thListGuardian"><?php echo $guardian->getAddress();?></td>

@@ -97,7 +97,23 @@ class OwnerController
         return $flag;
     }
 
-    public function addPet($name, $type, $breed, $size, $observations, $files){
+
+    public function typePet($type = null){
+        if(isset($type)){
+            if(strcmp($type, "Dog") == 0){
+                require_once(VIEWS_PATH . "validate-session.php");
+                require_once(VIEWS_PATH . "addDog.php");
+            }else{
+                require_once(VIEWS_PATH . "validate-session.php");
+                require_once(VIEWS_PATH . "addCat.php");
+            }
+        }else{
+            require_once(VIEWS_PATH . "validate-session.php");
+            require_once(VIEWS_PATH . "addPet.php");
+        }
+    }
+
+    public function addPet($name, $breed, $size, $observations, $type, $files){
         $this->PetDAO->getAll();
 
         $newPet = new Pet();
@@ -109,11 +125,6 @@ class OwnerController
         $newPet->setIdOwner($_SESSION["idUser"]);
         
         $fileController = new FileController();
-
-        $this->PetDAO->add($newPet);
-
-        echo "<pre>";
-        print_r($files);
         
         if($pathFile1 = $fileController->upload($files["photo1"], "Foto-Perfil")){
             $newPet->setPhoto1($pathFile1);
@@ -129,7 +140,9 @@ class OwnerController
             }
         }
 
-        //$this->showListPet();
+        $this->PetDAO->add($newPet);
+
+        $this->showListPet();
     }
 
     public function showListPet()
@@ -239,20 +252,20 @@ class OwnerController
                     $sizeAv = 'all';
                 }
                 if($listReservationsGuardian[$start]!=$date){
-                    $date = strtotime("+1 day", $date);
+                    $date = strtotime("+1 day", (integer) $date);
                 }
             }
-            else if($listAvailability[(count($listAvailability))-5]<$date<=$listAvailability[(count($listAvailability)-4)]){
-                $date = strtotime("+1 day", $date);
+            else if(count($listAvailability) > 0 && $listAvailability[(count($listAvailability)) -5] <$date && $date <=$listAvailability[(count($listAvailability)) -4]){
+                $date = strtotime("+1 day", (integer) $date);
             }
             else if ($startAv == null && $endAv == null){
                 $startAv=$date;
                 $endAv=$date;
-                $date = strtotime("+1 day", $date);
+                $date = strtotime("+1 day", (int) $date);
             }
             else if($endAv != null){
                 $endAv=$date;
-                $date = strtotime("+1 day", $date);
+                $date = strtotime("+1 day", (integer) $date);
             }
             if($date > $this->guardianDAO->getReservationEnd($idGuardian)){
                 array_push($listAvailability,$startAv);

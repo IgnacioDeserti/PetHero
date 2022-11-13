@@ -104,13 +104,13 @@
         {
             $dates = array();
 
-            $query = "CALL Reservation_GetReservationsByIdOwner(?)";
+            $query = "CALL Reservation_GetReservationsByIdGuardian(?)";
 
             $parameters["idGuardianS"] = $idGuardian;
 
             $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+            $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
 
             foreach($result as $date){
                 array_push($dates, $date['availabilityStart']);

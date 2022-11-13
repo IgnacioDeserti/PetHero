@@ -198,6 +198,12 @@ h5{
     top: 10px;
 }
 
+.divSelectPet{
+    margin: -8px 0px 0px 13px;
+    position: relative;
+    top: 70px;
+}
+
 .buttonGoBackGuardian{
     padding: 15px;
     position: absolute;
@@ -266,8 +272,18 @@ Pet
     position: absolute;
     left: 30%;
     top: 10%;
-    height: 650px;
-    width: 650px;
+    height: 600px;
+    width: 630px;
+    background-color: rgba(255, 242, 183, 0.599);
+    border: 2px solid black;
+}
+
+.formSelectPet{
+    position: absolute;
+    left: 30%;
+    top: 20%;
+    height: 350px;
+    width: 630px;
     background-color: rgba(255, 242, 183, 0.599);
     border: 2px solid black;
 }
@@ -283,6 +299,18 @@ Pet
     border-radius: 5px;
 }
 
+.inputSelectPet {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 50px;
+    left: 90%;
+    border-radius: 5px;
+}
+
+
 .filePet{
     position: relative;
     bottom: 8px;
@@ -291,7 +319,7 @@ Pet
 
 .buttonAddPet{
     position: absolute;
-    top: 300px;
+    top: 313px;
     left: 135%;
     padding: 15px;
     width: 200px;
@@ -302,6 +330,26 @@ Pet
 .buttonGoBackPet{
     position: absolute;
     top: 379px;
+    left: 5%;
+    padding: 15px;
+    width: 200px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.buttonSelectPet{
+    position: absolute;
+    top: 241px;
+    left: 165%;
+    padding: 15px;
+    width: 200px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.buttonGoBackSelectPet{
+    position: absolute;
+    top: 275px;
     left: 5%;
     padding: 15px;
     width: 200px;

@@ -29,6 +29,7 @@
             $this->connection = Connection::GetInstance();
 
             $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+
         }
 
         public function GetPetByIdOwner($idOwner)

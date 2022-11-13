@@ -38,7 +38,6 @@ class FileController
 
           if(in_array($fileExtension, $this->allowedExtensions) ) {
 
-
                if(!file_exists($fileLocation)) {
 
                     if($fileAvatar->getSize() < $this->maxSize) {

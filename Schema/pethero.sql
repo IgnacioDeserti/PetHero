@@ -262,7 +262,7 @@ BEGIN
 END//
 
 DELIMITER //
-CREATE PROCEDURE Reservation_GetReservationsByIdGuardian (in idGuadianS int)
+CREATE PROCEDURE Reservation_GetReservationsByIdGuardian (in idGuadianS integer)
 BEGIN
 	SELECT *
     FROM Reservation  
@@ -270,7 +270,7 @@ BEGIN
 END//
 
 DELIMITER //
-CREATE PROCEDURE Reservation_GetReservationsByIdOwner (in idOwnerS int)
+CREATE PROCEDURE Reservation_GetReservationsByIdOwner (in idOwnerS integer)
 BEGIN
 	SELECT *
     FROM Reservation  

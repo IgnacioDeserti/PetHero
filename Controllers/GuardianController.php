@@ -59,10 +59,12 @@
 
         public function aceptReservation ($idReservation){
             $this->reservationDAO->changeReservationStatus($idReservation,'Aceptada');
+            $this->showReservationsList();
         }
 
         public function declineReservation ($idReservation){
             $this->reservationDAO->changeReservationStatus($idReservation,'Rechazada');
+            $this->showReservationsList();
         }
 
 

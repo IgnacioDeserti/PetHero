@@ -61,9 +61,10 @@ CREATE TABLE IF NOT EXISTS reservation(
     idPet integer not null,
     breed varchar (50) not null,
     animalType varchar(1) not null,
+    size varchar(50) not null,
     reservationDateStart date not null,
     reservationDateEnd date not null,
-    reservationStatus varchar(50) not null,
+    reservationStatus varchar(50) default 'Esperando Confirmacion',
     primary key (idReservation),
     constraint fk_idOwner foreign key (idOwner) references owner (idOwner),
     constraint fk_idGuardian foreign key (idGuardian) references guardian (idGuardian)
@@ -194,12 +195,12 @@ END//
 
 DELIMITER //
 
-CREATE PROCEDURE Reservation_Add (IN idOwner integer, IN idGuardian integer, IN idPet integer, IN breed varchar(50), IN animalType varchar(1), IN reservationDateStart date, IN reservationDateEnd date, IN reservationStatus varchar(50))
+CREATE PROCEDURE Reservation_Add (IN idOwner integer, IN idGuardian integer, IN idPet integer, IN breed varchar(50), IN animalType varchar(1), IN size varchar(30), IN reservationDateStart date, IN reservationDateEnd date, IN reservationStatus varchar(50))
 BEGIN
     INSERT INTO reservation
-        (reservation.idOwner, reservation.idGuardian, reservation.idPet, reservation.breed,reservation.animalType, reservation.reservationDateStart, reservation.reservationDateEnd, reservation.reservationStatus)
+        (reservation.idOwner, reservation.idGuardian, reservation.idPet, reservation.breed, reservation.animalType, reservation.size,reservation.reservationDateStart, reservation.reservationDateEnd, reservation.reservationStatus)
     VALUES
-        (idOwner, idGuardian, idPet, breed, animalType, reservationDateStart, reservationDateEnd, reservationStatus);
+        (idOwner, idGuardian, idPet, breed, animalType, size, reservationDateStart, reservationDateEnd, reservationStatus);
 END//
 
 DELIMITER //
@@ -316,3 +317,19 @@ BEGIN
     FROM guardian
     WHERE guardian.idGuardian = idGuardianS;
 END//
+
+DELIMITER //
+CREATE PROCEDURE Pet_GetPetById (in idPetS int)
+BEGIN
+	SELECT *
+    FROM pet
+    WHERE pet.idPet = idPetS;
+END//
+
+DELIMITER //
+CREATE PROCEDURE reservation_changeStatus (in idReservationS int, in statusS varchar(30))
+BEGIN
+	UPDATE reservation SET status = statusS WHERE reservation.idReservation = idReservationS;
+END//
+
+

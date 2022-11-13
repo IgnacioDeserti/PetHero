@@ -85,6 +85,34 @@
             return $petList;
         }
 
+        public function getPetByIdPet($idPet)
+        {
+            $pet = array();
+
+            $query = "CALL Pet_getPetById(?)";
+
+
+            $this->connection = Connection::GetInstance();
+
+            $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+
+            foreach($result as $row){
+                $pet = new Pet();
+                $pet->setName($row["name"]);
+                $pet->setBreed($row["breed"]);
+                $pet->setIdSize($row["idSize"]);
+                $pet->setObservations($row["observations"]);
+                $pet->setPhoto1($row["photo1"]);
+                $pet->setPhoto2($row["photo2"]);
+                $pet->setVideo($row["video"]);
+                $pet->setIdOwner($row["idOwner"]);
+                $pet->setType($row["type"]);
+                array_push($petList, $pet);
+            }
+
+            return $pet;
+        }
+
         public function delete($id){
             $query = "CALL Dog_Delete(?)";
 

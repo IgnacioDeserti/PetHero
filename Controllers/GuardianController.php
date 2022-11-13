@@ -6,6 +6,7 @@
     use DAO\ownersDAO;
     use DAO\petDAO;
     use Models\Pet;
+    use DAO\ReservationDAO;
     use FFI\Exception;
 
     class GuardianController{
@@ -13,11 +14,13 @@
         private $ownerDAO;
         private $guardianDAO;
         private $PetDAO;
+        private $reservationDAO;
 
         public function __construct(){
             $this->guardianDAO = new guardiansDAO();
             $this->ownerDAO = new ownersDAO();
             $this->PetDAO = new petDAO();
+            $this->reservationDAO = new ReservationDAO();
         }
 
         public function showModifyView($e = null){
@@ -47,6 +50,13 @@
                 throw new Exception ("Fechas invalidas, ingrese otras");
             }
         }
+
+        private function showReservationsList (){
+            $reservationList = $this->reservationDAO->GetReservationsByGuardian($_SESSION['idUser']);
+            require_once(VIEWS_PATH . "validate-session.php");
+            require_once(VIEWS_PATH . "listReservationGuardian.php");
+        }
+
 
         //TODO: aceptar reservas
         //TODO: hacer el arreglo de disponibilidad

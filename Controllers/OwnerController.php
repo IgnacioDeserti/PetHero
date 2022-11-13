@@ -10,6 +10,8 @@ use DAO\sizeDAO;
 use DAO\guardian_x_sizeDAO;
 use DAO\ReviewDAO;
 use DAO\ReservationDAO;
+use FFI\Exception;
+use Models\Reservation;
 
 class OwnerController
 {
@@ -192,8 +194,8 @@ class OwnerController
                     array_push($listAvailability,$typeAv);
                     array_push($listAvailability,$sizeAv);
                 }
-                if(count($listAvailability)>=5 && strcmp($listAvailability[(count($listAvailability))-3],$listReservationsGuardian[$breed]) && (($listAvailability[(count($listAvailability)-4)])+1)>=$listReservationsGuardian[$start] && strcmp($listAvailability[(count($listAvailability))-2],$listReservationsGuardian[$type]) && strcmp($listAvailability[(count($listAvailability))-1],$listReservationsGuardian[$size])){
-                    $listAvailability[(count($listAvailability))-4]=$listReservationsGuardian[$end];
+                if(count($listAvailability)>=5 && strcmp($listAvailability[(count($listAvailability))-3],$listReservationsGuardian[$breed]) && (($listAvailability[(count($listAvailability)-4)])+1)>=$listReservationsGuardian[$start] && (((strcmp($listAvailability[(count($listAvailability))-2],$listReservationsGuardian[$type])) || ((strcmp($listAvailability[(count($listAvailability))-2],'all'))))) && strcmp($listAvailability[(count($listAvailability))-1],$listReservationsGuardian[$size])){
+                    $listAvailability[(count($listAvailability))-4]=$listReservationsGuardian[$end]; 
                 }
                 else {
                     $startAv = $listReservationsGuardian[$start];
@@ -263,7 +265,39 @@ class OwnerController
     }
 
     public function makeReservation($availabilityStart, $availabilityEnd, $idPet, $idGuardian){
-    //TODO: validar que la fecha de inicio sea menor a la de fin, y que esta este disponible en el guardian, despues crear la reserva o mandar de nuevo a la pagina de creacion.
+            $pet = $this->PetDAO->GetPetByIdPet($idPet);
+            try{    
+                if($this->checkReservationDate($availabilityStart, $availabilityEnd, $idPet, $idGuardian)){
+                    $reservation = new Reservation();
+                    $reservation->setIdOwner($_SESSION['idUser']);
+                    $reservation->setIdGuardian($idGuardian);
+                    $reservation->setIdPet($idPet);
+                    $reservation->setBreed($pet->getBreed());
+                    $reservation->setAnimalType($pet->getType());
+                    $reservation->setSize($this->sizeDAO->getName($pet->getIdSize()));
+                    $reservation->setReservationDateStart($availabilityStart);
+                    $reservation->setReservationDateEnd($availabilityEnd);
+                    $this->reservationDAO->Add($reservation);
+                }
+
+            }catch (Exception $e){
+                require_once(VIEWS_PATH . "validate-session.php");
+                require_once(VIEWS_PATH . "createReservationOwner.php");
+            }
+    }
+
+    private function checkReservationDate($availabilityStart, $availabilityEnd, $idPet, $idGuardian){
+        $pet = $this->PetDAO->getPetByIdPet($idPet);
+        $listDisponibility = $this->getDisponibilityByGuardian($idGuardian);
+        for($i=0; $i<count($listDisponibility);$i+5){
+            if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && (strcmp($listDisponibility[$i+2],$pet->getBreed())) && ((strcmp($listDisponibility[$i+3],$pet->getType())) || ((strcmp($listDisponibility[$i+3],'all')))) && ((strcmp($listDisponibility[$i+4],$this->sizeDAO->getName($pet->getIdSize()))) || (strcmp($listDisponibility[$i+4],'all')))){
+                $flag=1;
+            }
+            else {
+                throw new Exception ('Fechas invalidas');
+            }
+        }
+        return $flag;
     }
 
 }

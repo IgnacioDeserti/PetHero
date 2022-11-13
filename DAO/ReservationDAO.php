@@ -15,13 +15,14 @@
         
         public function Add(Reservation $reservation)
         {
-            $query = "CALL Reservation_Add(?,?,?,?,?,?,?)";
+            $query = "CALL Reservation_Add(?,?,?,?,?,?,?,?)";
 
             $parameters["idOwner"] = $reservation->getIdOwner();
             $parameters["idGuardian"] = $reservation->getIdGuardian();
             $parameters["idPet"] = $reservation->getIdPet();
             $parameters["breed"] = $reservation->getBreed();
             $parameters["animalType"] = $reservation->getAnimalType();
+            $parameters["size"] = $reservation->getSize();
             $parameters["reservationDateStart"] = $reservation->getReservationDateStart();
             $parameters["reservationDateEnd"] = $reservation->getReservationDateEnd();
             $this->connection = Connection::GetInstance();
@@ -39,7 +40,7 @@
 
             $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+            $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
 
             foreach($result as $row){
                 $reservation = new Reservation();
@@ -68,7 +69,7 @@
 
             $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+            $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
 
             foreach($result as $row){
                     $reservation = new Reservation();
@@ -86,6 +87,8 @@
 
             return $reviewList;
         }
+
+        
 
         public function delete($id){
             $query = "CALL Reservation_Delete(?)";
@@ -120,6 +123,16 @@
             return $dates;
         }
 
+        public function changeReservationStatus ($idReservation,$status){
+            $query = "CALL Reservation_changeStatus(?,?)";
+
+            $parameters["idReservationS"] = $idReservation;
+            $parameters["statusS"] = $status;
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+        }
 
         
 }

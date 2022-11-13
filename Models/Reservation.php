@@ -9,6 +9,7 @@
         private $idPet;
         private $breed;
         private $animalType;
+        private $size;
         private $reservationDateStart;
         private $reservationDateEnd;
         private $reservationStatus;
@@ -89,6 +90,18 @@
 
         public function setReservationDateEnd($reservationDateEnd){
             $this->reservationDateEnd = $reservationDateEnd;
+        }
+
+        public function getSize()
+        {
+                return $this->size;
+        }
+
+        public function setSize($size)
+        {
+                $this->size = $size;
+
+                return $this;
         }
 }
 

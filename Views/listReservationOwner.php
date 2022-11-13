@@ -1,0 +1,1 @@
+//TODO: hacer lista donde si status igual a esperando confirmacion aparezca en Esperando Confirmacion, status finalizado en Terminados y cualquier reserva con status distinto de esperando confirmacion y a finaliza en confirmado.

@@ -333,3 +333,10 @@ BEGIN
 END//
 
 
+DELIMITER //
+CREATE PROCEDURE GetGuardianByUserName (IN userName varchar(50))
+BEGIN
+	SELECT idGuardian, name, address, email, number, userName, password, typeUser
+    FROM guardian
+    WHERE (guardian.userName = userName);
+END//

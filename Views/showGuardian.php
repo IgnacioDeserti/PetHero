@@ -48,8 +48,8 @@
                                         <?php if($guardian->getAvailabilityStart() != null && $guardian->getAvailabilityEnd() != null){ ?>
                                              <td><button class="" name="button" value="reserve">Hacer reserva</button></td>
                                         <?php } ?>
+                                        <td><input type="hidden" name="idGuardian" value="<?php echo $guardian->getIdGuardian()?>"></td>
                                         <td><button class="" name="button" value="goBack">Volver</button></td>   
-                                        <td><input type="hidden" name="email" value="<?php echo $guardian->getIdGuardian()?>"></td>
                                    </tr>
                          </table>
 

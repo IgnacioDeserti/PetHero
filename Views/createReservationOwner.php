@@ -1,6 +1,6 @@
 <?php
-       include('header.php');
-       include("nav.php");
+    include('header.php');
+    include("nav.php");
 ?>
 
 <html>
@@ -9,30 +9,36 @@
         <div>
             <label for="">Fecha inicio</label>
         </div>
-           
+    
         <div>
-             <input type="date" name="availabilityStart" required>
+            <input type="date" name="availabilityStart" required>
         </div>
 
         <div>
-             <label for="">Fecha fin</label>
+            <label for="">Fecha fin</label>
         </div>
 
         <div>
-             <input type="date" name="availabilityEnd" required>
+            <input type="date" name="availabilityEnd" required>
         </div>
         
         <div>
-             <label for="">Mascota a cuidar</label>
+            <label for="">Mascota a cuidar</label>
         </div>
-        
+
         <div>
         <select name="breed" required>
+            <option value="">Seleccione mascota</option>
             <?php foreach($petChecked as $pet){?>
-            <option value="<?php $pet->getIdPet()?>"><?php echo $pet->getName() .'('.$pet->getBreed().')'?></option>
+            <option value="<?php echo $pet->getIdPet()?>"><?php echo $pet->getName() .'('.$pet->getBreed().')'?></option>
             <?php }?>
         </select>
-        <input type="hidden" name="idGuardian" value="<?php $idGuardian?>">
+
+        <?php if(isset($e)){
+            echo $e->getMessage();
+        }?>
+
+        <input type="hidden" name="idGuardian" value="<?php echo $idGuardian?>">
         </div>
         <button type="submit">Hacer Reserva</button>
     </form>

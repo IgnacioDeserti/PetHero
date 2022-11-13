@@ -33,9 +33,11 @@
 
             $query = "CALL Review_GetReviewsByGuardian(?)";
 
+            $parameters["idGuardianS"] = $idGuardian;
+
             $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+            $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
 
             foreach($result as $row){
                 $review = new Review();

@@ -94,7 +94,7 @@
                 require_once(VIEWS_PATH . "validate-session.php");
                 require_once(VIEWS_PATH . "addPet.php");
             }else{
-                $sizeList = $this->sizeDAO->getAll();
+                $size = $this->sizeDAO;
                 require_once(VIEWS_PATH . "validate-session.php");
                 require_once(VIEWS_PATH . "listPet.php");
             }

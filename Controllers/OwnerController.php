@@ -10,7 +10,7 @@ use DAO\sizeDAO;
 use DAO\guardian_x_sizeDAO;
 use DAO\ReviewDAO;
 use DAO\ReservationDAO;
-use FFI\Exception;
+use Exception;
 use Models\Reservation;
 
 class OwnerController
@@ -65,6 +65,7 @@ class OwnerController
                 array_push($listChecked,$guardian);
             }
         }
+        $gxsDAO = $this->guardian_x_sizeDAO;
         require_once(VIEWS_PATH . "validate-session.php");
         require_once(VIEWS_PATH . "listGuardian.php");
        
@@ -170,31 +171,6 @@ class OwnerController
         require_once(VIEWS_PATH . "showGuardian.php");
     }
 
-    /*public function selectPet($button, $email){
-        if(strcmp($button, "goBack") == 0){
-            $this->showGuardianList();
-        }else{
-            $guardian = $this->guardianDAO->getGuardian($email);
-            $sizeList = $this->sizeDAO->getAll();
-            $arrayListGuardianxSize = $this->guardian_x_sizeDAO->getAll();
-            $arrayListPetUser = $this->PetDAO->GetPetByIdOwner($_SESSION["idUser"]);
-            $arrayListPet = array();
-
-            foreach($arrayListPetUser as $pet){
-                foreach($arrayListGuardianxSize as $gxs){
-                    if($guardian->getIdGuardian() == $gxs->getIdGuardian()){
-                        if($gxs->getIdSize() == $pet->getIdSize()){
-                            array_push($arrayListPet, $pet);
-                        }
-                    }
-                }
-            }
-
-            require_once(VIEWS_PATH . "validate-session.php");
-            require_once(VIEWS_PATH . "createReservationOwner.php");
-        }
-    }*/
-
     //TODO: filtrado guardian por raza
     //TODO: hacer reservas
 
@@ -283,26 +259,35 @@ class OwnerController
         return $listAvailability;
     }
 
-    public function createReservation($idGuardian){
+    public function createReservation($button = null, $idGuardian = null){
+        if(isset($button)){
+            if(strcmp($button, "goBack") == 0){
+                $this->filterGuardians();
+            }
+        }
+
         $petList = $this->PetDAO->GetPetByIdOwner($_SESSION["idUser"]);
-        $petChecked = array();
         $sizesGuardian = $this->guardian_x_sizeDAO->getSizeById($idGuardian);
+        $petChecked = array();  
         foreach($petList as $pet){
-            foreach( $sizesGuardian as $size){
-                if(strcmp($this->sizeDAO->getName($pet->getIdSize()),$size)){
+            foreach($sizesGuardian as $size){
+                if(strcmp($this->sizeDAO->getName($pet->getIdSize()),$size) == 0){
                     array_push($petChecked,$pet);
                 }
             }
         }
         require_once(VIEWS_PATH . "validate-session.php");
         require_once(VIEWS_PATH . "createReservationOwner.php");
+        
+        
     }
 
     public function makeReservation($availabilityStart, $availabilityEnd, $idPet, $idGuardian){
             $pet = $this->PetDAO->GetPetByIdPet($idPet);
-            try{    
+            try{
                 if($this->checkReservationDate($availabilityStart, $availabilityEnd, $idPet, $idGuardian)){
                     $reservation = new Reservation();
+                    echo "TRY IF";
                     $reservation->setIdOwner($_SESSION['idUser']);
                     $reservation->setIdGuardian($idGuardian);
                     $reservation->setIdPet($idPet);
@@ -318,8 +303,7 @@ class OwnerController
                 }
 
             }catch (Exception $e){
-                require_once(VIEWS_PATH . "validate-session.php");
-                require_once(VIEWS_PATH . "createReservationOwner.php");
+                $this->createReservation("", $idGuardian);
             }
     }
 

@@ -44,6 +44,7 @@
 
             foreach($result as $row){
                 $pet = new Pet();
+                $pet->setIdPet($row["idPet"]);
                 $pet->setName($row["name"]);
                 $pet->setBreed($row["breed"]);
                 $pet->setIdSize($row["idSize"]);
@@ -88,14 +89,13 @@
 
         public function getPetByIdPet($idPet)
         {
-            $pet = array();
-
             $query = "CALL Pet_getPetById(?)";
 
+            $parameters["idPetS"] = $idPet;
 
             $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+            $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
 
             foreach($result as $row){
                 $pet = new Pet();
@@ -108,7 +108,6 @@
                 $pet->setVideo($row["video"]);
                 $pet->setIdOwner($row["idOwner"]);
                 $pet->setType($row["type"]);
-                array_push($petList, $pet);
             }
 
             return $pet;

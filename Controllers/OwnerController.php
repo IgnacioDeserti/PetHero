@@ -180,7 +180,7 @@ class OwnerController
         $date = $this->guardianDAO->getReservationStart($idGuardian);
         $aux = 0;
 
-
+ 
         while($date<=$this->guardianDAO->getReservationEnd($idGuardian)){
             if(count($listReservationsGuardian)>=5 && $listReservationsGuardian[$start] == $date){
                 if($startAv != null && $endAv != null){

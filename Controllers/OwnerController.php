@@ -76,45 +76,11 @@ class OwnerController
         $listDisponibility = $this->getDisponibilityByGuardian($idGuardian);
         $guardian = $this->guardianDAO->getGuardianById($idGuardian);
 
-        /*echo "<pre>";
-        print_r($listDisponibility);
-
-        echo "<br>";
-        echo $availabilityStart;
-        echo "<br>";
-        echo $availabilityEnd;
-        echo "<br>";
-        echo $breed;
-        echo "<br>";
-        echo $type;
-        echo "<br>";
-        echo $size;
-*/
-
-
         $i = 0;
         while($i<count($listDisponibility)){
-            //echo "<br>WHILE<br>";
             if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed) == 0) || (strcmp($listDisponibility[$i+2],'all') == 0)) && ((strcmp($listDisponibility[$i+3],$type) == 0) || (strcmp($listDisponibility[$i+3],'all') == 0)) && ((strcmp($listDisponibility[$i+4],$size) == 0) || (strcmp($listDisponibility[$i+4],'all') == 0))){
                 $flag = 1;
-                //echo "<br>IF 1<br>";
             }
-            /*else if (($availabilityStart>=$listDisponibility[$i]) && ($availabilityEnd>=$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed) == 0) || (strcmp($listDisponibility[$i+2],'all') == 0)) && ((strcmp($listDisponibility[$i+3],$type) == 0) || (strcmp($listDisponibility[$i+3],'all') == 0)) && ((strcmp($listDisponibility[$i+4],$size) == 0) || (strcmp($listDisponibility[$i+4],'all') == 0))){
-                $flag=2;
-                $i=$i+5;
-                echo "<br>ELSE IF 1<br>";
-            }
-            if($flag == 2){
-                echo "<br>IF 2<br>";
-                if(($availabilityStart<=$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed) == 0) || (strcmp($listDisponibility[$i+2],'all') == 0)) && ((strcmp($listDisponibility[$i+3],$type) == 0) || (strcmp($listDisponibility[$i+3],'all') == 0)) && ((strcmp($listDisponibility[$i+4],$size) == 0) || (strcmp($listDisponibility[$i+4],'all') == 0))){
-                    $flag = 1;
-                    echo "<br>IF 3<br>";
-                }
-                else {
-                    $flag=0;
-                    echo "<br>ELSE 1<br>";
-                }
-            }*/
             $i=$i+5;
         }
 
@@ -192,9 +158,6 @@ class OwnerController
         require_once(VIEWS_PATH . "validate-session.php");
         require_once(VIEWS_PATH . "showGuardian.php");
     }
-
-    //TODO: filtrado guardian por raza
-    //TODO: hacer reservas
 
     public function getDisponibilityByGuardian ($idGuardian){
         $listReservationsGuardian = $this->reservationDAO->GetReservationDates($idGuardian);

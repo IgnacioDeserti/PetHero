@@ -46,10 +46,20 @@ class OwnerController
     //llama al checkeo 
     public function showGuardianList($availabilityStart ,$availabilityEnd, $idPet){
         $listGuardian = $this->guardianDAO->getAll();
-        $listChecked = array();
+        $listGuardianSize = array();
         $pet = $this->PetDAO->getPetByIdPet($idPet);
-        $i = 0;
         foreach($listGuardian as $guardian){
+            $listSize = $this->guardian_x_sizeDAO->getSizeById($guardian->getSize());
+            foreach($listSize as $size){
+                if(strcmp($this->sizeDAO->getName($pet->getIdSize()),$size) == 0){
+                    array_push($listGuardianSize,$guardian);
+                }
+            }
+        }
+        $listChecked = array();
+        
+        $i = 0;
+        foreach($listGuardianSize as $guardian){
             if($this->checkGuardian($availabilityStart ,$availabilityEnd, $pet->getBreed(), $pet->getType(), $this->sizeDAO->getName($pet->getIdSize()), $guardian->getIdGuardian())){
                 array_push($listChecked,$guardian);
             }
@@ -63,14 +73,20 @@ class OwnerController
     public function checkGuardian($availabilityStart ,$availabilityEnd, $breed, $type, $size, $idGuardian){
         $flag = 0;
         $listDisponibility = $this->getDisponibilityByGuardian($idGuardian);
+        $guardian = $this->guardianDAO->getGuardianById($idGuardian);
 
         $i = 0;
         while($i<count($listDisponibility)){
-            if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityStart<=$listDisponibility[$i+1]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed) == 0) || ((strcmp($listDisponibility[$i+2],'all') == 0))) && ((strcmp($listDisponibility[$i+3],$type) == 0) || ((strcmp($listDisponibility[$i+3],'all') == 0))) && ((strcmp($listDisponibility[$i+4],$size) == 0) || (strcmp($listDisponibility[$i+4],'all') == 0))){
+            
+            if(($availabilityStart>=$guardian->getAvailabilityStart()) && ($availabilityStart<=$listDisponibility[$i+1]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed) == 0) || ((strcmp($listDisponibility[$i+2],'all') == 0))) && ((strcmp($listDisponibility[$i+3],$type) == 0) || ((strcmp($listDisponibility[$i+3],'all') == 0))) && ((strcmp($listDisponibility[$i+4],$size) == 0) || (strcmp($listDisponibility[$i+4],'all') == 0))){
+                $flag=1;
+            }
+            else if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityStart<=$listDisponibility[$i+1]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed) == 0) || ((strcmp($listDisponibility[$i+2],'all') == 0))) && ((strcmp($listDisponibility[$i+3],$type) == 0) || ((strcmp($listDisponibility[$i+3],'all') == 0))) && ((strcmp($listDisponibility[$i+4],$size) == 0) || (strcmp($listDisponibility[$i+4],'all') == 0))){
                 $flag=1;
             }
             else if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityStart<=$listDisponibility[$i+1]) && ($availabilityEnd>$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed) == 0) || ((strcmp($listDisponibility[$i+2],'all')) == 0)) && ((strcmp($listDisponibility[$i+3],$type) == 0) || ((strcmp($listDisponibility[$i+3],'all') == 0))) && ((strcmp($listDisponibility[$i+4],$size) == 0) || (strcmp($listDisponibility[$i+4],'all') == 0))){
                 $flag=2;
+                $i = $i+5;
             }
             if($flag==2){
                 if(($availabilityStart<$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed) == 0) || ((strcmp($listDisponibility[$i+2],'all') == 0))) && ((strcmp($listDisponibility[$i+3],$type) == 0) || ((strcmp($listDisponibility[$i+3],'all') == 0))) && ((strcmp($listDisponibility[$i+4],$size) == 0) || (strcmp($listDisponibility[$i+4],'all') == 0))){

@@ -81,6 +81,7 @@
                 $reservation->setReservationDateStart($row["reservationDateStart"]);
                 $reservation->setReservationDateEnd($row["reservationDateEnd"]);
                 $reservation->setReservationStatus($row["reservationStatus"]);
+                $reservation->setSize($row["size"]);
             }
 
             return $reservation;
@@ -188,6 +189,7 @@
                 $reservation->setReservationDateEnd($row["reservationDateEnd"]);
                 $reservation->setReservationStatus($row["reservationStatus"]);
                 $reservation->setPrice($row["price"]);
+                $reservation->setSize($row["size"]);
                 array_push($reservationList, $reservation);
             }
 

@@ -46,13 +46,13 @@
                                         }?>
                                         </td>
                                         <?php if($guardian->getAvailabilityStart() != null && $guardian->getAvailabilityEnd() != null){ ?>
-                                             <td><button class="buttonSelectG">Hacer reserva</button></td>
+                                             <td><button class="buttonSelectG buttonHoversGreen">Hacer reserva</button></td>
                                         <?php } ?>
                                         <td><input type="hidden" name="idGuardian" value="<?php echo $guardian->getIdGuardian()?>"></td>
                     </form>
                     
                     <form action="<?php echo FRONT_ROOT?> Owner/filterGuardians">
-                                        <td><button class="buttonSelectG" type="submit">Volver</button>
+                                        <td><button class="buttonSelectG buttonRedHovers" type="submit">Volver</button>
                                    </tr>
                     </form>
                          </table>

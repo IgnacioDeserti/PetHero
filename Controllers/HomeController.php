@@ -8,22 +8,25 @@
     use Models\Owner as Owner;
     use DAO\Guardian_x_SizeDAO;
     use Models\Guardian as Guardian;
+    use DAO\ReservationDAO;
     use Exception;
 
     class HomeController{
 
         private $guardianDAO;
         private $ownerDAO;
-        private $petsDAO;
+        private $PetDAO;
         private $sizeDAO;
         private $gxsDAO;
+        private $reservationDAO;
 
         public function __construct(){
             $this->guardianDAO = new guardiansDAO();
             $this->ownerDAO = new ownersDAO();
-            $this->petsDAO = new petDAO();
+            $this->PetDAO = new petDAO();
             $this->sizeDAO = new sizeDAO();
             $this->gxsDAO = new Guardian_x_SizeDAO();
+            $this->reservationDAO = new ReservationDAO();
         }
 
         public function Index(){
@@ -88,7 +91,7 @@
 
         public function selectView($id){
 
-            $arrayListPet = $this->petsDAO->GetPetByIdOwner($id);
+            $arrayListPet = $this->PetDAO->GetPetByIdOwner($id);
 
             if(empty($arrayListPet)){
                 require_once(VIEWS_PATH . "validate-session.php");
@@ -104,7 +107,15 @@
             if($aux->getAvailabilityStart() == null && $aux->getAvailabilityEnd() == null){
                 require_once(VIEWS_PATH . "modifyAvailability.php");
             }else{
-                require_once(VIEWS_PATH . "guardian.php");
+                $wcReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Esperando confirmacion", $_SESSION['idUser']);
+                $fReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Finalizado", $_SESSION['idUser']);
+                $cReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Aceptada", $_SESSION['idUser']);
+                $allpets = $this->PetDAO;
+                $guardian = $this->guardianDAO;
+                $owner =$this->ownerDAO;
+                
+                require_once(VIEWS_PATH . "validate-session.php");
+                require_once(VIEWS_PATH . "listReservationGuardian.php");
             }
         }
 

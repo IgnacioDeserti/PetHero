@@ -31,13 +31,10 @@
                          <select name="breed" required>
                               <option value="">Selecciona mascota</option>
                               <?php foreach($listPets as $pet){?>
-                              <option value="<?php $pet->getBreed()?>"><?php echo $pet->getName() .'('.$pet->getBreed().')'?></option>
+                              <option value="<?php echo $pet->getIdPet();?>"><?php echo $pet->getName() . " ". $pet->getType() . ' ('.$pet->getBreed().')'?></option>
                               <?php }?>
                          </select>
                     </div>
-                    <input type="hidden" name="type" value="<?php echo $pet->getType()?>">
-                    <input type="hidden" name="size" value="<?php echo $pet->getIdSize()?>">
-                    <input type="hidden" name="idPet" value="<?php echo $pet->getIdPet()?>">
                     <button class="buttonFilter buttonHoversGreen" type="submit">Filtrar guardianes</button>
                     
 

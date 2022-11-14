@@ -95,14 +95,12 @@
 
         public function getSize()
         {
-                return $this->size;
+            return $this->size;
         }
 
         public function setSize($size)
         {
-                $this->size = $size;
-
-                return $this;
+            $this->size = $size;
         }
 
         public function getPrice() {

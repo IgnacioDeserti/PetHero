@@ -19,8 +19,8 @@
                     <div class="inputSelectPet">
                          <select name="type" required>
                               <option value="">Seleccione el tipo de mascota</option>
-                              <option value="Dog">Perro</option>
-                              <option value="Cat">Gato</option>
+                              <option value="D">Perro</option>
+                              <option value="C">Gato</option>
                          </select>    
                     </div>
 

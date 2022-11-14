@@ -222,6 +222,7 @@ use Models\Review as Review;
                 $guardian->setTypeUser($row["typeUser"]);
                 $guardian->setAvailabilityStart($row["availabilityStart"]);
                 $guardian->setAvailabilityEnd($row["availabilityEnd"]);
+                $guardian->setPrice($row["price"]);
             }
             
 

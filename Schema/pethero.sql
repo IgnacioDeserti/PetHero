@@ -129,9 +129,17 @@ DELIMITER //
 
 CREATE PROCEDURE Guardian_GetGuardian (IN email varchar(50))
 BEGIN
-	SELECT idGuardian, name, address, email, number, userName, password, typeUser, availabilityStart, availabilityEnd
+	SELECT idGuardian, name, address, email, number, userName, password, typeUser, availabilityStart, availabilityEnd, price
     FROM guardian
     WHERE (guardian.email = email);
+END//
+
+DELIMITER //
+CREATE PROCEDURE Guardian_GetGuardianById (IN idG integer)
+BEGIN
+	SELECT idGuardian, name, address, email, number, userName, password, typeUser, availabilityStart, availabilityEnd, price
+    FROM guardian
+    WHERE (guardian.idGuardian = idG);
 END//
 
 DELIMITER //
@@ -249,7 +257,7 @@ END//
 DELIMITER //
 CREATE PROCEDURE GetGuardianByUserName (IN userName varchar(50))
 BEGIN
-	SELECT idGuardian, name, address, email, number, userName, password, typeUser
+	SELECT idGuardian, name, address, email, number, userName, password, typeUser, availabilityStart, availabilityEnd, price
     FROM guardian
     WHERE (guardian.userName = userName);
 END//
@@ -277,7 +285,7 @@ BEGIN
     FROM reservation  
     WHERE reservation.idGuardian = idGuardianS;
 END//
-
+reservationDateStart
 DELIMITER //
 CREATE PROCEDURE Reservation_GetReservationsByIdOwner (in idOwnerS integer)
 BEGIN
@@ -346,7 +354,31 @@ END//
 DELIMITER //
 CREATE PROCEDURE reservation_changeStatus (in idReservationS int, in statusS varchar(30))
 BEGIN
-	UPDATE reservation SET status = statusS WHERE reservation.idReservation = idReservationS;
+	UPDATE reservation SET reservation.reservationStatus = statusS WHERE reservation.idReservation = idReservationS;
+END//
+
+DELIMITER //
+CREATE PROCEDURE Reservation_getReservationByStatusAndIdOwner (IN stat varchar(50), IN idOwnerR integer)
+BEGIN
+    SELECT *
+    FROM Reservation
+    WHERE Reservation.idOwner = idOwnerR AND Reservation.reservationStatus = stat;
 END//
 
 
+DELIMITER //
+CREATE PROCEDURE Reservation_getReservationByStatusAndIdGuardian (IN stat varchar(50), IN idGuardianR integer)
+BEGIN
+    SELECT *
+    FROM Reservation
+    WHERE Reservation.idGuardian = idGuardianR AND Reservation.reservationStatus = stat;
+END//
+
+
+DELIMITER //
+CREATE PROCEDURE Pet_GetNameByIdPet (in idPetS int)
+BEGIN
+	SELECT pet.name
+    FROM pet
+    WHERE pet.idPet = idPetS;
+END//

@@ -51,8 +51,14 @@
             }
         }
 
-        public function showReservationsList (){
-            $reservationList = $this->reservationDAO->GetReservationsByGuardian($_SESSION['idUser']);
+        public function showReservationsList(){
+            $wcReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Esperando confirmacion", $_SESSION['idUser']);
+            $fReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Finalizado", $_SESSION['idUser']);
+            $cReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Aceptada", $_SESSION['idUser']);
+            $allpets = $this->PetDAO;
+            $guardian = $this->guardianDAO;
+            $owner =$this->ownerDAO;
+            
             require_once(VIEWS_PATH . "validate-session.php");
             require_once(VIEWS_PATH . "listReservationGuardian.php");
         }
@@ -75,44 +81,43 @@
                 $this->showReservationsList();
             }
         }
+        
 
         public function declineReservation ($idReservation){
             $this->reservationDAO->changeReservationStatus($idReservation,'Rechazada');
             $this->showReservationsList();
         }
 
-        public function checkGuardian($availabilityStart ,$availabilityEnd, $breed, $type, $size , $idGuardian){
+        public function checkGuardian($availabilityStart, $availabilityEnd, $breed, $type, $size, $idGuardian){
             $flag = 0;
             $listDisponibility = $this->getDisponibilityByGuardian($idGuardian);
     
             $i = 0;
             while($i<count($listDisponibility)){
-                if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityStart<=$listDisponibility[$i+1]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed)) || ((strcmp($listDisponibility[$i+2],'all')))) && ((strcmp($listDisponibility[$i+3],$type)) || ((strcmp($listDisponibility[$i+3],'all')))) && ((strcmp($listDisponibility[$i+4],$size)) || (strcmp($listDisponibility[$i+4],'all')))){
+                if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityStart<=$listDisponibility[$i+1]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed) == 0) || ((strcmp($listDisponibility[$i+2],'all') == 0))) && ((strcmp($listDisponibility[$i+3],$type) == 0) || ((strcmp($listDisponibility[$i+3],'all') == 0))) && ((strcmp($listDisponibility[$i+4],$size) == 0) || (strcmp($listDisponibility[$i+4],'all') == 0))){
                     $flag=1;
                 }
-                else if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityStart<=$listDisponibility[$i=1]) && ($availabilityEnd>$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed)) || ((strcmp($listDisponibility[$i+2],'all')))) && ((strcmp($listDisponibility[$i+3],$type)) || ((strcmp($listDisponibility[$i+3],'all')))) && ((strcmp($listDisponibility[$i+4],$size)) || (strcmp($listDisponibility[$i+4],'all')))){
+                else if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityStart<=$listDisponibility[$i+1]) && ($availabilityEnd>$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed) == 0) || ((strcmp($listDisponibility[$i+2],'all')) == 0)) && ((strcmp($listDisponibility[$i+3],$type) == 0) || ((strcmp($listDisponibility[$i+3],'all') == 0))) && ((strcmp($listDisponibility[$i+4],$size) == 0) || (strcmp($listDisponibility[$i+4],'all') == 0))){
                     $flag=2;
                 }
                 if($flag==2){
-                    if(($availabilityStart<$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed)) || ((strcmp($listDisponibility[$i+2],'all')))) && ((strcmp($listDisponibility[$i+3],$type)) || ((strcmp($listDisponibility[$i+3],'all')))) && ((strcmp($listDisponibility[$i+4],$size)) || (strcmp($listDisponibility[$i+4],'all')))){
+                    if(($availabilityStart<$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed) == 0) || ((strcmp($listDisponibility[$i+2],'all') == 0))) && ((strcmp($listDisponibility[$i+3],$type) == 0) || ((strcmp($listDisponibility[$i+3],'all') == 0))) && ((strcmp($listDisponibility[$i+4],$size) == 0) || (strcmp($listDisponibility[$i+4],'all') == 0))){
                         $flag=1;
                     }
-                    else if(($availabilityStart<$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && (!(strcmp($listDisponibility[$i+2],$breed)) && (!(strcmp($listDisponibility[$i+2],'all')))) && (!(strcmp($listDisponibility[$i+3],$type)) && (!(strcmp($listDisponibility[$i+3],'all')))) && (!(strcmp($listDisponibility[$i+4],$size)) && !(strcmp($listDisponibility[$i+4],'all')))){
+                    else if(($availabilityStart<$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && (!(strcmp($listDisponibility[$i+2],$breed) == 0) && (!(strcmp($listDisponibility[$i+2],'all') == 0))) && (!(strcmp($listDisponibility[$i+3],$type)== 0) && (!(strcmp($listDisponibility[$i+3],'all') == 0))) && (!(strcmp($listDisponibility[$i+4],$size) == 0) && !(strcmp($listDisponibility[$i+4],'all') == 0))){
                         $flag=0;
                     }
                 }
                 if((($i+4)==(count($listDisponibility)-1)) && ($flag==2)){
                     $flag=0;
                 }
-                $i=$i+5;
+                $i = $i+5;
             }
-            if($flag == 0){
-                throw new Exception("No se puede aceptar la reserva");
-            }
+    
+            return $flag;
         }
         
         public function getDisponibilityByGuardian ($idGuardian){
-        
             $listReservationsGuardian = $this->reservationDAO->GetReservationDates($idGuardian);
             $start=0;
             $end=1;
@@ -128,7 +133,6 @@
             $formato = 'Y-m-d';
             $date = $this->guardianDAO->getReservationStart($idGuardian);
     
-    
             while($date<=$this->guardianDAO->getReservationEnd($idGuardian)){
                 if(count($listReservationsGuardian)>=5 && $listReservationsGuardian[$start] == $date){
                     if($startAv != null && $endAv != null){
@@ -138,8 +142,25 @@
                         array_push($listAvailability,$typeAv);
                         array_push($listAvailability,$sizeAv);
                     }
-                    if(count($listAvailability)>=5 && strcmp($listAvailability[(count($listAvailability))-3],$listReservationsGuardian[$breed]) && (($listAvailability[(count($listAvailability)-4)])+1)<=$listReservationsGuardian[$start] && (((strcmp($listAvailability[(count($listAvailability))-2],$listReservationsGuardian[$type])) || ((strcmp($listAvailability[(count($listAvailability))-2],'all'))))) && strcmp($listAvailability[(count($listAvailability))-1],$listReservationsGuardian[$size])){
+    
+                    if(count($listAvailability)>=5 && (strcmp($listAvailability[(count($listAvailability))-3],$listReservationsGuardian[$breed])==0) && (($listAvailability[(count($listAvailability)-4)])<=$listReservationsGuardian[$start]) && (((strcmp($listAvailability[(count($listAvailability))-2],$listReservationsGuardian[$type])==0))) && (strcmp($listAvailability[(count($listAvailability))-1],$listReservationsGuardian[$size])==0)){
                         $listAvailability[(count($listAvailability))-4]=$listReservationsGuardian[$end]; 
+                        if(($size + 5) < count($listReservationsGuardian)){
+                            $start = $start + 5;
+                            $end = $end + 5;
+                            $breed = $breed + 5;
+                            $type = $type + 5;
+                            $size = $size + 5;
+                            $startAv = null;
+                            $endAv = null;
+                            $breedAv = 'all';
+                            $typeAv = 'all';
+                            $sizeAv = 'all';
+                        }else{
+                            $date = strtotime($date);
+                            $date= strtotime("+1 day",$date);
+                            $date = date($formato,$date);
+                        }
                     }
                     else {
                         $startAv = $listReservationsGuardian[$start];
@@ -176,8 +197,8 @@
                         $date = date($formato,$date);
                     }
                 }
-                else if(count($listAvailability) > 0 && $listAvailability[(count($listAvailability)-5)] <$date && $date <=$listAvailability[(count($listAvailability)-4)]){
-                    $date = strtotime($date);
+                else if(count($listAvailability) > 0 && $listAvailability[(count($listAvailability)-5)] <= $date && $date <=$listAvailability[(count($listAvailability)-4)]){
+                    $date = strtotime($listAvailability[count($listAvailability) - 4]);
                     $date = strtotime('+1 day',$date);
                     $date = date($formato,$date);
                 }

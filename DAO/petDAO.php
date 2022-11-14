@@ -122,6 +122,25 @@
 
             $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
         }
+
+        public function getNameByIdPet($idPet)
+        {
+            $query = "CALL Pet_GetNameByIdPet(?)";
+
+            $parameters["idPetS"] = $idPet;
+
+            $this->connection = Connection::GetInstance();
+
+            $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+
+            foreach($result as $row){
+                $pet = new Pet();
+                $pet->setName($row["name"]);
+            }
+
+            return $pet->getName();
+        }
+
 }
 
 ?>

@@ -109,6 +109,8 @@
                     $reservation->setReservationDateStart($row["reservationDateStart"]);
                     $reservation->setReservationDateEnd($row["reservationDateEnd"]);
                     $reservation->setReservationStatus($row["reservationStatus"]);
+                    $reservation->setSize($row["size"]);
+                    $reservation->setPrice($row["price"]);
                     array_push($reviewList, $reservation);
             }
 
@@ -159,6 +161,70 @@
             $this->connection = Connection::GetInstance();
 
             $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+        }
+
+        public function getReservationByStatusAndIdOwner($status, $idOwner)
+        {
+            $reservationList = array();
+
+            $query = "CALL Reservation_getReservationByStatusAndIdOwner(?,?)";
+
+            $parameters["stat"] = $status;
+            $parameters["idOwnerR"] = $idOwner;
+
+            $this->connection = Connection::GetInstance();
+
+            $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+
+            foreach($result as $row){
+                $reservation = new Reservation();
+                $reservation->setIdReservation($row["idReservation"]);
+                $reservation->setIdOwner($row["idOwner"]);
+                $reservation->setIdGuardian($row["idGuardian"]);
+                $reservation->setIdPet($row["idPet"]);
+                $reservation->setBreed($row["breed"]);
+                $reservation->setAnimalType($row["animalType"]);
+                $reservation->setReservationDateStart($row["reservationDateStart"]);
+                $reservation->setReservationDateEnd($row["reservationDateEnd"]);
+                $reservation->setReservationStatus($row["reservationStatus"]);
+                $reservation->setPrice($row["price"]);
+                array_push($reservationList, $reservation);
+            }
+
+            return $reservationList;
+
+        }
+
+        public function getReservationByStatusAndIdGuardian($status, $idGuardian)
+        {
+            $reservationList = array();
+
+            $query = "CALL Reservation_getReservationByStatusAndIdGuardian(?,?)";
+
+            $parameters["stat"] = $status;
+            $parameters["idGuardianR"] = $idGuardian;
+
+            $this->connection = Connection::GetInstance();
+
+            $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+
+            foreach($result as $row){
+                $reservation = new Reservation();
+                $reservation->setIdReservation($row["idReservation"]);
+                $reservation->setIdOwner($row["idOwner"]);
+                $reservation->setIdGuardian($row["idGuardian"]);
+                $reservation->setIdPet($row["idPet"]);
+                $reservation->setBreed($row["breed"]);
+                $reservation->setAnimalType($row["animalType"]);
+                $reservation->setReservationDateStart($row["reservationDateStart"]);
+                $reservation->setReservationDateEnd($row["reservationDateEnd"]);
+                $reservation->setReservationStatus($row["reservationStatus"]);
+                $reservation->setPrice($row["price"]);
+                array_push($reservationList, $reservation);
+            }
+
+            return $reservationList;
+
         }
 
         

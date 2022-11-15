@@ -88,33 +88,20 @@
             $this->showReservationsList();
         }
 
-        public function checkGuardian($availabilityStart, $availabilityEnd, $breed, $type, $size, $idGuardian){
-            $flag = 0;
-            $listDisponibility = $this->getDisponibilityByGuardian($idGuardian);
-    
-            $i = 0;
-            while($i<count($listDisponibility)){
-                if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityStart<=$listDisponibility[$i+1]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed) == 0) || ((strcmp($listDisponibility[$i+2],'all') == 0))) && ((strcmp($listDisponibility[$i+3],$type) == 0) || ((strcmp($listDisponibility[$i+3],'all') == 0))) && ((strcmp($listDisponibility[$i+4],$size) == 0) || (strcmp($listDisponibility[$i+4],'all') == 0))){
-                    $flag=1;
-                }
-                else if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityStart<=$listDisponibility[$i+1]) && ($availabilityEnd>$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed) == 0) || ((strcmp($listDisponibility[$i+2],'all')) == 0)) && ((strcmp($listDisponibility[$i+3],$type) == 0) || ((strcmp($listDisponibility[$i+3],'all') == 0))) && ((strcmp($listDisponibility[$i+4],$size) == 0) || (strcmp($listDisponibility[$i+4],'all') == 0))){
-                    $flag=2;
-                }
-                if($flag==2){
-                    if(($availabilityStart<$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed) == 0) || ((strcmp($listDisponibility[$i+2],'all') == 0))) && ((strcmp($listDisponibility[$i+3],$type) == 0) || ((strcmp($listDisponibility[$i+3],'all') == 0))) && ((strcmp($listDisponibility[$i+4],$size) == 0) || (strcmp($listDisponibility[$i+4],'all') == 0))){
-                        $flag=1;
-                    }
-                    else if(($availabilityStart<$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && (!(strcmp($listDisponibility[$i+2],$breed) == 0) && (!(strcmp($listDisponibility[$i+2],'all') == 0))) && (!(strcmp($listDisponibility[$i+3],$type)== 0) && (!(strcmp($listDisponibility[$i+3],'all') == 0))) && (!(strcmp($listDisponibility[$i+4],$size) == 0) && !(strcmp($listDisponibility[$i+4],'all') == 0))){
-                        $flag=0;
-                    }
-                }
-                if((($i+4)==(count($listDisponibility)-1)) && ($flag==2)){
-                    $flag=0;
-                }
-                $i = $i+5;
+        public function checkGuardian($availabilityStart ,$availabilityEnd, $breed, $type, $size, $idGuardian){
+        $flag = 0;
+        $listDisponibility = $this->getDisponibilityByGuardian($idGuardian);
+        $guardian = $this->guardianDAO->getGuardianById($idGuardian);
+
+        $i = 0;
+        while($i<count($listDisponibility)){
+            if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed) == 0) || (strcmp($listDisponibility[$i+2],'all') == 0)) && ((strcmp($listDisponibility[$i+3],$type) == 0) || (strcmp($listDisponibility[$i+3],'all') == 0)) && ((strcmp($listDisponibility[$i+4],$size) == 0) || (strcmp($listDisponibility[$i+4],'all') == 0))){
+                $flag = 1;
             }
-    
-            return $flag;
+            $i=$i+5;
+        }
+
+        return $flag;
         }
         
         public function getDisponibilityByGuardian ($idGuardian){
@@ -226,8 +213,6 @@
             
             return $listAvailability;
         }
-        //TODO: aceptar reservas
-        //TODO: hacer el arreglo de disponibilidad
     }
 
 ?>

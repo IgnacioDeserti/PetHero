@@ -5,6 +5,7 @@
     use Models\Guardian as Guardian;
     use DAO\IGuardiansDAO as IGuardiansDAO;
 use DateTime;
+use Exception;
 use Models\Review as Review;
 
     class guardiansDAO implements IGuardiansDAO{
@@ -31,9 +32,12 @@ use Models\Review as Review;
             $parameters["availabilityEnd"] = $guardian->getAvailabilityEnd();
             $parameters["price"] = $guardian->getPrice();
 
-            $this->connection = Connection::GetInstance();
-
-            $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            try{
+                $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+                $this->connection = Connection::GetInstance();
+            }catch(Exception $error){
+                throw $error;
+            }
         }
 
         public function GetAll()
@@ -42,27 +46,31 @@ use Models\Review as Review;
 
             $query = "SELECT * FROM ".$this->tableName;
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+                $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 
-            foreach($result as $row){
-                $guardian = new Guardian();
-                $guardian->setIdGuardian($row["idGuardian"]);
-                $guardian->setName($row["name"]);
-                $guardian->setAddress($row["address"]);
-                $guardian->setEmail($row["email"]);
-                $guardian->setNumber($row["number"]);
-                $guardian->setUserName($row["userName"]);
-                $guardian->setPassword($row["password"]);
-                $guardian->setTypeUser($row["typeUser"]);
-                $guardian->setAvailabilityStart($row["availabilityStart"]);
-                $guardian->setAvailabilityEnd($row["availabilityEnd"]);
-                $guardian->setPrice($row['price']);
-                array_push($guardianList, $guardian);
+                foreach($result as $row){
+                    $guardian = new Guardian();
+                    $guardian->setIdGuardian($row["idGuardian"]);
+                    $guardian->setName($row["name"]);
+                    $guardian->setAddress($row["address"]);
+                    $guardian->setEmail($row["email"]);
+                    $guardian->setNumber($row["number"]);
+                    $guardian->setUserName($row["userName"]);
+                    $guardian->setPassword($row["password"]);
+                    $guardian->setTypeUser($row["typeUser"]);
+                    $guardian->setAvailabilityStart($row["availabilityStart"]);
+                    $guardian->setAvailabilityEnd($row["availabilityEnd"]);
+                    $guardian->setPrice($row['price']);
+                    array_push($guardianList, $guardian);
+                }
+
+                return $guardianList;
+            }catch(Exception $error){
+                throw $error;
             }
-
-            return $guardianList;
         }
 
 
@@ -73,26 +81,30 @@ use Models\Review as Review;
 
             $query = "CALL Guardian_GetGuardian(?)";
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
+                $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
 
-            $guardian = new Guardian();
-            foreach($result as $row){
-                $guardian->setIdGuardian($row["idGuardian"]);
-                $guardian->setName($row["name"]);
-                $guardian->setAddress($row["address"]);
-                $guardian->setEmail($row["email"]);
-                $guardian->setNumber($row["number"]);
-                $guardian->setUserName($row["userName"]);
-                $guardian->setPassword($row["password"]);
-                $guardian->setTypeUser($row["typeUser"]);
-                $guardian->setAvailabilityStart($row["availabilityStart"]);
-                $guardian->setAvailabilityEnd($row["availabilityEnd"]);
+                $guardian = new Guardian();
+                foreach($result as $row){
+                    $guardian->setIdGuardian($row["idGuardian"]);
+                    $guardian->setName($row["name"]);
+                    $guardian->setAddress($row["address"]);
+                    $guardian->setEmail($row["email"]);
+                    $guardian->setNumber($row["number"]);
+                    $guardian->setUserName($row["userName"]);
+                    $guardian->setPassword($row["password"]);
+                    $guardian->setTypeUser($row["typeUser"]);
+                    $guardian->setAvailabilityStart($row["availabilityStart"]);
+                    $guardian->setAvailabilityEnd($row["availabilityEnd"]);
+                }
+                
+
+                return $guardian;
+            }catch(Exception $error){
+                throw $error;
             }
-            
-
-            return $guardian;
         }
         
         public function delete($id){
@@ -100,9 +112,13 @@ use Models\Review as Review;
 
             $parameters["id"] =  $id;
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
 
-            $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+                $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            }catch(Exception $error){
+                throw $error;
+            }
 
         }
 
@@ -112,9 +128,12 @@ use Models\Review as Review;
             $parameters["newAvailabilityStart"] = $date;
             $parameters["idGuardianLogged"] =  $id;
 
-            $this->connection = Connection::GetInstance();
-
-            $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            }catch(Exception $error){
+                throw $error;
+            }
         }
 
         public function UpdateAvailabilityEnd($id, $date){
@@ -123,9 +142,12 @@ use Models\Review as Review;
             $parameters["newAvailabilityEnd"] = $date;
             $parameters["idGuardianLogged"] =  $id;
 
-            $this->connection = Connection::GetInstance();
-
-            $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            }catch(Exception $error){
+                throw $error;
+            }
         }
 
         
@@ -136,67 +158,73 @@ use Models\Review as Review;
 
             $query = "CALL GetGuardianByUserName(?)";
 
-            $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
+            try{
+                $this->connection = Connection::GetInstance();
 
-            $guardian = new Guardian();
-            foreach($result as $row){
-                $guardian->setIdGuardian($row["idGuardian"]);
-                $guardian->setName($row["name"]);
-                $guardian->setAddress($row["address"]);
-                $guardian->setEmail($row["email"]);
-                $guardian->setNumber($row["number"]);
-                $guardian->setUserName($row["userName"]);
-                $guardian->setPassword($row["password"]);
-                $guardian->setTypeUser($row["typeUser"]);
-                $guardian->setAvailabilityStart($row["availabilityStart"]);
-                $guardian->setAvailabilityEnd($row["availabilityEnd"]);
+                $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
+
+                $guardian = new Guardian();
+                foreach($result as $row){
+                    $guardian->setIdGuardian($row["idGuardian"]);
+                    $guardian->setName($row["name"]);
+                    $guardian->setAddress($row["address"]);
+                    $guardian->setEmail($row["email"]);
+                    $guardian->setNumber($row["number"]);
+                    $guardian->setUserName($row["userName"]);
+                    $guardian->setPassword($row["password"]);
+                    $guardian->setTypeUser($row["typeUser"]);
+                    $guardian->setAvailabilityStart($row["availabilityStart"]);
+                    $guardian->setAvailabilityEnd($row["availabilityEnd"]);
+                }
+                
+
+                return $guardian;
+            }catch(Exception $error){
+                throw $error;
             }
-            
-
-            return $guardian;
         }
 
-        public function getReservationStart($idGuardian){
-            
+        public function getReservationStart($idGuardian){  
             $result = NULL;
 
             $parameter["idGuardianS"] = $idGuardian;
 
             $query = "CALL Guardian_GetAvailabilityStart(?)";
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
+                $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
 
-            $avStart = null;
-            foreach($result as $row){
-                $avStart = new DateTime();
-                $avStart = $row["availabilityStart"];
+                $avStart = null;
+                foreach($result as $row){
+                    $avStart = new DateTime();
+                    $avStart = $row["availabilityStart"];
+                }
+        
+                return $avStart;
+            }catch(Exception $error){
+                throw $error;
             }
-    
-            return $avStart;
         }
 
         public function getReservationEnd($idGuardian){
-            
             $result = NULL;
-
             $parameter["idGuardianS"] = $idGuardian;
-
             $query = "CALL Guardian_GetAvailabilityEnd(?)";
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
+                $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
 
-            $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
-
-            $avEnd = null;
-            foreach($result as $row){
-                $avEnd = $row["availabilityEnd"];
+                foreach($result as $row){
+                    $avEnd = $row["availabilityEnd"];
+                }
+                return $avEnd;
+            }catch(Exception $error){
+                throw $error;
             }
-    
-            return $avEnd;
         }
 
         public function getGuardianById($idGuardian){
@@ -206,27 +234,29 @@ use Models\Review as Review;
 
             $query = "CALL Guardian_GetGuardianById(?)";
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
+                $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
 
-            $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
-
-            $guardian = new Guardian();
-            foreach($result as $row){
-                $guardian->setIdGuardian($row["idGuardian"]);
-                $guardian->setName($row["name"]);
-                $guardian->setAddress($row["address"]);
-                $guardian->setEmail($row["email"]);
-                $guardian->setNumber($row["number"]);
-                $guardian->setUserName($row["userName"]);
-                $guardian->setPassword($row["password"]);
-                $guardian->setTypeUser($row["typeUser"]);
-                $guardian->setAvailabilityStart($row["availabilityStart"]);
-                $guardian->setAvailabilityEnd($row["availabilityEnd"]);
-                $guardian->setPrice($row["price"]);
-            }
+                $guardian = new Guardian();
+                foreach($result as $row){
+                    $guardian->setIdGuardian($row["idGuardian"]);
+                    $guardian->setName($row["name"]);
+                    $guardian->setAddress($row["address"]);
+                    $guardian->setEmail($row["email"]);
+                    $guardian->setNumber($row["number"]);
+                    $guardian->setUserName($row["userName"]);
+                    $guardian->setPassword($row["password"]);
+                    $guardian->setTypeUser($row["typeUser"]);
+                    $guardian->setAvailabilityStart($row["availabilityStart"]);
+                    $guardian->setAvailabilityEnd($row["availabilityEnd"]);
+                    $guardian->setPrice($row["price"]);
+                }
             
-
-            return $guardian;
+                return $guardian;
+            }catch(Exception $error){
+                throw $error;
+            }
         }
 
 }

@@ -8,7 +8,7 @@
           <section id="listado">
                <div class="divListGuardian">
                     
-                    <form action="<?php echo FRONT_ROOT ?>Owner/createReservation" method="post">
+                    <form action="<?php echo FRONT_ROOT ?>Owner/makeReservation" method="post">
                          <table class="tableListGuardian">
                               <caption style="text-align: center;"Perros>Guardianes</caption>
                               <thead>
@@ -48,6 +48,9 @@
                                         <?php if($guardian->getAvailabilityStart() != null && $guardian->getAvailabilityEnd() != null){ ?>
                                              <td><button class="buttonSelectG buttonHoversGreen">Hacer reserva</button></td>
                                         <?php } ?>
+                                        <input type="hidden" name="availabilityStart" value="<?php echo $availabilityStart; ?>">   
+                                        <input type="hidden" name="availabilityEnd" value="<?php echo $availabilityEnd; ?>">   
+                                        <input type="hidden" name="idPet" value="<?php echo $idPet; ?>">
                                         <td><input type="hidden" name="idGuardian" value="<?php echo $guardian->getIdGuardian()?>"></td>
                     </form>
                     

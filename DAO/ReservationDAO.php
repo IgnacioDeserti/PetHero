@@ -3,6 +3,7 @@
     namespace DAO;
 
     use Models\Reservation;
+    use Exception;
 
     class ReservationDAO{
         private $connection;
@@ -26,9 +27,13 @@
             $parameters["reservationDateEnd"] = $reservation->getReservationDateEnd();
             $parameters["size"] = $reservation->getSize();
             $parameters["price"] = $reservation->getPrice();
+            
+            try{
             $this->connection = Connection::GetInstance();
-
             $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            }catch(Exception $error){
+                throw new Exception("No se pudo crear la reserva");
+            }
         }
 
         public function GetReservationsByGuardian($idGuardian)
@@ -39,25 +44,29 @@
 
             $parameters["idGuardianS"] = $idGuardian;
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+                $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
 
-            foreach($result as $row){
-                $reservation = new Reservation();
-                    $reservation->setIdReservation($row["idReservation"]);
-                    $reservation->setIdOwner($row["idOwner"]);
-                    $reservation->setIdGuardian($row["idGuardian"]);
-                    $reservation->setIdPet($row["idPet"]);
-                    $reservation->setBreed($row["breed"]);
-                    $reservation->setAnimalType($row["animalType"]);
-                    $reservation->setReservationDateStart($row["reservationDateStart"]);
-                    $reservation->setReservationDateEnd($row["reservationDateEnd"]);
-                    $reservation->setReservationStatus($row["reservationStatus"]);
-                    array_push($reservationList, $reservation);
+                foreach($result as $row){
+                    $reservation = new Reservation();
+                        $reservation->setIdReservation($row["idReservation"]);
+                        $reservation->setIdOwner($row["idOwner"]);
+                        $reservation->setIdGuardian($row["idGuardian"]);
+                        $reservation->setIdPet($row["idPet"]);
+                        $reservation->setBreed($row["breed"]);
+                        $reservation->setAnimalType($row["animalType"]);
+                        $reservation->setReservationDateStart($row["reservationDateStart"]);
+                        $reservation->setReservationDateEnd($row["reservationDateEnd"]);
+                        $reservation->setReservationStatus($row["reservationStatus"]);
+                        array_push($reservationList, $reservation);
+                }
+
+                return $reservationList;
+            }catch(Exception $error){
+                throw new Exception("El guardian con ese id no tiene reservas");
             }
-
-            return $reservationList;
         }
 
         public function GetReservationsById($idRes)
@@ -66,40 +75,12 @@
 
             $parameters["idRes"] = $idRes;
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+                $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
 
-            foreach($result as $row){
-                $reservation = new Reservation();
-                $reservation->setIdReservation($row["idReservation"]);
-                $reservation->setIdOwner($row["idOwner"]);
-                $reservation->setIdGuardian($row["idGuardian"]);
-                $reservation->setIdPet($row["idPet"]);
-                $reservation->setBreed($row["breed"]);
-                $reservation->setAnimalType($row["animalType"]);
-                $reservation->setReservationDateStart($row["reservationDateStart"]);
-                $reservation->setReservationDateEnd($row["reservationDateEnd"]);
-                $reservation->setReservationStatus($row["reservationStatus"]);
-                $reservation->setSize($row["size"]);
-            }
-
-            return $reservation;
-        }
-
-        public function GetReservationsByOwner($idOwner)
-        {
-            $reviewList = array();
-
-            $query = "CALL Reservation_GetReservationsByIdOwner(?)";
-
-            $parameters["idOwnerS"] = $idOwner;
-
-            $this->connection = Connection::GetInstance();
-
-            $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
-
-            foreach($result as $row){
+                foreach($result as $row){
                     $reservation = new Reservation();
                     $reservation->setIdReservation($row["idReservation"]);
                     $reservation->setIdOwner($row["idOwner"]);
@@ -111,23 +92,60 @@
                     $reservation->setReservationDateEnd($row["reservationDateEnd"]);
                     $reservation->setReservationStatus($row["reservationStatus"]);
                     $reservation->setSize($row["size"]);
-                    $reservation->setPrice($row["price"]);
-                    array_push($reviewList, $reservation);
-            }
+                }
 
-            return $reviewList;
+                return $reservation;
+            }catch(Exception $error){
+                throw new Exception("No existe reserva con ese id");
+            }
         }
 
-        
+        public function GetReservationsByOwner($idOwner)
+        {
+            $reviewList = array();
+
+            $query = "CALL Reservation_GetReservationsByIdOwner(?)";
+
+            $parameters["idOwnerS"] = $idOwner;
+
+            try{
+                $this->connection = Connection::GetInstance();
+
+                $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+
+                foreach($result as $row){
+                        $reservation = new Reservation();
+                        $reservation->setIdReservation($row["idReservation"]);
+                        $reservation->setIdOwner($row["idOwner"]);
+                        $reservation->setIdGuardian($row["idGuardian"]);
+                        $reservation->setIdPet($row["idPet"]);
+                        $reservation->setBreed($row["breed"]);
+                        $reservation->setAnimalType($row["animalType"]);
+                        $reservation->setReservationDateStart($row["reservationDateStart"]);
+                        $reservation->setReservationDateEnd($row["reservationDateEnd"]);
+                        $reservation->setReservationStatus($row["reservationStatus"]);
+                        $reservation->setSize($row["size"]);
+                        $reservation->setPrice($row["price"]);
+                        array_push($reviewList, $reservation);
+                }
+
+                return $reviewList;
+            }catch(Exception $error){
+                throw new Exception("El dueño con ese id no tiene reservas");
+            }
+        }
 
         public function delete($id){
             $query = "CALL Reservation_Delete(?)";
 
             $parameters["id"] =  $id;
 
-            $this->connection = Connection::GetInstance();
-
-            $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            }catch(Exception $error){
+                throw new Exception("No se pudo borrar la reserva");
+            }
         }
 
         public function GetReservationDates($idGuardian)
@@ -138,19 +156,23 @@
 
             $parameters["idGuardianS"] = $idGuardian;
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+                $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
 
-            foreach($result as $date){
-                array_push($dates, $date['reservationDateStart']);
-                array_push($dates, $date['reservationDateEnd']);
-                array_push($dates, $date['breed']);
-                array_push($dates, $date['animalType']);
-                array_push($dates, $date['size']);
+                foreach($result as $date){
+                    array_push($dates, $date['reservationDateStart']);
+                    array_push($dates, $date['reservationDateEnd']);
+                    array_push($dates, $date['breed']);
+                    array_push($dates, $date['animalType']);
+                    array_push($dates, $date['size']);
+                }
+
+                return $dates;
+            }catch(Exception $error){
+                throw new Exception("No existe reserva con ese id");
             }
-
-            return $dates;
         }
 
         public function changeReservationStatus ($idReservation,$status){
@@ -159,9 +181,12 @@
             $parameters["idReservationS"] = $idReservation;
             $parameters["statusS"] = $status;
 
-            $this->connection = Connection::GetInstance();
-
-            $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+            }catch(Exception $error){
+                throw new Exception("No se pudo modificar la reserva");
+            }
         }
 
         public function getReservationByStatusAndIdOwner($status, $idOwner)
@@ -173,27 +198,31 @@
             $parameters["stat"] = $status;
             $parameters["idOwnerR"] = $idOwner;
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+                $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
 
-            foreach($result as $row){
-                $reservation = new Reservation();
-                $reservation->setIdReservation($row["idReservation"]);
-                $reservation->setIdOwner($row["idOwner"]);
-                $reservation->setIdGuardian($row["idGuardian"]);
-                $reservation->setIdPet($row["idPet"]);
-                $reservation->setBreed($row["breed"]);
-                $reservation->setAnimalType($row["animalType"]);
-                $reservation->setReservationDateStart($row["reservationDateStart"]);
-                $reservation->setReservationDateEnd($row["reservationDateEnd"]);
-                $reservation->setReservationStatus($row["reservationStatus"]);
-                $reservation->setPrice($row["price"]);
-                $reservation->setSize($row["size"]);
-                array_push($reservationList, $reservation);
+                foreach($result as $row){
+                    $reservation = new Reservation();
+                    $reservation->setIdReservation($row["idReservation"]);
+                    $reservation->setIdOwner($row["idOwner"]);
+                    $reservation->setIdGuardian($row["idGuardian"]);
+                    $reservation->setIdPet($row["idPet"]);
+                    $reservation->setBreed($row["breed"]);
+                    $reservation->setAnimalType($row["animalType"]);
+                    $reservation->setReservationDateStart($row["reservationDateStart"]);
+                    $reservation->setReservationDateEnd($row["reservationDateEnd"]);
+                    $reservation->setReservationStatus($row["reservationStatus"]);
+                    $reservation->setPrice($row["price"]);
+                    $reservation->setSize($row["size"]);
+                    array_push($reservationList, $reservation);
+                }
+
+                return $reservationList;
+            }catch(Exception $error){
+                throw new Exception("No existen reservas de ese dueño o con ese estado");
             }
-
-            return $reservationList;
 
         }
 
@@ -206,26 +235,30 @@
             $parameters["stat"] = $status;
             $parameters["idGuardianR"] = $idGuardian;
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+                $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
 
-            foreach($result as $row){
-                $reservation = new Reservation();
-                $reservation->setIdReservation($row["idReservation"]);
-                $reservation->setIdOwner($row["idOwner"]);
-                $reservation->setIdGuardian($row["idGuardian"]);
-                $reservation->setIdPet($row["idPet"]);
-                $reservation->setBreed($row["breed"]);
-                $reservation->setAnimalType($row["animalType"]);
-                $reservation->setReservationDateStart($row["reservationDateStart"]);
-                $reservation->setReservationDateEnd($row["reservationDateEnd"]);
-                $reservation->setReservationStatus($row["reservationStatus"]);
-                $reservation->setPrice($row["price"]);
-                array_push($reservationList, $reservation);
+                foreach($result as $row){
+                    $reservation = new Reservation();
+                    $reservation->setIdReservation($row["idReservation"]);
+                    $reservation->setIdOwner($row["idOwner"]);
+                    $reservation->setIdGuardian($row["idGuardian"]);
+                    $reservation->setIdPet($row["idPet"]);
+                    $reservation->setBreed($row["breed"]);
+                    $reservation->setAnimalType($row["animalType"]);
+                    $reservation->setReservationDateStart($row["reservationDateStart"]);
+                    $reservation->setReservationDateEnd($row["reservationDateEnd"]);
+                    $reservation->setReservationStatus($row["reservationStatus"]);
+                    $reservation->setPrice($row["price"]);
+                    array_push($reservationList, $reservation);
+                }
+
+                return $reservationList;
+            }catch(Exception $error){
+                throw new Exception("No existen reservas de ese guardian o con ese estado");
             }
-
-            return $reservationList;
 
         }
 

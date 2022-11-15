@@ -4,6 +4,7 @@
 
     use Models\Pet as Pet;
     use DAO\IPetDAO;
+    use Exception;
 
     class PetDAO implements IPetDAO{
         private $connection;
@@ -26,9 +27,12 @@
             $parameters["idOwner"] = $pet->getIdOwner();
             $parameters["type"] = $pet->getType();
 
-            $this->connection = Connection::GetInstance();
-
-            $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            }catch(Exception $error){
+                throw new Exception("No se pudo agregar mascota");
+            }
 
         }
 
@@ -38,26 +42,30 @@
 
             $query = "SELECT * FROM ".$this->tableName;
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+                $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 
-            foreach($result as $row){
-                $pet = new Pet();
-                $pet->setIdPet($row["idPet"]);
-                $pet->setName($row["name"]);
-                $pet->setBreed($row["breed"]);
-                $pet->setIdSize($row["idSize"]);
-                $pet->setObservations($row["observations"]);
-                $pet->setPhoto1($row["photo1"]);
-                $pet->setPhoto2($row["photo2"]);
-                $pet->setVideo($row["video"]);
-                $pet->setIdOwner($row["idOwner"]);
-                $pet->setType($row["type"]);
-                array_push($petList, $pet);
+                foreach($result as $row){
+                    $pet = new Pet();
+                    $pet->setIdPet($row["idPet"]);
+                    $pet->setName($row["name"]);
+                    $pet->setBreed($row["breed"]);
+                    $pet->setIdSize($row["idSize"]);
+                    $pet->setObservations($row["observations"]);
+                    $pet->setPhoto1($row["photo1"]);
+                    $pet->setPhoto2($row["photo2"]);
+                    $pet->setVideo($row["video"]);
+                    $pet->setIdOwner($row["idOwner"]);
+                    $pet->setType($row["type"]);
+                    array_push($petList, $pet);
+                }
+
+                return $petList;
+            }catch(Exception $error){
+                throw new Exception("El dueño con ese id no tiene mascotas");
             }
-
-            return $petList;
         }
 
         public function GetAll()
@@ -66,25 +74,29 @@
 
             $query = "SELECT * FROM ".$this->tableName;
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+                $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 
-            foreach($result as $row){
-                $pet = new Pet();
-                $pet->setName($row["name"]);
-                $pet->setBreed($row["breed"]);
-                $pet->setIdSize($row["idSize"]);
-                $pet->setObservations($row["observations"]);
-                $pet->setPhoto1($row["photo1"]);
-                $pet->setPhoto2($row["photo2"]);
-                $pet->setVideo($row["video"]);
-                $pet->setIdOwner($row["idOwner"]);
-                $pet->setType($row["type"]);
-                array_push($petList, $pet);
+                foreach($result as $row){
+                    $pet = new Pet();
+                    $pet->setName($row["name"]);
+                    $pet->setBreed($row["breed"]);
+                    $pet->setIdSize($row["idSize"]);
+                    $pet->setObservations($row["observations"]);
+                    $pet->setPhoto1($row["photo1"]);
+                    $pet->setPhoto2($row["photo2"]);
+                    $pet->setVideo($row["video"]);
+                    $pet->setIdOwner($row["idOwner"]);
+                    $pet->setType($row["type"]);
+                    array_push($petList, $pet);
+                }
+
+                return $petList;
+            }catch(Exception $error){
+                throw new Exception("La lista de mascotas esta vacia");
             }
-
-            return $petList;
         }
 
         public function getPetByIdPet($idPet)
@@ -93,24 +105,28 @@
 
             $parameters["idPetS"] = $idPet;
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+                $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
 
-            foreach($result as $row){
-                $pet = new Pet();
-                $pet->setName($row["name"]);
-                $pet->setBreed($row["breed"]);
-                $pet->setIdSize($row["idSize"]);
-                $pet->setObservations($row["observations"]);
-                $pet->setPhoto1($row["photo1"]);
-                $pet->setPhoto2($row["photo2"]);
-                $pet->setVideo($row["video"]);
-                $pet->setIdOwner($row["idOwner"]);
-                $pet->setType($row["type"]);
+                foreach($result as $row){
+                    $pet = new Pet();
+                    $pet->setName($row["name"]);
+                    $pet->setBreed($row["breed"]);
+                    $pet->setIdSize($row["idSize"]);
+                    $pet->setObservations($row["observations"]);
+                    $pet->setPhoto1($row["photo1"]);
+                    $pet->setPhoto2($row["photo2"]);
+                    $pet->setVideo($row["video"]);
+                    $pet->setIdOwner($row["idOwner"]);
+                    $pet->setType($row["type"]);
+                }
+
+                return $pet;
+            }catch(Exception $error){
+                throw new Exception("No se pudo eliminar mascota");
             }
-
-            return $pet;
         }
 
         public function delete($id){
@@ -118,9 +134,12 @@
 
             $parameters["id"] =  $id;
 
-            $this->connection = Connection::GetInstance();
-
-            $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            }catch(Exception $error){
+                throw new Exception("No se pudo eliminar mascota");
+            }
         }
 
         public function getNameByIdPet($idPet)
@@ -129,16 +148,19 @@
 
             $parameters["idPetS"] = $idPet;
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
+                $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
 
-            $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+                foreach($result as $row){
+                    $pet = new Pet();
+                    $pet->setName($row["name"]);
+                }
 
-            foreach($result as $row){
-                $pet = new Pet();
-                $pet->setName($row["name"]);
+                return $pet->getName();
+            }catch(Exception $error){
+                throw new Exception("No existe mascota con ese id");
             }
-
-            return $pet->getName();
         }
 
 }

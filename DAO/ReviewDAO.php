@@ -3,6 +3,7 @@
     namespace DAO;
 
     use Models\Review as Review;
+    use Exception;
 
     class ReviewDAO{
         private $connection;
@@ -22,9 +23,13 @@
             $parameters["idOwner"] = $review->getIdOwner();
             $parameters["idGuardian"] = $review->getIdGuardian();
             $parameters["idReservation"] = $review->getIdReservation();
-            $this->connection = Connection::GetInstance();
-
-            $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            }catch(Exception $error){
+                throw new Exception("No se pudo agregar la reseña");
+            }
         }
 
         public function GetReviewsByGuardian($idGuardian)
@@ -35,21 +40,25 @@
 
             $parameters["idGuardianS"] = $idGuardian;
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+                $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
 
-            foreach($result as $row){
-                $review = new Review();
-                $review->setRating($row["rating"]);
-                $review->setObservations($row["observations"]);
-                $review->setIdOwner($row["idOwner"]);
-                $review->setIdGuardian($row["idGuardian"]);
-                $review->setIdReservation($row["idReservation"]);
-                array_push($reviewList, $review);
+                foreach($result as $row){
+                    $review = new Review();
+                    $review->setRating($row["rating"]);
+                    $review->setObservations($row["observations"]);
+                    $review->setIdOwner($row["idOwner"]);
+                    $review->setIdGuardian($row["idGuardian"]);
+                    $review->setIdReservation($row["idReservation"]);
+                    array_push($reviewList, $review);
+                }
+
+                return $reviewList;
+            }catch(Exception $error){
+                throw new Exception("El guardian con ese id no tiene reseñas");
             }
-
-            return $reviewList;
         }
 
         public function delete($id){
@@ -57,9 +66,12 @@
 
             $parameters["id"] =  $id;
 
-            $this->connection = Connection::GetInstance();
-
-            $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            }catch(Exception $error){
+                throw new Exception("No se pudo eliminar la reseña");
+            }
         }
         
 

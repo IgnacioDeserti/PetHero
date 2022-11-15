@@ -94,6 +94,19 @@ CREATE TABLE IF NOT EXISTS guardian_x_size(
     constraint FK_guardianSize_x_size foreign key (idSize) references size (idSize)
 );
 
+CREATE TABLE IF NOT EXISTS paymentCoupon(
+    idPayment integer not null auto_increment,
+    ownerName varchar(50) not null,
+    guardianName varchar(50) not null,
+    petName varchar(50) not null,
+    price float not null,
+    dateP date not null,
+    titular varchar(50) not null,
+    reservationNumber integer not null,
+    constraint PK_idPayment primary key (idPayment),
+    constraint FK_reservationNumber foreign key (reservationNumber) references reservationNumber (idReservation)
+);
+
 DELIMITER //
 
 CREATE PROCEDURE Guardian_Add (IN name varchar(50), IN address varchar(50), IN email varchar(50), IN number varchar(50), IN userName varchar(50), IN password varchar(50), IN typeUser char(1), IN availabilityStart date, IN availabilityEnd date, IN price float)
@@ -283,7 +296,7 @@ CREATE PROCEDURE Reservation_GetReservationsByIdGuardian (in idGuardianS integer
 BEGIN
 	SELECT *
     FROM reservation  
-    WHERE reservation.idGuardian = idGuardianS;
+    WHERE reservation.idGuardian = idGuardianS and reservation.reservationStatus != 'Cancelado' ;
 END//
 reservationDateStart
 DELIMITER //
@@ -291,7 +304,7 @@ CREATE PROCEDURE Reservation_GetReservationsByIdOwner (in idOwnerS integer)
 BEGIN
 	SELECT *
     FROM reservation  
-    WHERE reservation.idOwner = idOwnerS;
+    WHERE reservation.idOwner = idOwnerS and reservation.reservationStatus != 'Cancelado' ;
 END//
 
 DELIMITER //
@@ -299,7 +312,7 @@ CREATE PROCEDURE Reservation_GetReservationById (in idRes integer)
 BEGIN
 	SELECT *
     FROM reservation  
-    WHERE reservation.idReservation = idRes;
+    WHERE reservation.idReservation = idRes and reservation.reservationStatus != 'Cancelado' ;
 END//
 
 DELIMITER //
@@ -307,7 +320,7 @@ CREATE PROCEDURE Reservation_GetDates (in idGuardianS int)
 BEGIN
 	SELECT Reservation.reservationDateStart, Reservation.reservationDateEnd, Reservation.breed, Reservation.type, Reservation.size
     FROM Reservation  
-    WHERE Reservation.idGuardian = idGuardianS
+    WHERE Reservation.idGuardian = idGuardianS and reservation.reservationStatus != 'Cancelado' 
     ORDER BY Reservation.reservationDateStart ASC;
 END//
 
@@ -362,7 +375,7 @@ CREATE PROCEDURE Reservation_getReservationByStatusAndIdOwner (IN stat varchar(5
 BEGIN
     SELECT *
     FROM Reservation
-    WHERE Reservation.idOwner = idOwnerR AND Reservation.reservationStatus = stat;
+    WHERE Reservation.idOwner = idOwnerR AND Reservation.reservationStatus = stat and reservation.reservationStatus != 'Cancelado' ;;
 END//
 
 
@@ -381,4 +394,19 @@ BEGIN
 	SELECT pet.name
     FROM pet
     WHERE pet.idPet = idPetS;
+END//
+
+DELIMITER //
+CREATE PROCEDURE paymentCoupon_Add (in idPaymentS int, in ownerNameS varchar(50), in guardianNameS varchar(50, in petNameS),in priceS float, in dateS date, in titularS varchar(50), in reservationNumberS integer)
+BEGIN
+	INSERT INTO paymentCoupon (idPayment, ownerName, guardianName, petName, price,  dateP, titular, reservationNumber)
+    VALUES (idPaymentS, ownerNameS, guardianNameS, petNameS, priceS, dateS, titularS, reservationNumberS);
+END//
+
+DELIMITER //
+CREATE PROCEDURE paymentCoupon_getPaymentById (in idRes int)
+BEGIN
+	SELECT *
+    FROM paymentCoupon
+    WHERE paymentCoupon.reservationNumber = idRes;
 END//

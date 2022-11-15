@@ -320,6 +320,15 @@ class OwnerController
         return ($i * $pricePD);
     }
 
+    public function chargeCard($idReservation){
+        require_once(VIEWS_PATH . 'validate-session.php');
+        require_once(VIEWS_PATH . 'chargeCard.php');
+    }
+
+    
+
+    
+
 }
 
 

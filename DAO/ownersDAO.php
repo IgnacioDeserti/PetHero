@@ -29,8 +29,8 @@
             try{
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
-            }catch (Exception $error){
-                throw $error;
+            }catch(Exception $error){
+                throw new Exception("No se pudo agregar dueño");
             }
             
         }
@@ -60,7 +60,7 @@
 
                 return $ownerList;
             }catch(Exception $error){
-                throw $error;
+                throw new Exception("La lista de dueños esta vacia");
             }
         }
 
@@ -72,11 +72,15 @@
 
             $query = "CALL Owner_GetOwnerById(?)";
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
+                $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
 
-            return $result['name'];
+                return $result['name'];
+            }catch(Exception $error){
+                throw new Exception("No existe dueño con ese id");
+            }
         }
 
         public function getOwner($email){
@@ -86,23 +90,27 @@
 
             $query = "CALL Owner_GetOwner(?)";
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
+                $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
 
-            $owner = new Owner();
-            foreach($result as $row){
-                $owner->setIdOwner($row["idOwner"]);
-                $owner->setName($row["name"]);
-                $owner->setAddress($row["address"]);
-                $owner->setEmail($row["email"]);
-                $owner->setNumber($row["number"]);
-                $owner->setUserName($row["userName"]);
-                $owner->setPassword($row["password"]);
-                $owner->setTypeUser($row["typeUser"]);
+                $owner = new Owner();
+                foreach($result as $row){
+                    $owner->setIdOwner($row["idOwner"]);
+                    $owner->setName($row["name"]);
+                    $owner->setAddress($row["address"]);
+                    $owner->setEmail($row["email"]);
+                    $owner->setNumber($row["number"]);
+                    $owner->setUserName($row["userName"]);
+                    $owner->setPassword($row["password"]);
+                    $owner->setTypeUser($row["typeUser"]);
+                }
+                return $owner;
+
+            }catch(Exception $error){
+                throw new Exception("No se pudo agregar dueño");
             }
-
-            return $owner;
         }
         
         public function delete($id){
@@ -110,9 +118,12 @@
 
             $parameters["id"] =  $id;
 
-            $this->connection = Connection::GetInstance();
-
-            $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            }catch(Exception $error){
+                throw new Exception("No se pudo agregar dueño");
+            }
 
         }
 
@@ -123,23 +134,27 @@
 
             $query = "CALL GetOwnerByUserName(?)";
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
+                $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
 
-            $owner = new Owner();
-            foreach($result as $row){
-                $owner->setIdOwner($row["idOwner"]);
-                $owner->setName($row["name"]);
-                $owner->setAddress($row["address"]);
-                $owner->setEmail($row["email"]);
-                $owner->setNumber($row["number"]);
-                $owner->setUserName($row["userName"]);
-                $owner->setPassword($row["password"]);
-                $owner->setTypeUser($row["typeUser"]);
+                $owner = new Owner();
+                foreach($result as $row){
+                    $owner->setIdOwner($row["idOwner"]);
+                    $owner->setName($row["name"]);
+                    $owner->setAddress($row["address"]);
+                    $owner->setEmail($row["email"]);
+                    $owner->setNumber($row["number"]);
+                    $owner->setUserName($row["userName"]);
+                    $owner->setPassword($row["password"]);
+                    $owner->setTypeUser($row["typeUser"]);
+                }
+
+                return $owner;
+            }catch(Exception $error){
+                throw new Exception("No se pudo agregar dueño");
             }
-
-            return $owner;
         }
         
         public function GetIdOwner($email){

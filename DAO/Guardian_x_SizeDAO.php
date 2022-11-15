@@ -27,8 +27,8 @@ use Exception;
             try{
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
-            }catch(Exception $error) {
-                throw $error;
+            }catch(Exception $error){
+                throw new Exception("No se pudo agregar el tamaño del guardian");
             }
 
         }
@@ -50,10 +50,9 @@ use Exception;
                     $newGXS->setIdSize($row["idSize"]);
                     array_push($this->guardianXsizeList, $newGXS);
                 }
-
                 return $this->guardianXsizeList;
             }catch(Exception $error){
-                throw new Exception("No se pudo agregar el tamaño del guardian");
+                throw new Exception("La lista esta vacia");
             }
         }
 
@@ -78,7 +77,7 @@ use Exception;
 
                 return $SizeList;
             }catch(Exception $error){
-                throw $error;
+                throw new Exception("El guardian no tiene tamaños asignados");
             }
         }
         
@@ -89,10 +88,9 @@ use Exception;
 
             try{
                 $this->connection = Connection::GetInstance();
-
                 $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
             }catch(Exception $error){
-                throw $error;
+                throw new Exception("No se encontro el tamaño del guardian");
             }
 
         }

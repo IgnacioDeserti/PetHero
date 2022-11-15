@@ -36,7 +36,7 @@ use Models\Review as Review;
                 $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
                 $this->connection = Connection::GetInstance();
             }catch(Exception $error){
-                throw $error;
+                throw new Exception("No se pudo agregar el guardian");
             }
         }
 
@@ -69,7 +69,7 @@ use Models\Review as Review;
 
                 return $guardianList;
             }catch(Exception $error){
-                throw $error;
+                throw new Exception("No se pudo recuperar la lista de guardianes");
             }
         }
 
@@ -100,10 +100,9 @@ use Models\Review as Review;
                     $guardian->setAvailabilityEnd($row["availabilityEnd"]);
                 }
                 
-
                 return $guardian;
             }catch(Exception $error){
-                throw $error;
+                throw new Exception("No existe guardian con ese mail");
             }
         }
         
@@ -114,10 +113,9 @@ use Models\Review as Review;
 
             try{
                 $this->connection = Connection::GetInstance();
-
                 $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
             }catch(Exception $error){
-                throw $error;
+                throw new Exception("No existe guardian con ese id");
             }
 
         }
@@ -132,7 +130,7 @@ use Models\Review as Review;
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
             }catch(Exception $error){
-                throw $error;
+                throw new Exception("No hay guardian con ese id");
             }
         }
 
@@ -146,7 +144,7 @@ use Models\Review as Review;
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
             }catch(Exception $error){
-                throw $error;
+                throw new Exception("No hay guardian con ese id");
             }
         }
 
@@ -181,7 +179,7 @@ use Models\Review as Review;
 
                 return $guardian;
             }catch(Exception $error){
-                throw $error;
+                throw new Exception("No hay guardian con ese id");
             }
         }
 
@@ -205,7 +203,7 @@ use Models\Review as Review;
         
                 return $avStart;
             }catch(Exception $error){
-                throw $error;
+                throw new Exception("No hay guardian con ese id");
             }
         }
 
@@ -223,7 +221,7 @@ use Models\Review as Review;
                 }
                 return $avEnd;
             }catch(Exception $error){
-                throw $error;
+                throw new Exception("No hay guardian con ese id");
             }
         }
 
@@ -255,7 +253,7 @@ use Models\Review as Review;
             
                 return $guardian;
             }catch(Exception $error){
-                throw $error;
+                throw new Exception("No hay guardian con ese id");
             }
         }
 

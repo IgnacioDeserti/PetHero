@@ -53,7 +53,7 @@ use Exception;
 
                 return $this->guardianXsizeList;
             }catch(Exception $error){
-                throw $error;
+                throw new Exception("No se pudo agregar el tamaño del guardian");
             }
         }
 

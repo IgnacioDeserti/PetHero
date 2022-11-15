@@ -46,6 +46,11 @@
                     $_SESSION["typeUser"] = $aux->getTypeUser();
                     $this->selectViewGuardian($aux);
                 }catch(Exception $e){
+
+                    $alert = [
+                        "type" => "error",
+                        "text" => $e->getMessage()
+                    ];
                     require_once(VIEWS_PATH . "inicio.php");
                 }
             }else{

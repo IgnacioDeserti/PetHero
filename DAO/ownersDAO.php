@@ -149,16 +149,19 @@
 
             $query = "CALL Owner_GetIdOwner(?)";
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
+                $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
 
-            $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
+                $owner = new Owner();
+                foreach($result as $row){
+                    $owner->setIdOwner($row["idOwner"]);
+                }
 
-            $owner = new Owner();
-            foreach($result as $row){
-                $owner->setIdOwner($row["idOwner"]);
+                return $owner;
+            }catch(Exception $error) {
+                throw $error;
             }
-
-            return $owner;
         }
 }
 

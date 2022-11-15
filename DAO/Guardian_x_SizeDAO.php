@@ -4,6 +4,7 @@
 
     use Models\Guardian_x_Size;
     use DAO\sizeDAO;
+use Exception;
 
     class guardian_x_sizeDAO{
         private $connection;
@@ -23,9 +24,13 @@
             $parameters["idGuardian"] =  $idGuardian;
             $parameters["idSize"] = $idSize;
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            }catch(Exception $error) {
+                throw $error;
+            }
 
-            $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
         }
 
         public function getAll(){
@@ -33,19 +38,23 @@
 
             $query = "CALL Guardian_x_SizeGetAll()";
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+                $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 
-            foreach($result as $row){
-                $newGXS = new Guardian_x_Size();
-                $newGXS->setIdGuardianxSize($row["idGuardianxSize"]);
-                $newGXS->setIdGuardian($row["idGuardian"]);
-                $newGXS->setIdSize($row["idSize"]);
-                array_push($this->guardianXsizeList, $newGXS);
+                foreach($result as $row){
+                    $newGXS = new Guardian_x_Size();
+                    $newGXS->setIdGuardianxSize($row["idGuardianxSize"]);
+                    $newGXS->setIdGuardian($row["idGuardian"]);
+                    $newGXS->setIdSize($row["idSize"]);
+                    array_push($this->guardianXsizeList, $newGXS);
+                }
+
+                return $this->guardianXsizeList;
+            }catch(Exception $error){
+                throw $error;
             }
-
-            return $this->guardianXsizeList;
         }
 
         public function getSizeById($idGuardian){
@@ -57,15 +66,20 @@
 
             $parameters["idGuardianS"] =  $idGuardian;
             
-            $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+            try{
+                $this->connection = Connection::GetInstance();
 
-            foreach($result as $row){
-                array_push($SizeList, $sizeDAO->getName($row['idSize']));
+                $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+
+                foreach($result as $row){
+                    array_push($SizeList, $sizeDAO->getName($row['idSize']));
+                }
+
+                return $SizeList;
+            }catch(Exception $error){
+                throw $error;
             }
-
-            return $SizeList;
         }
         
         public function delete($id){
@@ -73,9 +87,13 @@
 
             $parameters["id"] =  $id;
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
 
-            $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+                $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            }catch(Exception $error){
+                throw $error;
+            }
 
         }
 

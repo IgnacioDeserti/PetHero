@@ -25,8 +25,13 @@
             $parameters["userName"] = $owner->getUserName();
             $parameters["password"] = $owner->getPassword();
             $parameters["typeUser"] = $owner->getTypeUser();
-            $this->connection = Connection::GetInstance();
-            $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+            }catch (Exception $error){
+                throw $error;
+            }
             
         }
 
@@ -35,24 +40,28 @@
 
             $query = "SELECT * FROM ".$this->tableName;
 
-            $this->connection = Connection::GetInstance();
+            try{
+                $this->connection = Connection::GetInstance();
 
-            $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+                $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 
-            foreach($result as $row){
-                $owner = new Owner();
-                $owner->setIdOwner($row["idOwner"]);
-                $owner->setName($row["name"]);
-                $owner->setAddress($row["address"]);
-                $owner->setEmail($row["email"]);
-                $owner->setNumber($row["number"]);
-                $owner->setUserName($row["userName"]);
-                $owner->setPassword($row["password"]);
-                $owner->setTypeUser($row["typeUser"]);
-                array_push($ownerList, $owner);
+                foreach($result as $row){
+                    $owner = new Owner();
+                    $owner->setIdOwner($row["idOwner"]);
+                    $owner->setName($row["name"]);
+                    $owner->setAddress($row["address"]);
+                    $owner->setEmail($row["email"]);
+                    $owner->setNumber($row["number"]);
+                    $owner->setUserName($row["userName"]);
+                    $owner->setPassword($row["password"]);
+                    $owner->setTypeUser($row["typeUser"]);
+                    array_push($ownerList, $owner);
+                }
+
+                return $ownerList;
+            }catch(Exception $error){
+                throw $error;
             }
-
-            return $ownerList;
         }
 
         public function getNameById($id){

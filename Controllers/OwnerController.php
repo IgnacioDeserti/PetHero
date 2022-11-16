@@ -12,6 +12,8 @@ use DAO\ReviewDAO;
 use DAO\ReservationDAO;
 use Exception;
 use Models\Reservation;
+use DAO\PaymentCouponDAO; 
+use Models\PaymentCoupon;
 
 class OwnerController
 {
@@ -23,6 +25,7 @@ class OwnerController
     private $guardian_x_sizeDAO;
     private $reviewDAO;
     private $reservationDAO;
+    private $paymentDAO;
 
     public function __construct()
     {
@@ -33,6 +36,7 @@ class OwnerController
         $this->guardian_x_sizeDAO = new guardian_x_sizeDAO();
         $this->reviewDAO = new ReviewDAO();
         $this->reservationDAO = new ReservationDAO();
+        $this->paymentDAO = new PaymentCouponDAO();
     }
 
 
@@ -319,6 +323,55 @@ class OwnerController
 
         return ($i * $pricePD);
     }
+
+    public function chargeCard($idReservation){
+        require_once(VIEWS_PATH . 'validate-session.php');
+        require_once(VIEWS_PATH . 'chargeCard.php');
+    }
+
+    public function chargePayment ($idReservation, $titular, $expirationDate){
+        date_default_timezone_set("America/Buenos_Aires");
+        $date = strtotime('today');
+        /*try{   
+            $this->checkExpirationDate($expirationDate,$date);
+            $this->createPayment($idReservation, $titular, $expirationDate,$date)
+        }catch (Exception $e){
+            $alert = [];
+            $this->chargeCard($idReservation);
+        } hay que hacer el try catch del dao*/
+    }
+
+    public function createPayment($idReservation, $titular, $expirationDate,$date){
+        $this->checkExpirationDate($expirationDate,$date);
+        $payment = new PaymentCoupon();
+        $reservation = $this->reservationDAO->GetReservationsById($idReservation);
+        $payment->setOwnerName($this->ownerDAO->GetNameById($reservation->getIdOwner()));
+        $payment->setGuardianName(($this->guardianDAO->getGuardianById($reservation->getIdGuardian()))->getName());
+        $payment->setPetName(($this->petDAO->getPetById($reservation->getIdPet()))->getName());
+        $payment->setPrice($reservation->getPrice());
+        $payment->setReservationNumber($reservation->getIdReservation());
+        $this->paymentDAO->Add($payment);
+        $this->getCoupon($idReservation);
+    }
+
+    public function getCoupon($idReservation){
+        $payment = $this->paymentDAO->getPaymentByIdReservation($idReservation);
+        require_once(VIEWS_PATH . 'validate-session.php');
+        require_once(VIEWS_PATH . 'viewPaymentCoupon.php');
+    }
+
+    public function checkExpirationDate($expirationDate,$date){
+        if($expirationDate>$date){
+            return true;
+        }
+        else {
+            throw new Exception("Fecha de expiracion invalida");
+        }
+    }
+
+    
+
+    
 
 }
 

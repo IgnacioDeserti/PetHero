@@ -328,26 +328,27 @@
             require_once(VIEWS_PATH . 'chargeCard.php');
         }
 
-        public function chargePayment ($idReservation, $titular, $expirationDate){
+        public function chargePayment ($cardNumber, $titular ,$expirationMonth, $expirationYear,$secCode,$idReservation){
             date_default_timezone_set("America/Buenos_Aires");
             $date = strtotime('today');
-            /*try{   
-                $this->checkExpirationDate($expirationDate,$date);
-                $this->createPayment($idReservation, $titular, $expirationDate,$date)
+            try{   
+                $this->checkExpirationDate($expirationMonth,$expirationYear,$date);
+                $this->createPayment($idReservation, $titular,$date);
             }catch (Exception $e){
                 $alert = [];
                 $this->chargeCard($idReservation);
-            } hay que hacer el try catch del dao*/
+            } 
         }
 
-        public function createPayment($idReservation, $titular, $expirationDate,$date){
-            $this->checkExpirationDate($expirationDate,$date);
+        public function createPayment($titular,$date,$idReservation){
             $payment = new PaymentCoupon();
             $reservation = $this->reservationDAO->GetReservationsById($idReservation);
             $payment->setOwnerName($this->ownerDAO->GetNameById($reservation->getIdOwner()));
             $payment->setGuardianName(($this->guardianDAO->getGuardianById($reservation->getIdGuardian()))->getName());
             $payment->setPetName(($this->PetDAO->getPetByIdPet($reservation->getIdPet()))->getName());
-            $payment->setPrice($reservation->getPrice());
+            $payment->setPrice($reservation->getPrice()/2);
+            $payment->setDate($date);
+            $payment->setTitular($titular);
             $payment->setReservationNumber($reservation->getIdReservation());
             $this->paymentDAO->Add($payment);
             $this->getCoupon($idReservation);
@@ -359,8 +360,10 @@
             require_once(VIEWS_PATH . 'viewPaymentCoupon.php');
         }
 
-        public function checkExpirationDate($expirationDate,$date){
-            if($expirationDate>$date){
+        public function checkExpirationDate($expirationMonth,$expirationYear,$date){
+            $month = date ('m',$date);
+            $year = date ('Y',$date);
+            if($expirationMonth>=$month && $expirationYear>=$year){
                 return true;
             }
             else {

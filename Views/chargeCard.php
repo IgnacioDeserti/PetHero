@@ -10,86 +10,53 @@
                     <h2 style="text-align: center;"> INGRESAR GATO</h2>
                </header>
 
-               <form action="<?php echo FRONT_ROOT ?> Owner/createPayment" method="post" class="contentForm" enctype="multipart/form-data">
-                    
+               <form action="<?php echo FRONT_ROOT ?> Owner/chargePayment" method="post" class="contentForm" enctype="multipart/form-data">
+                    <input >
                     <div class="divOwner">
-                         <label for="">Nombre del animal</label>
+                         <label for="">Numero de tarjeta</label>
                     </div>
                     
                     <div class="inputPet">
-                         <input type="text" name="name" class="form-control form-control-lg" placeholder="Ingresar nombre" required>
+                         <input type="number" name="cardNumber" class="form-control form-control-lg" placeholder="-ingrese los numeros sin espacios" required minlength="16" maxlength="16">
                     </div>
 
                     <div class="divOwner">
-                         <label for="">Raza</label>
+                         <label for="">Titular de la tarjeta</label>
                     </div>
 
                     <div class="inputPet">
-                         <select name="breed" required>
-                              <option value="">Seleccione raza</option>
-                              <option value="Siames">Siames</option>
-                              <option value="Persa">Persa </option>
-                              <option value="Kohana">Kohana</option>
-                              <option value="Elfo">Elfo</option>
-                              <option value="Bambino">Bambino</option>
-                              <option value="Gato Lobo">Gato Lobo</option>
-                              <option value="Imalayo">Imalayo</option>
-                              <option value="Van Turco">Van Turco</option>
-                              <option value="Angora Turco">Angora Turco</option>
-                              <option value="Habana">Habana</option>
-                         </select>
+                         <input type="text" name="titular" class="form-control form-control-lg" placeholder="-ingrese los numeros sin espacios" required>
                     </div>
                     
                     <div class="divOwner">
-                         <label for="">Tamaño</label>             
+                         <label for="">Mes de expiracion de la tarjeta</label>             
                     </div>
 
                     <div class="inputPet">
-                         <select name="size">
-                              <option value="">Seleccione el tamaño</option>
-                              <option value="1">Pequeño</option>
-                              <option value="2">Medio</option>
-                              <option value="3">Grande</option>
-                         </select>    
+                         <input type="month" name="expirationMonth" class="form-control form-control-lg"  required>
                     </div>
 
                     <div class="divOwner">
-                         <label for="">Observaciones</label>
+                         <label for="">Año de expiracion de la tarjeta</label>   
                     </div>
 
                     <div class="inputPet">
-                         <textarea name="observations" cols="10" rows="2" maxlength="200" required></textarea>
+                         <input type="year" name="expirationYear" class="form-control form-control-lg"  required>
                     </div>
 
                     <div class="divOwner">
-                         <label for="">Ingresar foto perfil</label>         
+                         <label for="">Codigo de seguridad</label>     
                     </div>
 
                     <div class="filePet">
-                         <input type="file" name="photo1"  id = 'photo1' required>
-                    </div>
-                    
-                    <div class="divOwner">
-                         <label for="">Ingresar foto plan de vacunacion</label>
+                         <input type="number" name="expirationYear" class="form-control form-control-lg" minlength="3" maxlength="3" required>
                     </div>
 
-                    <div class="filePet">
-                         <input type="file" name="photo2" id = 'photo2' required>
-                    </div>
+                    <input type="hidden" name="idReservation" value="<?php echo $idReservation ?>">
 
-                    <div class="divOwner">
-                         <label for="">Ingresar video (opcional)</label>
-                    </div>
-
-                    <div class="filePet">
-                         <input type="file" name="video">
-                    </div>
-
-                    <input type="hidden" name="type" value="<?php echo $type ?>">
-
-                    <button class="buttonAddPet buttonHoversGreen" type="submit">Agregar Mascota</button>
+                    <button class="buttonAddPet buttonHoversGreen" type="submit">Cargar tarjeta</button>
                </form>
-               <a href="<?php echo FRONT_ROOT?> Owner/typePet "><button class="buttonGoBackPet buttonRedHovers">Volver</button></a>
+               <a href="<?php echo FRONT_ROOT?> Owner/listReservationOwner"><button class="buttonGoBackPet buttonRedHovers">Volver</button></a>
           
           </div>
      </main>

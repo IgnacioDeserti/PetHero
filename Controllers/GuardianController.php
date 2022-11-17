@@ -38,7 +38,10 @@
                     $this->verifyAvailability($availabilityStart,$availabilityEnd);
                     $this->guardianDAO->UpdateAvailabilityStart($id, $availabilityStart);
                     $this->guardianDAO->UpdateAvailabilityEnd($id, $availabilityEnd);
-                    $this->Index();
+                    $alert = [
+                        "type" => "success",
+                        "text" => 'Modificacion realizada con exito'
+                    ];
                 }catch (Exception $e) {
                     $alert = [
                         "type" => "alert",
@@ -89,7 +92,7 @@
                 $this->reservationDAO->changeReservationStatus($idReservation,'Esperando pago');
                 $alert = [
                     "type" => "success",
-                    "text" => 'Reserva aceptada con exito, esperand pago!'
+                    "text" => 'Reserva aceptada con exito, esperando pago!'
                 ];
                 $this->showReservationsList($alert);
             }catch(Exception $e){
@@ -104,7 +107,11 @@
 
         public function declineReservation ($idReservation){
             $this->reservationDAO->changeReservationStatus($idReservation,'Rechazada');
-            $this->showReservationsList();
+            $alert = [
+                "type" => "success",
+                "text" => 'Reserva rechazada con exito'
+            ];
+            $this->showReservationsList($alert);
         }
 
         public function checkGuardian($availabilityStart ,$availabilityEnd, $breed, $type, $size, $idGuardian){

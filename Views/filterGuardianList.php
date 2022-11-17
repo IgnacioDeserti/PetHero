@@ -12,7 +12,7 @@
                     </div>
                
                     <div class="inputFilter">
-                         <input type="date" name="availabilityStart" required>
+                         <input type="date" name="availabilityStart" min = '<?php echo $date ?>'required>
                     </div>
 
                     <div class="containerFilter2">
@@ -20,7 +20,7 @@
                     </div>
 
                     <div class="inputFilter2">
-                         <input type="date" name="availabilityEnd" required>
+                         <input type="date" name="availabilityEnd" min = '<?php echo $date ?>' required>
                     </div>
 
                     <div class="containerFilter3">

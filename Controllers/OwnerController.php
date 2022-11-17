@@ -42,6 +42,8 @@
 
         //permite mandar los parametros para filtrar guardianes
         public function filterGuardians(){
+            date_default_timezone_set("America/Buenos_Aires");
+            $date = strtotime('today');
             $listPets = $this->PetDAO->GetPetByIdOwner($_SESSION["idUser"]);
             require_once(VIEWS_PATH . "validate-session.php");
             require_once(VIEWS_PATH . "filterGuardianList.php");

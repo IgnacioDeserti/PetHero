@@ -46,7 +46,6 @@
                     $_SESSION["typeUser"] = $aux->getTypeUser();
                     $this->selectViewGuardian($aux);
                 }catch(Exception $e){
-
                     $alert = [
                         "type" => "error",
                         "text" => $e->getMessage()
@@ -60,6 +59,10 @@
                     $_SESSION["typeUser"] = $aux->getTypeUser();
                     $this->selectView($aux->getIdOwner());
                 }catch(Exception $e){
+                    $alert = [
+                        "type" => "error",
+                        "text" => $e->getMessage()
+                    ];
                     require_once(VIEWS_PATH . "inicio.php");
                 }
             }
@@ -96,15 +99,14 @@
 
         public function selectView($id){
 
-            $arrayListPet = $this->PetDAO->GetPetByIdOwner($id);
-
-            if(empty($arrayListPet)){
-                require_once(VIEWS_PATH . "validate-session.php");
-                require_once(VIEWS_PATH . "addPet.php");
-            }else{
+            try{
+                $arrayListPet = $this->PetDAO->GetPetByIdOwner($id);
                 $size = $this->sizeDAO;
                 require_once(VIEWS_PATH . "validate-session.php");
                 require_once(VIEWS_PATH . "listPet.php");
+            }catch(Exception $aaa){
+                require_once(VIEWS_PATH . "validate-session.php");
+                require_once(VIEWS_PATH . "addPet.php");
             }
         }
 
@@ -141,8 +143,7 @@
         }
 
         public function createOwnerProfile($name, $address, $email, $number, $userName, $password, $typeUser){
-            if($_POST){
-                
+            if($_POST){             
                 $this->ownerDAO->getAll();
                 $newOwner = new Owner();
                 $newOwner->setName($name);
@@ -159,7 +160,6 @@
                     $aux = $this->ownerDAO->getOwner($email);
                     $_SESSION["idUser"] = $aux->getIdOwner();
                     $_SESSION["typeUser"] = $aux->getTypeUser();
-                    echo "<script> if(confirm('Perfil creado con exito!')); </script>";
                     require_once(VIEWS_PATH.'addPet.php');
                 }catch (Exception $e){
                     require_once(VIEWS_PATH . "createOwnerProfile.php");
@@ -191,10 +191,8 @@
 
         }
 
-        public function createGuardianProfile($name, $address, $email, $number, $userName, $password, $size, $price, $typeUser){
-            
+        public function createGuardianProfile($name, $address, $email, $number, $userName, $password, $size, $price, $typeUser){            
             if($_POST){
-
                 $newGuardian = new Guardian();
                 $newGuardian->setName($name);
                 $newGuardian->setAddress($address);
@@ -203,8 +201,7 @@
                 $newGuardian->setUserName($userName);
                 $newGuardian->setPassword($password);
                 $newGuardian->setPrice($price);
-                $newGuardian->setTypeUser($typeUser);
-                
+                $newGuardian->setTypeUser($typeUser);                
             
                 try{
                     $this->verifyEmailUser($email, $userName);

@@ -69,7 +69,7 @@ use Models\Review as Review;
 
                 return $guardianList;
             }catch(Exception $error){
-                throw new Exception("No se pudo recuperar la lista de guardianes");
+                throw new Exception("Los guardianes estan de vacaciones :)");
             }
         }
 

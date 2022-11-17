@@ -365,6 +365,14 @@ BEGIN
 END//
 
 DELIMITER //
+CREATE PROCEDURE Pet_GetPetByIdOwner (in idO int)
+BEGIN
+	SELECT *
+    FROM pet
+    WHERE pet.idOwner = idO;
+END//
+
+DELIMITER //
 CREATE PROCEDURE reservation_changeStatus (in idReservationS int, in statusS varchar(30))
 BEGIN
 	UPDATE reservation SET reservation.reservationStatus = statusS WHERE reservation.idReservation = idReservationS;

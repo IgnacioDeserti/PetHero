@@ -42,38 +42,67 @@
 
         //permite mandar los parametros para filtrar guardianes
         public function filterGuardians(){
-            date_default_timezone_set("America/Buenos_Aires");
-            $date = strtotime('today');
-            $listPets = $this->PetDAO->GetPetByIdOwner($_SESSION["idUser"]);
-            require_once(VIEWS_PATH . "validate-session.php");
-            require_once(VIEWS_PATH . "filterGuardianList.php");
+            try{
+                date_default_timezone_set("America/Buenos_Aires");
+                $date = strtotime('today');
+                $listPets = $this->PetDAO->GetPetByIdOwner($_SESSION["idUser"]);
+                require_once(VIEWS_PATH . "validate-session.php");
+                require_once(VIEWS_PATH . "filterGuardianList.php");
+            }catch(Exception $e){
+                $alert = [
+                    "type" => "alert",
+                    "text" => $e->getMessage()
+                ];
+                require_once(VIEWS_PATH . "validate-session.php");
+                require_once(VIEWS_PATH . "filterGuardianList.php");
+            }
         }
 
         //llama al checkeo 
         public function showGuardianList($availabilityStart ,$availabilityEnd, $idPet){
-            $listGuardian = $this->guardianDAO->getAll();
-            $listGuardianSize = array();
-            $pet = $this->PetDAO->getPetByIdPet($idPet);
-            foreach($listGuardian as $guardian){
-                $listSize = $this->guardian_x_sizeDAO->getSizeById($guardian->getIdGuardian());
-                foreach($listSize as $size){
-                    if(strcmp($this->sizeDAO->getName($pet->getIdSize()),$size) == 0){
-                        array_push($listGuardianSize,$guardian);
-                    }
-                }
-            }
-            $listChecked = array();
-            
-            $i = 0;
-            foreach($listGuardianSize as $guardian){
-                if($this->checkGuardian($availabilityStart ,$availabilityEnd, $pet->getBreed(), $pet->getType(), $this->sizeDAO->getName($pet->getIdSize()), $guardian->getIdGuardian())){
-                    array_push($listChecked,$guardian);
-                }
-            }
 
-            $gxsDAO = $this->guardian_x_sizeDAO;
-            require_once(VIEWS_PATH . "validate-session.php");
-            require_once(VIEWS_PATH . "listGuardian.php");
+            try{
+                $listGuardian = $this->guardianDAO->getAll();
+                $listGuardianSize = array();
+                try{
+                    $pet = $this->PetDAO->getPetByIdPet($idPet);
+                    foreach($listGuardian as $guardian){
+                        $listSize = $this->guardian_x_sizeDAO->getSizeById($guardian->getIdGuardian());
+                        foreach($listSize as $size){
+                            if(strcmp($this->sizeDAO->getName($pet->getIdSize()),$size) == 0){
+                                array_push($listGuardianSize,$guardian);
+                            }
+                        }
+                    }
+                    $listChecked = array();
+                    
+                    $i = 0;
+                    foreach($listGuardianSize as $guardian){
+                        if($this->checkGuardian($availabilityStart ,$availabilityEnd, $pet->getBreed(), $pet->getType(), $this->sizeDAO->getName($pet->getIdSize()), $guardian->getIdGuardian())){
+                            array_push($listChecked,$guardian);
+                        }
+                    }
+
+                $gxsDAO = $this->guardian_x_sizeDAO;
+                require_once(VIEWS_PATH . "validate-session.php");
+                require_once(VIEWS_PATH . "listGuardian.php");
+
+                }catch(Exception $e){
+                    $alert = [
+                        "type" => "alert",
+                        "text" => $e->getMessage()
+                    ];
+                    $this->showAddPet($alert);
+                }
+                
+            }catch(Exception $e){
+                $alert = [
+                    "type" => "alert",
+                    "text" => $e->getMessage()
+                ];
+                $this->showListPet($alert);
+            }
+            
         }
 
         //checkea que la disponibilidad deseada este dentro de la disponibilidad del guardian
@@ -109,9 +138,7 @@
             }
         }
 
-        public function addPet($name, $breed, $size, $observations, $type, $files){
-            $this->PetDAO->getAll();
-
+        public function addPet($name, $breed, $size, $observations, $type, $files){;
             $newPet = new Pet();
             $newPet->setName($name);
             $newPet->setType($type);
@@ -136,19 +163,38 @@
                 }
             }
 
-            $this->PetDAO->add($newPet);
-            $this->showListPet();
+            try{
+                $this->PetDAO->add($newPet);
+                $alert = [
+                    "type" => "success",
+                    "text" => "Mascota agregada con Exito!"
+                ];
+                $this->showListPet($alert);
+            }catch(Exception $e){
+                $alert = [
+                    "type" => "error",
+                    "text" => $e->getMessage()
+                ];
+            }
         }
 
-        public function showListPet()
+        public function showListPet($alert = null)
         {   
-            $arrayListPet = $this->PetDAO->GetPetByIdOwner($_SESSION["idUser"]);
-            $size = $this->sizeDAO;
-            require_once(VIEWS_PATH . "validate-session.php");
-            require_once(VIEWS_PATH . "listPet.php");
+            try{
+                $arrayListPet = $this->PetDAO->GetPetByIdOwner($_SESSION["idUser"]);
+                $size = $this->sizeDAO;
+                require_once(VIEWS_PATH . "validate-session.php");
+                require_once(VIEWS_PATH . "listPet.php");
+            }catch (Exception $e){
+                $alert = [
+                    "type" => "alert",
+                    "text" => $e->getMessage()
+                ];
+                $this->showAddPet($alert);
+            }
         }
 
-        public function showAddPet()
+        public function showAddPet($alert = null)
         {
             require_once(VIEWS_PATH . "validate-session.php");
             require_once(VIEWS_PATH . "addPet.php");

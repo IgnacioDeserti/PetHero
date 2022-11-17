@@ -40,12 +40,14 @@
         {
             $petList = array();
 
-            $query = "SELECT * FROM ".$this->tableName;
+            $parameters["idO"] = $idOwner;
+
+            $query = "Pet_GetPetByIdOwner";
 
             try{
                 $this->connection = Connection::GetInstance();
 
-                $result = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+                $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
 
                 foreach($result as $row){
                     $pet = new Pet();

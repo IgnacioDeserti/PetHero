@@ -9,7 +9,8 @@
                <header>
                     <h2 style="text-align: center;"> ¿QUE MASCOTA QUIERE AGREGAR?</h2>
                </header>
-
+               <?php if(isset($alert)) { ?>
+                    <p class="psException <?= $alert["type"] ?>"> <?= $alert["text"]; } ?> </p>
                <form action="<?php echo FRONT_ROOT ?> Owner/typePet" method="post" class="contentForm" enctype="multipart/form-data">
 
                     <div class="divSelectPet">
@@ -27,7 +28,6 @@
                     <button class="buttonSelectPet buttonHoversGreen" type="submit">Agregar Mascota</button>
                </form>
                <a href="<?php echo FRONT_ROOT?> Owner/showListPet "><button class="buttonGoBackSelectPet buttonRedHovers">Volver</button></a>
-          
           </div>
      </main>
 </html>

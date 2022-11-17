@@ -6,6 +6,9 @@
      <main>
           <section id="listado">
                <div class="divListGuardian">
+                    <?php if(isset($alert)){ ?>
+                         <p class="psException <?= $alert["type"] ?>"> <?= $alert["text"]; ?></p>
+                    <?php } ?>
                     <table class="tableListGuardian">
                          <caption style="text-align: center;">Perros</caption>
                          <thead>

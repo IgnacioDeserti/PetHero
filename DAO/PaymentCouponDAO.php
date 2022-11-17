@@ -55,7 +55,7 @@
                 }
                 return $payment;
             }catch(Exception $error){
-                throw new Exception("No existe pago con ese id");
+                throw new Exception("No existe pago con ese id aun");
             }
         }
     }

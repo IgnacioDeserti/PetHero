@@ -61,7 +61,7 @@
             try{
                 $wcReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Esperando confirmacion", $_SESSION['idUser']);
                 $fReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Finalizado", $_SESSION['idUser']);
-                $cReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Aceptada", $_SESSION['idUser']);
+                $cReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian2("Aceptada",'Esperando pago', $_SESSION['idUser']);
                 $allpets = $this->PetDAO;
                 $guardian = $this->guardianDAO;
                 $owner =$this->ownerDAO;
@@ -76,6 +76,21 @@
                 require_once(VIEWS_PATH . "listReservationGuardian.php");
             }
         }
+
+        public function getCoupon($idReservation){
+            try{
+                $payment = $this->paymentDAO->getPaymentByIdReservation($idReservation);
+                require_once(VIEWS_PATH . 'validate-session.php');
+                require_once(VIEWS_PATH . 'viewPaymentCoupon.php');
+            }catch (Exception $e){
+                $alert = [
+                    "type" => "alert",
+                    "text" => $e->getMessage()
+                ];
+                $this->showReservationsList($alert);
+            }
+        }
+
 
         public function selectAction($button, $idReservation){
             if(strcmp($button, "Accept") == 0){

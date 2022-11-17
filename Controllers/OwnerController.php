@@ -353,7 +353,7 @@
                 }
         }
 
-        public function showReservationsList(){
+        public function showReservationsList($alert = null){
             $wcReservationList = $this->reservationDAO->getReservationByStatusAndIdOwner("Esperando confirmacion", $_SESSION['idUser']);
             $fReservationList = $this->reservationDAO->getReservationByStatusAndIdOwner("Finalizado", $_SESSION['idUser']);
             $cReservationList = $this->reservationDAO->getReservationByStatusAndIdOwner2("Aceptada", "Esperando pago", $_SESSION['idUser']);
@@ -390,7 +390,7 @@
             try{   
                 $this->checkExpirationDate($expirationDate,$date);
                 $alert = [
-                    "tpye" => "alert",
+                    "tpye" => "success",
                     "text" => "Cupon de pago creado correctamente!"
                 ];
                 $this->createPayment($titular,$date, $idReservation, $alert);
@@ -415,14 +415,23 @@
             $payment->setTitular($titular);
             $payment->setReservationNumber($reservation->getIdReservation());
             $this->reservationDAO->changeReservationStatus($idReservation, "Aceptada");
+            $this->reservationDAO->updatePrice($idReservation);
             $this->paymentDAO->Add($payment);
             $this->getCoupon($idReservation, $alert);
         }
 
         public function getCoupon($idReservation, $alert = null){
-            $payment = $this->paymentDAO->getPaymentByIdReservation($idReservation);
-            require_once(VIEWS_PATH . 'validate-session.php');
-            require_once(VIEWS_PATH . 'viewPaymentCoupon.php');
+            try{
+                $payment = $this->paymentDAO->getPaymentByIdReservation($idReservation);
+                require_once(VIEWS_PATH . 'validate-session.php');
+                require_once(VIEWS_PATH . 'viewPaymentCoupon.php');
+            }catch(Exception $e){
+                $alert = [
+                    "tpye" => "alert",
+                    "text" => $e->getMessage()
+                ];
+                $this->showReservationsList($alert);
+            }
         }
 
         public function checkExpirationDate($expirationDate,$date){
@@ -435,6 +444,8 @@
             }
 
         }
+
+
 
     }
 

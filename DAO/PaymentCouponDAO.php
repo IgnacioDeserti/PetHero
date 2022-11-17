@@ -34,7 +34,7 @@
 
         public function getPaymentByIdReservation ($idRes)
         {
-            $query = "CALL PaymentCoupon_GetPaymentById(?)";
+            $query = "CALL paymentCoupon_getPaymentById(?)";
 
             $parameters["idRes"] = $idRes;
 

@@ -6,6 +6,8 @@
     <main>
         <section>
             <div class="divListGuardian">
+            <?php if(isset($alert)) { ?>
+                    <p class="psException <?= $alert["type"] ?>"> <?= $alert["text"]; } ?> </p>
                 <table class="tableListGuardian">
                     <thead>
                         <caption class="captionListGuardian"> Reservas en espera de confirmacion </th>

@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS paymentCoupon(
     titular varchar(50) not null,
     reservationNumber integer not null,
     constraint PK_idPayment primary key (idPayment),
-    constraint FK_reservationNumber foreign key (reservationNumber) references reservationNumber (idReservation)
+    constraint FK_reservationNumber foreign key (reservationNumber) references reservation (idReservation)
 );
 
 DELIMITER //
@@ -306,7 +306,7 @@ BEGIN
     FROM reservation  
     WHERE reservation.idOwner = idOwnerS and reservation.reservationStatus != 'Cancelado' ;
 END//
-
+	
 DELIMITER //
 CREATE PROCEDURE Reservation_GetReservationById (in idRes integer)
 BEGIN
@@ -365,14 +365,6 @@ BEGIN
 END//
 
 DELIMITER //
-CREATE PROCEDURE Pet_GetPetByIdOwner (in idO int)
-BEGIN
-	SELECT *
-    FROM pet
-    WHERE pet.idOwner = idO;
-END//
-
-DELIMITER //
 CREATE PROCEDURE reservation_changeStatus (in idReservationS int, in statusS varchar(30))
 BEGIN
 	UPDATE reservation SET reservation.reservationStatus = statusS WHERE reservation.idReservation = idReservationS;
@@ -383,7 +375,23 @@ CREATE PROCEDURE Reservation_getReservationByStatusAndIdOwner (IN stat varchar(5
 BEGIN
     SELECT *
     FROM Reservation
-    WHERE Reservation.idOwner = idOwnerR AND Reservation.reservationStatus = stat and reservation.reservationStatus != 'Cancelado' ;;
+    WHERE Reservation.idOwner = idOwnerR AND Reservation.reservationStatus = stat and reservation.reservationStatus != 'Cancelado' ;
+END//
+
+DELIMITER //
+CREATE PROCEDURE Reservation_getReservationByStatusAndIdOwner2 (IN stat1 varchar(50), IN stat2 varchar(50), IN idOwnerR integer)
+BEGIN
+    SELECT *
+    FROM Reservation
+    WHERE Reservation.idOwner = idOwnerR AND Reservation.reservationStatus = stat1 or reservation.reservationStatus = stat2 ;
+END//
+
+DELIMITER //
+CREATE PROCEDURE Reservation_getReservationByStatusAndIdGuardian2 (IN stat1 varchar(50), IN stat2 varchar(50), IN idGuardianR integer)
+BEGIN
+    SELECT *
+    FROM Reservation
+    WHERE Reservation.idGuardian = idGuardianR AND Reservation.reservationStatus = stat1 or reservation.reservationStatus = stat2 ;
 END//
 
 
@@ -405,7 +413,16 @@ BEGIN
 END//
 
 DELIMITER //
-CREATE PROCEDURE paymentCoupon_Add (in idPaymentS int, in ownerNameS varchar(50), in guardianNameS varchar(50, in petNameS),in priceS float, in dateS date, in titularS varchar(50), in reservationNumberS integer)
+CREATE PROCEDURE Owner_GetNameOwnerById (in idO int)
+BEGIN
+	SELECT owner.name
+    FROM owner
+    WHERE owner.idOwner = idO;
+END//
+
+DELIMITER //
+
+CREATE PROCEDURE paymentCoupon_Add (in idPaymentS int, in ownerNameS varchar(50), in guardianNameS varchar(50), in petNameS varchar(50),in priceS float, in dateS date, in titularS varchar(50), in reservationNumberS integer)
 BEGIN
 	INSERT INTO paymentCoupon (idPayment, ownerName, guardianName, petName, price,  dateP, titular, reservationNumber)
     VALUES (idPaymentS, ownerNameS, guardianNameS, petNameS, priceS, dateS, titularS, reservationNumberS);
@@ -417,4 +434,18 @@ BEGIN
 	SELECT *
     FROM paymentCoupon
     WHERE paymentCoupon.reservationNumber = idRes;
+END//
+
+DELIMITER //
+CREATE PROCEDURE Pet_GetPetByIdOwner (in idO int)
+BEGIN
+	SELECT *
+    FROM pet
+    WHERE pet.idOwner = idO;
+END//
+
+DELIMITER //
+CREATE PROCEDURE reservation_changePrice (in idReservationS int)
+BEGIN
+    UPDATE reservation SET reservation.price = price * 0.5 WHERE reservation.idReservation = idReservationS;
 END//

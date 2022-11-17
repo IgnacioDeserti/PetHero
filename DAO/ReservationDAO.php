@@ -339,7 +339,21 @@
             }
 
         }
+        
+        public function updatePrice($idReservation){
+            $reservationList = array();
 
+            $query = "CALL reservation_changePrice(?)";
+
+            $parameters["idReservationS"] = $idReservation;
+
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+            }catch(Exception $error){
+                return null;
+            }
+        }
         
 }
 

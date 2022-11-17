@@ -42,13 +42,11 @@
 
             $parameters["idO"] = $idOwner;
 
-            $query = "Pet_GetPetByIdOwner";
+            $query = "CALL Pet_GetPetByIdOwner(?)";
 
             try{
                 $this->connection = Connection::GetInstance();
-
                 $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
-
                 foreach($result as $row){
                     $pet = new Pet();
                     $pet->setIdPet($row["idPet"]);

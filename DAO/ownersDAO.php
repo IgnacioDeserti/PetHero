@@ -68,16 +68,18 @@
             
             $result = NULL;
 
-            $parameter["idS"] = $id;
+            $parameter["idO"] = $id;
 
-            $query = "CALL Owner_GetOwnerById(?)";
+            $query = "CALL Owner_GetNameOwnerById(?)";
 
             try{
                 $this->connection = Connection::GetInstance();
-
                 $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
 
-                return $result['name'];
+                foreach($result as $row){
+                    $name = $row["name"];
+                }
+                return $name;
             }catch(Exception $error){
                 throw new Exception("No existe dueño con ese id");
             }

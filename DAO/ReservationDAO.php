@@ -91,10 +91,12 @@
                     $reservation->setReservationDateStart($row["reservationDateStart"]);
                     $reservation->setReservationDateEnd($row["reservationDateEnd"]);
                     $reservation->setReservationStatus($row["reservationStatus"]);
+                    $reservation->setPrice($row["price"]);
                     $reservation->setSize($row["size"]);
                 }
 
                 return $reservation;
+
             }catch(Exception $error){
                 throw new Exception("No existe reserva con ese id");
             }
@@ -221,7 +223,83 @@
 
                 return $reservationList;
             }catch(Exception $error){
-                throw new Exception("No existen reservas de ese dueño o con ese estado");
+                return null;
+            }
+
+        }
+
+        
+        public function getReservationByStatusAndIdOwner2($status1, $status2, $idOwner)
+        {
+            $reservationList = array();
+
+            $query = "CALL Reservation_getReservationByStatusAndIdOwner2(?,?,?)";
+
+            $parameters["stat1"] = $status1;
+            $parameters["stat2"] = $status2;
+            $parameters["idOwnerR"] = $idOwner;
+
+            try{
+                $this->connection = Connection::GetInstance();
+
+                $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+
+                foreach($result as $row){
+                    $reservation = new Reservation();
+                    $reservation->setIdReservation($row["idReservation"]);
+                    $reservation->setIdOwner($row["idOwner"]);
+                    $reservation->setIdGuardian($row["idGuardian"]);
+                    $reservation->setIdPet($row["idPet"]);
+                    $reservation->setBreed($row["breed"]);
+                    $reservation->setAnimalType($row["animalType"]);
+                    $reservation->setReservationDateStart($row["reservationDateStart"]);
+                    $reservation->setReservationDateEnd($row["reservationDateEnd"]);
+                    $reservation->setReservationStatus($row["reservationStatus"]);
+                    $reservation->setPrice($row["price"]);
+                    $reservation->setSize($row["size"]);
+                    array_push($reservationList, $reservation);
+                }
+
+                return $reservationList;
+            }catch(Exception $error){
+                return null;
+            }
+
+        }
+
+        public function getReservationByStatusAndIdGuardian2($status1, $status2, $idGuardian)
+        {
+            $reservationList = array();
+
+            $query = "CALL Reservation_getReservationByStatusAndIdOwner2(?,?,?)";
+            $parameters["stat1"] = $status1;
+            $parameters["stat2"] = $status2;
+            $parameters["idGuardianR"] = $idGuardian;
+
+            try{
+                $this->connection = Connection::GetInstance();
+
+                $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+
+                foreach($result as $row){
+                    $reservation = new Reservation();
+                    $reservation->setIdReservation($row["idReservation"]);
+                    $reservation->setIdOwner($row["idOwner"]);
+                    $reservation->setIdGuardian($row["idGuardian"]);
+                    $reservation->setIdPet($row["idPet"]);
+                    $reservation->setBreed($row["breed"]);
+                    $reservation->setAnimalType($row["animalType"]);
+                    $reservation->setReservationDateStart($row["reservationDateStart"]);
+                    $reservation->setReservationDateEnd($row["reservationDateEnd"]);
+                    $reservation->setReservationStatus($row["reservationStatus"]);
+                    $reservation->setPrice($row["price"]);
+                    $reservation->setSize($row["size"]);
+                    array_push($reservationList, $reservation);
+                }
+
+                return $reservationList;
+            }catch(Exception $error){
+                return null;
             }
 
         }
@@ -257,7 +335,7 @@
 
                 return $reservationList;
             }catch(Exception $error){
-                throw new Exception("No existen reservas de ese guardian o con ese estado");
+                return null;
             }
 
         }

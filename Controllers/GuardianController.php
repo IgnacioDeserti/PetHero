@@ -4,6 +4,7 @@
     use DAO\guardiansDAO as GuardianDAO;
     use DAO\guardiansDAO;
     use DAO\ownersDAO;
+    use DAO\PaymentCouponDAO;
     use DAO\petDAO;
     use Models\Pet;
     use DAO\ReservationDAO;
@@ -15,12 +16,14 @@
         private $guardianDAO;
         private $PetDAO;
         private $reservationDAO;
+        private $paymentDAO;
 
         public function __construct(){
             $this->guardianDAO = new guardiansDAO();
             $this->ownerDAO = new ownersDAO();
             $this->PetDAO = new petDAO();
             $this->reservationDAO = new ReservationDAO();
+            $this->paymentDAO = new PaymentCouponDAO();
         }
 
         public function showModifyView($alert = null){
@@ -58,7 +61,6 @@
         }
 
         public function showReservationsList($alert = null){
-            try{
                 $wcReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Esperando confirmacion", $_SESSION['idUser']);
                 $fReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Finalizado", $_SESSION['idUser']);
                 $cReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian2("Aceptada",'Esperando pago', $_SESSION['idUser']);
@@ -67,14 +69,6 @@
                 $owner =$this->ownerDAO;
                 require_once(VIEWS_PATH . "validate-session.php");
                 require_once(VIEWS_PATH . "listReservationGuardian.php");
-            }catch (Exception $e){
-                $alert = [
-                    "type" => "alert",
-                    "text" => 'Error en la base de datos'
-                ];
-                require_once(VIEWS_PATH . "validate-session.php");
-                require_once(VIEWS_PATH . "listReservationGuardian.php");
-            }
         }
 
         public function getCoupon($idReservation){

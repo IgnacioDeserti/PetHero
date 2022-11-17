@@ -4,7 +4,6 @@
       <ul class="clear">
         <?php if($_SESSION["typeUser"] == "O"){?>
           <div class="containerMenu">
-            <li class="liMenu">Menu</li>
               <ul class="subMenu">
                 <li><a href="<?php echo FRONT_ROOT . "Owner/showAddPet" ?>">Agregar mascota</a></li>
                 <li><a href="<?php echo FRONT_ROOT . "Owner/showListPet" ?>">Ver listado mascotas</a></li>
@@ -16,7 +15,6 @@
           </div>
         <?php }else{?>
           <div class="containerMenu">
-            <li class="liMenu">Menu</li>
               <ul class="subMenu">
                 <li><a href="<?php echo FRONT_ROOT ?> Guardian/showModifyView">Modificar disponibilidad</a></li>
                 <li><a href="<?php echo FRONT_ROOT ?> Guardian/showReservationsList">Lista Reservas</a></li>

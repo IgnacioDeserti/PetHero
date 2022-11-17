@@ -5,7 +5,6 @@
 <html class="fondoMenus"> 
     <main>
         <section>
-            <form action="<?php echo FRONT_ROOT ?>Guardian/selectAction" method="POST">
             <?php if(isset($alert)){ ?>
                 <p class="psException <?= $alert["type"] ?>"> <?= $alert["text"]; ?></p>
             <?php } ?>
@@ -27,9 +26,11 @@
                                         <td class="thListGuardian"><?php echo $reservation->getReservationDateStart() ?> </td>
                                         <td class="thListGuardian"><?php echo $reservation->getReservationDateEnd() ?> </td>
                                         <td class="thListGuardian"><?php echo $reservation->getPrice()?></td>
-                                        <td><button name="button" value="Accept" class="buttonSelectG buttonHoversGreen" type="submit"> Aceptar</button></td>
-                                        <td><button name="button" value="Decline" class="buttonSelectG buttonRedHovers" type="submit"> Rechazar</button></td>
-                                        <input type="hidden" name="idReservation" value="<?php echo $reservation->getIdReservation() ?>">
+                                        <form action="<?php echo FRONT_ROOT ?>Guardian/selectAction" method="POST">
+                                            <td><button name="button" value="Accept" class="buttonSelectG buttonHoversGreen" type="submit"> Aceptar</button></td>
+                                            <td><button name="button" value="Decline" class="buttonSelectG buttonRedHovers" type="submit"> Rechazar</button></td>
+                                            <input type="hidden" name="idReservation" value="<?php echo $reservation->getIdReservation() ?>">
+                                        </form>
                                     </tr>
                                 <?php }?>
                         </tbody>
@@ -55,7 +56,7 @@
                                     <td class="thListGuardian"><?php echo $reservation->getReservationDateEnd() ?> </td>
                                     <td class="thListGuardian"><?php echo $reservation->getPrice()?> </td>
                                     <form action="<?= FRONT_ROOT . 'Guardian/getCoupon'?>" method = 'POST'>
-                                        <button type= 'submit' value = '<?= $reservation->getReservation()?>'>Ver cupon de pago</button>
+                                        <td><button class="buttonSelectG buttonHoversGreen" type= 'submit' value = '<?= $reservation->getIdReservation()?>'>Ver cupon de pago</button><td>
                                     </form>
                                 </tr>
                             <?php }?>
@@ -87,7 +88,6 @@
                     </table>
                     
                 </div>
-            </form>
         </section>
     </main>
 </html>     

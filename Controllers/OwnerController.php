@@ -175,6 +175,7 @@
                     "type" => "error",
                     "text" => $e->getMessage()
                 ];
+                $this->showAddPet($alert);
             }
         }
 
@@ -201,13 +202,20 @@
         }
 
         public function selectGuardian($availabilityStart, $availabilityEnd, $idPet, $email){
-            $guardian = $this->guardianDAO->getGuardian($email);
-            $arrayListSize = $this->sizeDAO->getAll();
-            $arrayListGuardianxSize = $this->guardian_x_sizeDAO->getAll();
-            $reviewsList = $this->reviewDAO->GetReviewsByGuardian($guardian->getIdGuardian());
-            $ownerList = $this->ownerDAO;
-            require_once(VIEWS_PATH . "validate-session.php");
-            require_once(VIEWS_PATH . "showGuardian.php");
+            try{
+                $guardian = $this->guardianDAO->getGuardian($email);
+                $arrayListSize = $this->sizeDAO->getAll();
+                $arrayListGuardianxSize = $this->guardian_x_sizeDAO->getAll();
+                $reviewsList = $this->reviewDAO->GetReviewsByGuardian($guardian->getIdGuardian());
+                $ownerList = $this->ownerDAO;
+                require_once(VIEWS_PATH . "validate-session.php");
+                require_once(VIEWS_PATH . "showGuardian.php");
+            }catch(Exception $e){
+                $alert = [
+                    "type" => "alert",
+                    "text" => $e->getMessage()
+                ];
+            }   
         }
 
         public function getDisponibilityByGuardian ($idGuardian){
@@ -348,10 +356,10 @@
         public function showReservationsList(){
             $wcReservationList = $this->reservationDAO->getReservationByStatusAndIdOwner("Esperando confirmacion", $_SESSION['idUser']);
             $fReservationList = $this->reservationDAO->getReservationByStatusAndIdOwner("Finalizado", $_SESSION['idUser']);
-            $cReservationList = $this->reservationDAO->getReservationByStatusAndIdOwner("Aceptada", $_SESSION['idUser']);
+            $cReservationList = $this->reservationDAO->getReservationByStatusAndIdOwner2("Aceptada", "Esperando pago", $_SESSION['idUser']);
             $allpets = $this->PetDAO;
             $guardian = $this->guardianDAO;
-            $owner =$this->ownerDAO;
+            $owner = $this->ownerDAO;
             
             require_once(VIEWS_PATH . "validate-session.php");
             require_once(VIEWS_PATH . "listReservationOwner.php");
@@ -371,25 +379,33 @@
             return ($i * $pricePD);
         }
 
-        public function chargeCard($idReservation){
+        public function chargeCard($idReservation, $alert = null){
             require_once(VIEWS_PATH . 'validate-session.php');
             require_once(VIEWS_PATH . 'chargeCard.php');
         }
 
-        public function chargePayment ($cardNumber, $titular ,$expirationMonth, $expirationYear,$secCode,$idReservation){
+        public function chargePayment ($cardNumber, $titular ,$expirationDate,$secCode,$idReservation){
             date_default_timezone_set("America/Buenos_Aires");
             $date = strtotime('today');
             try{   
-                $this->checkExpirationDate($expirationMonth,$expirationYear,$date);
-                $this->createPayment($idReservation, $titular,$date);
+                $this->checkExpirationDate($expirationDate,$date);
+                $alert = [
+                    "tpye" => "alert",
+                    "text" => "Cupon de pago creado correctamente!"
+                ];
+                $this->createPayment($titular,$date, $idReservation, $alert);
             }catch (Exception $e){
-                $alert = [];
-                $this->chargeCard($idReservation);
+                $alert = [
+                    "tpye" => "alert",
+                    "text" => $e->getMessage()
+                ];
+                $this->chargeCard($idReservation, $alert);
             } 
         }
 
-        public function createPayment($titular,$date,$idReservation){
+        public function createPayment($titular,$date,$idReservation, $alert){
             $payment = new PaymentCoupon();
+            $date = date("Y-m-d", $date);
             $reservation = $this->reservationDAO->GetReservationsById($idReservation);
             $payment->setOwnerName($this->ownerDAO->GetNameById($reservation->getIdOwner()));
             $payment->setGuardianName(($this->guardianDAO->getGuardianById($reservation->getIdGuardian()))->getName());
@@ -398,25 +414,26 @@
             $payment->setDate($date);
             $payment->setTitular($titular);
             $payment->setReservationNumber($reservation->getIdReservation());
+            $this->reservationDAO->changeReservationStatus($idReservation, "Aceptada");
             $this->paymentDAO->Add($payment);
-            $this->getCoupon($idReservation);
+            $this->getCoupon($idReservation, $alert);
         }
 
-        public function getCoupon($idReservation){
+        public function getCoupon($idReservation, $alert = null){
             $payment = $this->paymentDAO->getPaymentByIdReservation($idReservation);
             require_once(VIEWS_PATH . 'validate-session.php');
             require_once(VIEWS_PATH . 'viewPaymentCoupon.php');
         }
 
-        public function checkExpirationDate($expirationMonth,$expirationYear,$date){
-            $month = date ('m',$date);
-            $year = date ('Y',$date);
-            if($expirationMonth>=$month && $expirationYear>=$year){
+        public function checkExpirationDate($expirationDate,$date){
+            $date = date("Y-m", $date);
+            if($expirationDate>=$date){
                 return true;
             }
             else {
                 throw new Exception("Fecha de expiracion invalida");
             }
+
         }
 
     }

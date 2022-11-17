@@ -6,7 +6,7 @@
 }
 
 .pantallaInicial{
-    background-image: url("https://blog-cdn.Dogbuddy.com/wp-content/uploads/2015/07/caracteristicas-de-un-buen-cuidador-chica-besando-a-un-perro-golde-retriever-e1438179668679.jpg");
+    background-image: url("https://img.freepik.com/foto-gratis/retrato-mujer-su-hermoso-perro_1157-36171.jpg?w=2000");
     background-repeat:no-repeat;
     background-size:cover;
     height: 100vh;
@@ -338,7 +338,7 @@ h5{
 .buttonSelectPet{
     position: absolute;
     top: 241px;
-    left: 165%;
+    left: 155%;
     padding: 15px;
     width: 200px;
     font-size: 16px;

@@ -6,6 +6,9 @@
     <main>
         <section>
             <form action="<?php echo FRONT_ROOT ?>Guardian/selectAction" method="POST">
+            <?php if(isset($alert)){ ?>
+                <p class="psException <?= $alert["type"] ?>"> <?= $alert["text"]; ?></p>
+            <?php } ?>
                 <div class="divListGuardian">
                     <table class="tableListGuardian">
                         <thead>

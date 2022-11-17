@@ -23,8 +23,7 @@
             $this->reservationDAO = new ReservationDAO();
         }
 
-        public function showModifyView($e = null){
-            $exception = $e;
+        public function showModifyView($alert = null){
             require_once(VIEWS_PATH . "validate-session.php");
             require_once(VIEWS_PATH . "modifyAvailability.php");
         }
@@ -41,7 +40,11 @@
                     $this->guardianDAO->UpdateAvailabilityEnd($id, $availabilityEnd);
                     $this->Index();
                 }catch (Exception $e) {
-                    $this->showModifyView($e);
+                    $alert = [
+                        "type" => "alert",
+                        "text" => $e->getMessage()
+                    ];
+                    $this->showModifyView($alert);
                 } 
         }
 
@@ -51,16 +54,24 @@
             }
         }
 
-        public function showReservationsList(){
-            $wcReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Esperando confirmacion", $_SESSION['idUser']);
-            $fReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Finalizado", $_SESSION['idUser']);
-            $cReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Aceptada", $_SESSION['idUser']);
-            $allpets = $this->PetDAO;
-            $guardian = $this->guardianDAO;
-            $owner =$this->ownerDAO;
-            
-            require_once(VIEWS_PATH . "validate-session.php");
-            require_once(VIEWS_PATH . "listReservationGuardian.php");
+        public function showReservationsList($alert = null){
+            try{
+                $wcReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Esperando confirmacion", $_SESSION['idUser']);
+                $fReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Finalizado", $_SESSION['idUser']);
+                $cReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Aceptada", $_SESSION['idUser']);
+                $allpets = $this->PetDAO;
+                $guardian = $this->guardianDAO;
+                $owner =$this->ownerDAO;
+                require_once(VIEWS_PATH . "validate-session.php");
+                require_once(VIEWS_PATH . "listReservationGuardian.php");
+            }catch (Exception $e){
+                $alert = [
+                    "type" => "alert",
+                    "text" => 'Error en la base de datos'
+                ];
+                require_once(VIEWS_PATH . "validate-session.php");
+                require_once(VIEWS_PATH . "listReservationGuardian.php");
+            }
         }
 
         public function selectAction($button, $idReservation){
@@ -75,10 +86,18 @@
             try{
                 $reservation = $this->reservationDAO->GetReservationsById($idReservation);
                 $this->checkGuardian($reservation->getReservationDateStart(), $reservation->getReservationDateEnd(), $reservation->getBreed(), $reservation->getAnimalType(), $reservation->getSize(), $reservation->getIdGuardian());
-                $this->reservationDAO->changeReservationStatus($idReservation,'Aceptada');
-                $this->showReservationsList();
+                $this->reservationDAO->changeReservationStatus($idReservation,'Esperando pago');
+                $alert = [
+                    "type" => "success",
+                    "text" => 'Reserva aceptada con exito, esperand pago!'
+                ];
+                $this->showReservationsList($alert);
             }catch(Exception $e){
-                $this->showReservationsList();
+                $alert = [
+                    "type" => "alert",
+                    "text" => $e->getMessage()
+                ];
+                $this->showReservationsList($alert);
             }
         }
         
@@ -100,7 +119,9 @@
             }
             $i=$i+5;
         }
-
+        if($flag == 0){
+            throw new Exception ('Guardian no cumple con requisitos para aceptar la reserva');
+        }
         return $flag;
         }
         

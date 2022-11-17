@@ -6,6 +6,9 @@
 <html class="fondoMenus">
     <div class="containerModify">
         <main> 
+            <?php if(isset($alert)){ ?>
+                <p class="psException <?= $alert["type"] ?>"> <?= $alert["text"]; ?></p>
+            <?php } ?>
             <form action="<?php echo FRONT_ROOT ?> Guardian/modifyAvailability" method="post">
                 
                 <div>

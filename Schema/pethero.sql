@@ -296,7 +296,7 @@ CREATE PROCEDURE Reservation_GetReservationsByIdGuardian (in idGuardianS integer
 BEGIN
 	SELECT *
     FROM reservation  
-    WHERE reservation.idGuardian = idGuardianS and reservation.reservationStatus != 'Cancelado' ;
+    WHERE Reservation.idGuardian = idGuardianS and reservation.reservationStatus != 'Cancelado' and reservation.reservationStatus != 'Finalzado' reservation.reservationStatus != 'Finalzado Revisado'
 END//
 reservationDateStart
 DELIMITER //

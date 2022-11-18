@@ -538,6 +538,7 @@
                     "type" => "success",
                     "text" => "Review agregada con Exito!"
                 ];
+                $this->reservationDAO ->changeReservationStatus($idReservation, 'Finalizado Revisado');
                 $this->showReservationsList($alert);
             }catch(Exception $e){
                 $alert = [

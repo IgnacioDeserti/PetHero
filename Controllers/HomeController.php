@@ -136,7 +136,7 @@
             try{
                 $this->guardianDAO->getReservationStart($aux->getIdGuardian());
                 $wcReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Esperando confirmacion", $aux->getIdGuardian());
-                $fReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Finalizado", $aux->getIdGuardian());
+                $fReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian2("Finalizado", "Finalizado Revisado", $aux->getIdGuardian());
                 $cReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian2("Aceptada", "Esperando pago", $aux->getIdGuardian());
                 $allpets = $this->PetDAO;
                 $guardian = $this->guardianDAO;

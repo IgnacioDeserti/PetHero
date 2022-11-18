@@ -203,7 +203,7 @@ DELIMITER //
 CREATE PROCEDURE Review_Add (IN rating float, IN observations varchar(200), IN idOwner integer, IN idGuardian integer, IN idReservation integer)
 BEGIN
     INSERT INTO review
-        (review.idOwner, review.idGuardian, review.idOwner, review.idGuardian)
+        (review.rating, review.observations, review.idOwner, review.idGuardian, review.idReservation)
     VALUES
         (rating, observations, idOwner, idGuardian, idReservation);
 END//
@@ -383,7 +383,7 @@ CREATE PROCEDURE Reservation_getReservationByStatusAndIdOwner2 (IN stat1 varchar
 BEGIN
     SELECT *
     FROM Reservation
-    WHERE Reservation.idOwner = idOwnerR AND Reservation.reservationStatus = stat1 or reservation.reservationStatus = stat2 ;
+    WHERE Reservation.idOwner = idOwnerR AND (Reservation.reservationStatus = stat1 or reservation.reservationStatus = stat2);
 END//
 
 DELIMITER //
@@ -391,7 +391,7 @@ CREATE PROCEDURE Reservation_getReservationByStatusAndIdGuardian2 (IN stat1 varc
 BEGIN
     SELECT *
     FROM Reservation
-    WHERE Reservation.idGuardian = idGuardianR AND Reservation.reservationStatus = stat1 or reservation.reservationStatus = stat2 ;
+    WHERE Reservation.idGuardian = idGuardianR AND (Reservation.reservationStatus = stat1 or reservation.reservationStatus = stat2);
 END//
 
 
@@ -439,13 +439,19 @@ END//
 DELIMITER //
 CREATE PROCEDURE Pet_GetPetByIdOwner (in idO int)
 BEGIN
-	SELECT *
+    SELECT *
     FROM pet
-    WHERE pet.idOwner = idO;
+    WHERE pet.idOwner = idO and pet.status = 1;
 END//
 
 DELIMITER //
 CREATE PROCEDURE reservation_changePrice (in idReservationS int)
 BEGIN
     UPDATE reservation SET reservation.price = price * 0.5 WHERE reservation.idReservation = idReservationS;
+END//
+
+DELIMITER //
+CREATE PROCEDURE Pet_deletePet (in idPetS int)
+BEGIN
+    UPDATE pet SET pet.status = 0 WHERE pet.idPet = idPetS;
 END//

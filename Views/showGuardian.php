@@ -5,7 +5,7 @@
 
 <html class="fondoMenus">
      <main>
-     <?php if(isset($alert)) { ?>
+          <?php if(isset($alert)) { ?>
                     <p class="psException <?= $alert["type"] ?>"> <?= $alert["text"]; } ?> </p>
           <section id="listado">
                <div class="divListGuardian">

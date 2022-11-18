@@ -515,21 +515,20 @@
 
         
         public function finishReservation($idReservation){
-            $this->reservationDAO->changeReservationStatus($idReservation,'finalizada');
-            require_once(VIEWS_PATH . 'validate-session.php');
-            require_once(VIEWS_PATH . 'listReservationOwner.php');
+            $this->reservationDAO->changeReservationStatus($idReservation,'Finalizado');
+            $this->showReservationsList();
         }
 
         public function createReview($idReservation){
             $reservation = $this->reservationDAO->GetReservationsById($idReservation);
             require_once(VIEWS_PATH . 'validate-session.php');
-            require_once(VIEWS_PATH . 'CAMBIAR.php');
+            require_once(VIEWS_PATH . 'addReview.php');
         }
 
         public function addReview ($rating, $observations, $idOwner, $idGuardian, $idReservation){
             $review = new Review();
             $review->setRating($rating);
-            $review->setObservations($$observations);
+            $review->setObservations($observations);
             $review->setIdOwner($idOwner);
             $review->setIdGuardian($idGuardian);
             $review->setIdReservation($idReservation);

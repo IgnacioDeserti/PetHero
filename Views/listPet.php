@@ -38,6 +38,9 @@
                                                        <td class="thListGuardian">No disponible</td>
                                                        </tr>
                                                   <?php } ?> 
+                                                  <form action="<?php echo FRONT_ROOT ?>Owner/deletePet">
+                                                  <td><button name="idPet" value='<?= $pet->getIdPet()?>' class="buttonSelectG buttonRedHovers" type="submit"> Quitar </button></td>
+                                                  </form>
                                         <?php }
                                    } ?>      </tr>
                               </form>

@@ -163,6 +163,19 @@
             }
         }
 
+        public function deletePet ($idPet){
+            $query = "CALL pet_deletePet(?)";
+
+            $parameters["idPetS"] = $idPet;
+
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+            }catch(Exception $error){
+                throw new Exception("No se pudo dar de baja a la mascota");
+            }
+        }
+
 }
 
 ?>

@@ -141,6 +141,7 @@
                     "type" => "alert",
                     "text" => $e->getMessage()
                 ];
+                $this->showReservationsList($alert);
             }
         }
 

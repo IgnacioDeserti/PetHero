@@ -59,6 +59,9 @@
                                         <form action="<?= FRONT_ROOT ?>Owner/getCoupon" method="post">
                                             <td><button class="buttonSelectG buttonHoversGreen" type="submit" name="idReservation" value="<?= $reservation->getIdReservation(); ?>">Ver Factura</button></td>
                                         </form>
+                                        <form action="<?= FRONT_ROOT ?>Owner/finishReservation" method="post">
+                                            <td><button class="buttonSelectG buttonHoversGreen" type="submit" name="idReservation" value="<?= $reservation->getIdReservation(); ?>">Finalizar</button></td>
+                                        </form>
                                 </tr>
                             <?php }}}?>
                     </tbody>                  
@@ -83,7 +86,9 @@
                                     <td class="thListGuardian"><?php echo $reservation->getReservationDateStart() ?> </td>
                                     <td class="thListGuardian"><?php echo $reservation->getReservationDateEnd() ?> </td>
                                     <td class="thListGuardian"><?php echo $reservation->getPrice()?> </td>
-
+                                    <form action="<?= FRONT_ROOT ?>Owner/createReview" method="post">
+                                            <td><button class="buttonSelectG buttonHoversGreen" type="submit" name="idReservation" value="<?= $reservation->getIdReservation(); ?>">Realizar review</button></td>
+                                    </form>
                                 </tr>
                             <?php }?>
                     </tbody>

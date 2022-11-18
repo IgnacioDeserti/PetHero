@@ -63,14 +63,14 @@
                          </table>
 
                          <table>
-                          <?php  foreach($reviewsList as $review) { ?>
+                         <?php  foreach($reviewsList as $review) { ?>
                                    <tr>
                                         <td><?php echo $ownerList->getNameById($review->getIdOwner())."ㅤㅤㅤ".$review->getRating()."⭐" ?></td>
                                    </tr>
                                    <tr>
                                         <td><?php echo $review->getObservations() ?></td>
                                    </tr>
-                          <?php } ?>
+                         <?php } ?>
                          </table>
                </div>
           </section>

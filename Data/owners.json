@@ -1,0 +1,32 @@
+[
+    {
+        "name": "Ignacio Deserti",
+        "address": "Misiones 2454",
+        "email": "ignaciodeserti@gmail.com",
+        "number": "2235139919",
+        "userName": "ideserti",
+        "password": "44667880",
+        "idOwner": 1,
+        "typeUser": "O"
+    },
+    {
+        "name": "Ignacio Muzio",
+        "address": "Fortunato de la Plaza 2455",
+        "email": "nachotemuzio@gmail.com",
+        "number": "2231231234",
+        "userName": "NachoMuzio66",
+        "password": "1",
+        "idOwner": 2,
+        "typeUser": "O"
+    },
+    {
+        "name": "Moni Argento",
+        "address": "Cualquiera 1234",
+        "email": "moni@gmail.com",
+        "number": "223456789",
+        "userName": "MoniArgento",
+        "password": "1",
+        "idOwner": 3,
+        "typeUser": "O"
+    }
+]

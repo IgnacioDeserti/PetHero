@@ -296,9 +296,10 @@ CREATE PROCEDURE Reservation_GetReservationsByIdGuardian (in idGuardianS integer
 BEGIN
 	SELECT *
     FROM reservation  
-    WHERE Reservation.idGuardian = idGuardianS and reservation.reservationStatus != 'Cancelado' and reservation.reservationStatus != 'Finalzado' reservation.reservationStatus != 'Finalzado Revisado'
+    WHERE Reservation.idGuardian = idGuardianS and reservation.reservationStatus != 'Cancelado' and reservation.reservationStatus != 'Finalzado' and reservation.reservationStatus != 'Finalzado Revisado'
+    ORDER BY reservation.reservationDateStart asc;
 END//
-reservationDateStart
+
 DELIMITER //
 CREATE PROCEDURE Reservation_GetReservationsByIdOwner (in idOwnerS integer)
 BEGIN
@@ -320,7 +321,7 @@ CREATE PROCEDURE Reservation_GetDates (in idGuardianS int)
 BEGIN
 	SELECT Reservation.reservationDateStart, Reservation.reservationDateEnd, Reservation.breed, Reservation.animalType, Reservation.size
     FROM Reservation  
-    WHERE Reservation.idGuardian = idGuardianS and reservation.reservationStatus != 'Cancelado' and reservation.reservationStatus != 'Finalzado' reservation.reservationStatus != 'Finalzado Revisado' 
+    WHERE Reservation.idGuardian = idGuardianS and reservation.reservationStatus != 'Cancelado' and reservation.reservationStatus != 'Finalzado' and reservation.reservationStatus != 'Finalzado Revisado' 
     ORDER BY Reservation.reservationDateStart ASC;
 END//
 

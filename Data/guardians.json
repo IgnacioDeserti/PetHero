@@ -1,0 +1,36 @@
+[
+    {
+        "name": "Mateo Braganza",
+        "address": "Ciudad de Rosario 1455",
+        "email": "mateobraganza1@gmail.com",
+        "number": "2234567890",
+        "userName": "1",
+        "password": "1",
+        "size": [
+            "small",
+            "big"
+        ],
+        "availabilityStart": "2022-10-22",
+        "availabilityEnd": "2022-10-27",
+        "reviews": [],
+        "idGuardian": 1,
+        "typeUser": "G"
+    },
+    {
+        "name": "Pepe Argento",
+        "address": "Cualquiera 1234",
+        "email": "pepe@gmail.com",
+        "number": "2234567890",
+        "userName": "PepeArgento",
+        "password": "1",
+        "size": [
+            "medium",
+            "big"
+        ],
+        "availabilityStart": "2022-10-31",
+        "availabilityEnd": "2022-11-10",
+        "reviews": [],
+        "idGuardian": 2,
+        "typeUser": "G"
+    }
+]

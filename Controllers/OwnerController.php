@@ -390,7 +390,7 @@
 
         public function showReservationsList($alert = null){
             $wcReservationList = $this->reservationDAO->getReservationByStatusAndIdOwner("Esperando confirmacion", $_SESSION['idUser']);
-            $fReservationList = $this->reservationDAO->getReservationByStatusAndIdOwner("Finalizado", $_SESSION['idUser']);
+            $fReservationList = $this->reservationDAO->getReservationByStatusAndIdOwner2("Finalizado", "Finalizado Revisado", $_SESSION['idUser']);
             $cReservationList = $this->reservationDAO->getReservationByStatusAndIdOwner2("Aceptada", "Esperando pago", $_SESSION['idUser']);
             $allpets = $this->PetDAO;
             $guardian = $this->guardianDAO;

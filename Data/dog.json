@@ -1,0 +1,35 @@
+[
+    {
+        "idDog": 1,
+        "name": "Brandon",
+        "breed": "Golden",
+        "size": "Big",
+        "observations": "12345",
+        "photo1": "http:\/\/localhost\/FacultadXampp\/PetHero\/Views\/img\/\/Foto-Perfil\/rrope.jpg",
+        "photo2": "http:\/\/localhost\/FacultadXampp\/PetHero\/Views\/img\/\/Foto-Vacunacion\/random.jpg",
+        "video": null,
+        "idOwner": 1
+    },
+    {
+        "idDog": 2,
+        "name": "Fatiga",
+        "breed": "Callejero",
+        "size": "Big",
+        "observations": "Perro de Moni Argento",
+        "photo1": "http:\/\/localhost\/FacultadXampp\/PetHero\/Views\/img\/\/Foto-Perfil\/descargar.jpg",
+        "photo2": "http:\/\/localhost\/FacultadXampp\/PetHero\/Views\/img\/\/Foto-Vacunacion\/descargar (1).jpg",
+        "video": null,
+        "idOwner": 3
+    },
+    {
+        "idDog": 3,
+        "name": "Corona",
+        "breed": "Golden",
+        "size": "Medium",
+        "observations": "Coronita",
+        "photo1": "http:\/\/localhost\/FacultadXampp\/PetHero\/Views\/img\/\/Foto-Perfil\/images.jpg",
+        "photo2": "http:\/\/localhost\/FacultadXampp\/PetHero\/Views\/img\/\/Foto-Vacunacion\/descargar (2).jpg",
+        "video": null,
+        "idOwner": 1
+    }
+]

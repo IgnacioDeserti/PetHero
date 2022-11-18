@@ -14,6 +14,7 @@
     use Models\Reservation;
     use DAO\PaymentCouponDAO; 
     use Models\PaymentCoupon;
+    use Models\Review;
 
     class OwnerController
     {
@@ -510,6 +511,42 @@
                 $this->showListPet($alert);
             }
 
+        }
+
+        
+        public function finishReservation($idReservation){
+            $this->reservationDAO->changeReservationStatus($idReservation,'finalizada');
+            require_once(VIEWS_PATH . 'validate-session.php');
+            require_once(VIEWS_PATH . 'listReservationOwner.php');
+        }
+
+        public function createReview($idReservation){
+            $reservation = $this->reservationDAO->GetReservationsById($idReservation);
+            require_once(VIEWS_PATH . 'validate-session.php');
+            require_once(VIEWS_PATH . 'CAMBIAR.php');
+        }
+
+        public function addReview ($rating, $observations, $idOwner, $idGuardian, $idReservation){
+            $review = new Review();
+            $review->setRating($rating);
+            $review->setObservations($$observations);
+            $review->setIdOwner($idOwner);
+            $review->setIdGuardian($idGuardian);
+            $review->setIdReservation($idReservation);
+            try{
+                $this->reviewDAO->add($review);
+                $alert = [
+                    "type" => "success",
+                    "text" => "Review agregada con Exito!"
+                ];
+                $this->showReservationsList($alert);
+            }catch(Exception $e){
+                $alert = [
+                    "type" => "error",
+                    "text" => $e->getMessage()
+                ];
+                $this->showReservationsList($alert);
+            }
         }
 
     }

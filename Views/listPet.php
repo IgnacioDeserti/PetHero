@@ -5,12 +5,12 @@
 <html class="fondoMenus">
      <main>
           <section id="listado">
-               <div class="divListGuardian">
-                    <?php if(isset($alert)){ ?>
-                         <p class="psException <?= $alert["type"] ?>"> <?= $alert["text"]; ?></p>
+          <?php if(isset($alert)){ ?>
+                         <p class="psException <?php echo $alert["type"] ?>"> <?= $alert["text"]; ?></p>
                     <?php } ?>
+               <div class="divListGuardian">
                     <table class="tableListGuardian">
-                         <caption style="text-align: center;">Perros</caption>
+                         <caption style="text-align: center;">Mascotas</caption>
                          <thead>
                               <th class="thListGuardian">Foto Perfil</th>
                               <th class="thListGuardian">Foto Vacunacion</th>
@@ -21,7 +21,6 @@
                               <th class="thListGuardian">Video</th>
                          </thead>
                          <tbody>
-                              <form action="" method="post">
                                    <?php
                                    if (isset($arrayListPet)) {
                                         foreach ($arrayListPet as $Pet) { ?>
@@ -36,14 +35,13 @@
                                                   <td class="thListGuardian"><iframe src="<?php echo $Pet->getVideo(); ?>" frameborder="0" width="150" height="150"></iframe></td>
                                                   <?php } else { ?>
                                                        <td class="thListGuardian">No disponible</td>
-                                                       </tr>
                                                   <?php } ?> 
-                                                  <form action="<?php echo FRONT_ROOT ?>Owner/deletePet">
-                                                  <td><button name="idPet" value='<?= $pet->getIdPet()?>' class="buttonSelectG buttonRedHovers" type="submit"> Quitar </button></td>
+                                                  <form action="<?php echo FRONT_ROOT ?>Owner/deletePet" method="post">
+                                                       <td><button type="submit" name="idPet" class="buttonDeletePet buttonRedHovers" value="<?php echo $Pet->getIdPet() ?>"><img src="https://png.pngtree.com/png-vector/20210225/ourlarge/pngtree-error-cross-png-image_2951813.jpg" height="40px" width="40px" alt="Cruz roja.jpg"> </button></td>
                                                   </form>
+                                             </tr>
                                         <?php }
-                                   } ?>      </tr>
-                              </form>
+                                   } ?>      
                          </tbody>
                     </table>
                </div>

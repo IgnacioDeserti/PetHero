@@ -8,7 +8,7 @@
     use DAO\petDAO;
     use Models\Pet;
     use DAO\ReservationDAO;
-    use FFI\Exception;
+    use Exception;
 
     class GuardianController{
 
@@ -45,6 +45,7 @@
                         "type" => "success",
                         "text" => 'Modificacion realizada con exito'
                     ];
+                    $this->showModifyView($alert);
                 }catch (Exception $e) {
                     $alert = [
                         "type" => "alert",
@@ -55,7 +56,13 @@
         }
 
         private function verifyAvailability ($avStart, $avEnd){
+            date_default_timezone_set("America/Buenos_Aires");
+            $date = strtotime('today');
+            $date = date("Y-m-d", $date);
             if($avStart > $avEnd){
+                throw new Exception ("Fechas invalidas, ingrese otras");
+            }
+            if($avStart < $date){
                 throw new Exception ("Fechas invalidas, ingrese otras");
             }
         }
@@ -67,16 +74,23 @@
                 $allpets = $this->PetDAO;
                 $guardian = $this->guardianDAO;
                 $owner =$this->ownerDAO;
+                $payment = $this->paymentDAO;
+
                 require_once(VIEWS_PATH . "validate-session.php");
                 require_once(VIEWS_PATH . "listReservationGuardian.php");
         }
 
         public function getCoupon($idReservation){
             try{
-                $payment = $this->paymentDAO->getPaymentByIdReservation($idReservation);
-                require_once(VIEWS_PATH . 'validate-session.php');
-                require_once(VIEWS_PATH . 'viewPaymentCoupon.php');
-            }catch (Exception $e){
+                $paymentArray = $this->paymentDAO->getPaymentByIdReservation($idReservation);
+                if(count($paymentArray) > 0){
+                    $payment = $paymentArray[0];
+                    require_once(VIEWS_PATH . "validate-session.php");
+                    require_once(VIEWS_PATH . "viewPaymentCoupon.php");
+                }else{
+                    throw new Exception("La reserva no tiene pago aun");
+                }
+            }catch(Exception $e){
                 $alert = [
                     "type" => "alert",
                     "text" => $e->getMessage()
@@ -115,32 +129,36 @@
         
 
         public function declineReservation ($idReservation){
-            $this->reservationDAO->changeReservationStatus($idReservation,'Rechazada');
-            $alert = [
-                "type" => "success",
-                "text" => 'Reserva rechazada con exito'
-            ];
-            $this->showReservationsList($alert);
+            try{
+                $this->reservationDAO->changeReservationStatus($idReservation,'Rechazada');
+                $alert = [
+                    "type" => "success",
+                    "text" => 'Reserva rechazada con exito!'
+                ];
+                $this->showReservationsList($alert);
+            }catch(Exception $e){
+                $alert = [
+                    "type" => "alert",
+                    "text" => $e->getMessage()
+                ];
+            }
         }
 
         public function checkGuardian($availabilityStart ,$availabilityEnd, $breed, $type, $size, $idGuardian){
-        $flag = 0;
-        $listDisponibility = $this->getDisponibilityByGuardian($idGuardian);
-        $guardian = $this->guardianDAO->getGuardianById($idGuardian);
+            $flag = 0;
+            $listDisponibility = $this->getDisponibilityByGuardian($idGuardian);
 
-        $i = 0;
-        while($i<count($listDisponibility)){
-            if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed) == 0) || (strcmp($listDisponibility[$i+2],'all') == 0)) && ((strcmp($listDisponibility[$i+3],$type) == 0) || (strcmp($listDisponibility[$i+3],'all') == 0)) && ((strcmp($listDisponibility[$i+4],$size) == 0) || (strcmp($listDisponibility[$i+4],'all') == 0))){
-                $flag = 1;
+            $i = 0;
+            while($i<count($listDisponibility)){
+                if(($availabilityStart>=$listDisponibility[$i]) && ($availabilityEnd<=$listDisponibility[$i+1]) && ((strcmp($listDisponibility[$i+2],$breed) == 0) || (strcmp($listDisponibility[$i+2],'all') == 0)) && ((strcmp($listDisponibility[$i+3],$type) == 0) || (strcmp($listDisponibility[$i+3],'all') == 0)) && ((strcmp($listDisponibility[$i+4],$size) == 0) || (strcmp($listDisponibility[$i+4],'all') == 0))){
+                    $flag = 1;
+                }
+                $i=$i+5;
             }
-            $i=$i+5;
+
+            return $flag;
         }
-        if($flag == 0){
-            throw new Exception ('Guardian no cumple con requisitos para aceptar la reserva');
-        }
-        return $flag;
-        }
-        
+
         public function getDisponibilityByGuardian ($idGuardian){
             $listReservationsGuardian = $this->reservationDAO->GetReservationDates($idGuardian);
             $start=0;
@@ -252,4 +270,136 @@
         }
     }
 
+    /* 
+    private $guardianList;
+        private $fileName;
+
+        public function __construct(){
+            $this->fileName = dirname(__DIR__)."/Data/guardians.json";
+        }
+
+
+        public function add(guardian $newGuardian){
+            $this->retrieveData();
+            $newGuardian->setIdGuardian($this->setId());
+            array_push($this->guardianList, $newGuardian);
+            $this->saveData();
+        }
+
+        public function getGuardian(Guardian $newGuardian){
+            $searched = NULL;
+            foreach($this->guardianList as $list){
+                if(strcmp($list->getEmail(), $newGuardian->getEmail()) == 0){
+                    $searched = $newGuardian;
+                }
+            }
+
+            return $searched;
+        }
+        
+        public function delete($id){
+
+        }
+
+        public function getAll(){
+            $this->retrieveData();
+            return $this->guardianList;
+        }
+
+        private function saveData(){
+            $arrayToEncode = array();
+
+            foreach($this->guardianList as $guardian){
+                    $valuesArray["name"] = $guardian->getName();
+                    $valuesArray["address"] = $guardian->getAddress();
+                    $valuesArray["email"] = $guardian->getEmail();
+                    $valuesArray["number"] = $guardian->getNumber();
+                    $valuesArray["userName"] = $guardian->getUserName();
+                    $valuesArray["password"] = $guardian->getPassword();
+                    $valuesArray["size"] = $guardian->getSize();
+                    $aux = $guardian->getReviews();
+                    $arrayReviews = array();
+                    foreach($aux as $review){
+                        $value["rating"] = $review->getRating();
+                        $value["observations"] = $review->getObservations();
+                        $value["userName"] = $review->getUserName();
+                        array_push($arrayReviews, $value);
+                    }
+                    $valuesArray["availabilityStart"] = $guardian->getAvailabilityStart();
+                    $valuesArray["availabilityEnd"] = $guardian->getAvailabilityEnd();
+                    $valuesArray["reviews"] = $arrayReviews;
+                    $valuesArray["idGuardian"] = $guardian->getIdGuardian();
+                    $valuesArray["typeUser"] = $guardian->getTypeUser();
+                    array_push($arrayToEncode, $valuesArray);
+                }
+
+            $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
+
+            file_put_contents($this->GetJsonFilePath(), $jsonContent);
+        } 
+
+        private function retrieveData(){
+            $this->guardianList = array();
+
+            if(file_exists($this->fileName)){
+                $jsonContent = file_get_contents($this->GetJsonFilePath());
+
+                $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
+
+                foreach($arrayToDecode as $valuesArray){
+                    $guardian = new guardian();
+                    $guardian->setName($valuesArray["name"]);
+                    $guardian->setAddress($valuesArray["address"]);
+                    $guardian->setEmail($valuesArray["email"]);
+                    $guardian->setNumber($valuesArray["number"]);
+                    $guardian->setUserName($valuesArray["userName"]);
+                    $guardian->setPassword($valuesArray["password"]);
+                    $guardian->setSize($valuesArray["size"]);
+                    $aux = $valuesArray["reviews"];
+                    $arrayReviews = array();
+                    foreach($aux as $value){
+                        $review = new Review();
+                        $review->setRating($value["rating"]);
+                        $review->setObservations($value["observations"]);
+                        $review->setUserName($value["userName"]);
+                        array_push($arrayReviews, $review);
+                    }
+                    $guardian->setAvailabilityStart($valuesArray["availabilityStart"]);
+                    $guardian->setAvailabilityEnd($valuesArray["availabilityEnd"]);
+                    $guardian->setReviews($arrayReviews);
+                    $guardian->setIdGuardian($valuesArray["idGuardian"]);
+                    $guardian->setTypeUser($valuesArray["typeUser"]);
+                    array_push($this->guardianList, $guardian);
+                }
+            }
+        }
+
+        private function GetJsonFilePath(){
+
+            $initialPath = "Data/guardians.json";
+            if(file_exists($initialPath)){
+                $jsonFilePath = $initialPath;
+            }else{
+                $jsonFilePath = "../".$initialPath;
+            }
+
+            return $jsonFilePath;
+        }
+
+        private function setId(){
+            return count($this->getAll()) + 1;
+        }
+
+        public function UpdateAvailability($id, $date1, $date2){
+            foreach($this->getAll() as $guardian){
+                if($guardian->getIdGuardian() == $id){
+                    $guardian->setAvailabilityStart($date1);
+                    $guardian->setAvailabilityEnd($date2);
+                    $this->saveData();
+                }
+                
+            }
+        }
+}
+*/
 ?>

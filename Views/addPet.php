@@ -5,12 +5,12 @@
 
 <html class="fondoMenus">
      <main>
+     <?php if(isset($alert)) { ?>
+                    <p class="psException <?= $alert["type"] ?>"> <?= $alert["text"]; } ?> </p>
           <div class="formSelectPet">
                <header>
                     <h2 style="text-align: center;"> ¿QUE MASCOTA QUIERE AGREGAR?</h2>
                </header>
-               <?php if(isset($alert)) { ?>
-                    <p class="psException <?= $alert["type"] ?>"> <?= $alert["text"]; } ?> </p>
                <form action="<?php echo FRONT_ROOT ?> Owner/typePet" method="post" class="contentForm" enctype="multipart/form-data">
 
                     <div class="divSelectPet">

@@ -1,12 +1,16 @@
 <?php
-       include('header.php');
-       include("nav.php");
+     include('header.php');
+     include("nav.php");
 ?>
 
 <html class="fondoMenus">
      <main>
+          
+     <?php if(count($listChecked) != 0) { if(isset($alert)) { ?>
+                         <p class="psException <?= $alert["type"] ?>"> <?= $alert["text"]; } }?> </p>
           <section id="listado">
                <div class="divListGuardian">
+
                     <form action="<?php echo FRONT_ROOT ?>Owner/selectGuardian" method="post">
                          <table class="tableListGuardian">
                               <caption style="text-align: center;"Perros>Guardianes</caption>

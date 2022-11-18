@@ -55,9 +55,10 @@
                                     <td class="thListGuardian"><?php echo $reservation->getReservationDateStart() ?> </td>
                                     <td class="thListGuardian"><?php echo $reservation->getReservationDateEnd() ?> </td>
                                     <td class="thListGuardian"><?php echo $reservation->getPrice()?> </td>
-                                    <form action="<?= FRONT_ROOT . 'Guardian/getCoupon'?>" method = 'POST'>
-                                        <td><button class="buttonSelectG buttonHoversGreen" type= 'submit' value = '<?= $reservation->getIdReservation()?>'>Ver cupon de pago</button><td>
-                                    </form>
+                                    
+                                        <form action="<?= FRONT_ROOT ?>Guardian/getCoupon" method = 'POST'>
+                                        <td><button class="buttonSelectG buttonHoversGreen" name="idReservation" type= 'submit' value = '<?= $reservation->getIdReservation()?>'>Ver cupon de pago</button><td>
+                                    </form> 
                                 </tr>
                             <?php }?>
                         </tbody>                  

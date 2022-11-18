@@ -2,11 +2,14 @@
     include("header.php");
 ?>
 <html class="pantallaInicial">
-    <main>       
+    <main>
+    <?php if(isset($alert)) { ?>
+                    <p class="psException <?= $alert["type"] ?>"> <?= $alert["text"]; } ?> </p>       
         <div class="formCreateProfile">         
             <header>            
                 <h3 class="tituloForm">Create un nuevo perfil como guardian</h3>        
-            </header>          
+            </header>
+
             <form action=" <?php echo FRONT_ROOT ?>Home/createGuardianProfile" method="POST" class="contentForm"> 
                     <div class="divForm">                    
                         <label for="">Name</label>                     
@@ -49,13 +52,6 @@
                     <div>
                         <input type="hidden" name="typeUser" value="G">
                         <button type="submit" class="buttonForm buttonHoversGreen">Registrarse</button>
-                    </div>
-
-                    <div class="exceptionCreateProfileGuardian">
-                        <?php if (isset($e)) { ?>
-                            <p class="psException"><?php echo $e->getMessage(); ?></p><br>
-                            <p class="psException">Intente de nuevo</p>
-                        <?php } ?>
                     </div>
 
             </form>

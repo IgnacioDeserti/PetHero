@@ -35,6 +35,10 @@
 
         public function logOut(){
             session_destroy();
+            $alert = [
+                "type" => "success",
+                "text" => "Sesion cerrada con exito!"
+            ];
             require_once(VIEWS_PATH . "inicio.php");
         }
 
@@ -44,10 +48,14 @@
                     $aux = $this->searchGuardian($email, $password);
                     $_SESSION["idUser"] = $aux->getIdGuardian();
                     $_SESSION["typeUser"] = $aux->getTypeUser();
-                    $this->selectViewGuardian($aux);
+                    $alert = [
+                        "type" => "success",
+                        "text" => "Sesion iniciada con exito!"
+                    ];
+                    $this->selectViewGuardian($aux, $alert);
                 }catch(Exception $e){
                     $alert = [
-                        "type" => "error",
+                        "type" => "alert",
                         "text" => $e->getMessage()
                     ];
                     require_once(VIEWS_PATH . "inicio.php");
@@ -57,10 +65,14 @@
                     $aux = $this->searchOwner($email, $password);
                     $_SESSION["idUser"] = $aux->getIdOwner();
                     $_SESSION["typeUser"] = $aux->getTypeUser();
-                    $this->selectView($aux->getIdOwner());
+                    $alert = [
+                        "type" => "success",
+                        "text" => "Sesion iniciada con exito!"
+                    ];
+                    $this->selectView($aux->getIdOwner(), $alert);
                 }catch(Exception $e){
                     $alert = [
-                        "type" => "error",
+                        "type" => "alert",
                         "text" => $e->getMessage()
                     ];
                     require_once(VIEWS_PATH . "inicio.php");
@@ -97,32 +109,42 @@
             }
         }
 
-        public function selectView($id){
+        public function selectView($id, $alert = null){
 
             try{
                 $arrayListPet = $this->PetDAO->GetPetByIdOwner($id);
                 $size = $this->sizeDAO;
-                require_once(VIEWS_PATH . "validate-session.php");
-                require_once(VIEWS_PATH . "listPet.php");
-            }catch(Exception $aaa){
+                if(count($arrayListPet) > 0){
+                    require_once(VIEWS_PATH . "validate-session.php");
+                    require_once(VIEWS_PATH . "listPet.php");
+                }else{
+                    require_once(VIEWS_PATH . "validate-session.php");
+                    require_once(VIEWS_PATH . "addPet.php");
+                }
+            }catch(Exception $e){
+                $alert = [
+                    "type" => "alert",
+                    "text" => $e->getMessage()
+                ];
                 require_once(VIEWS_PATH . "validate-session.php");
                 require_once(VIEWS_PATH . "addPet.php");
             }
         }
 
-        public function selectViewGuardian($aux){
-            if($aux->getAvailabilityStart() == null && $aux->getAvailabilityEnd() == null){
-                require_once(VIEWS_PATH . "modifyAvailability.php");
-            }else{
-                $wcReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Esperando confirmacion", $_SESSION['idUser']);
-                $fReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Finalizado", $_SESSION['idUser']);
-                $cReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Aceptada", $_SESSION['idUser']);
+        public function selectViewGuardian($aux, $alert = null){
+
+            try{
+                $this->guardianDAO->getReservationStart($aux->getIdGuardian());
+                $wcReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Esperando confirmacion", $aux->getIdGuardian());
+                $fReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian("Finalizado", $aux->getIdGuardian());
+                $cReservationList = $this->reservationDAO->getReservationByStatusAndIdGuardian2("Aceptada", "Esperando pago", $aux->getIdGuardian());
                 $allpets = $this->PetDAO;
                 $guardian = $this->guardianDAO;
                 $owner =$this->ownerDAO;
-                
                 require_once(VIEWS_PATH . "validate-session.php");
                 require_once(VIEWS_PATH . "listReservationGuardian.php");
+            }catch(Exception $e){
+                require_once(VIEWS_PATH . "modifyAvailability.php");
             }
         }
 
@@ -160,8 +182,16 @@
                     $aux = $this->ownerDAO->getOwner($email);
                     $_SESSION["idUser"] = $aux->getIdOwner();
                     $_SESSION["typeUser"] = $aux->getTypeUser();
+                    $alert = [
+                        "type" => "success",
+                        "text" => "Pefil creado con exito!"
+                    ];
                     require_once(VIEWS_PATH.'addPet.php');
                 }catch (Exception $e){
+                    $alert = [
+                        "type" => "alert",
+                        "text" => $e->getMessage()
+                    ];
                     require_once(VIEWS_PATH . "createOwnerProfile.php");
                 }
                 
@@ -212,9 +242,16 @@
                     foreach($size as $aux){
                         $this->gxsDAO->Add($_SESSION["idUser"], $aux);
                     }
-                    echo "<script> if(confirm('Perfil creado con exito!')); </script>";
+                    $alert = [
+                        "type" => "success",
+                        "text" => "Perfil creado con exito!"
+                    ];
                     require_once(VIEWS_PATH.'modifyAvailability.php');
                 }catch (Exception $e){
+                    $alert = [
+                        "type" => "alert",
+                        "text" => $e->getMessage()
+                    ];
                     require_once(VIEWS_PATH . "createGuardianProfile.php");
                 }   
             }

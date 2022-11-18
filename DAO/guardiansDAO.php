@@ -203,7 +203,7 @@ use Models\Review as Review;
         
                 return $avStart;
             }catch(Exception $error){
-                throw new Exception("No hay guardian con ese id");
+                throw new Exception("El guardian no tiene fechas asignadas");
             }
         }
 

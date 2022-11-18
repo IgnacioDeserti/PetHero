@@ -7,6 +7,8 @@
             <header>
                 <h2 class="tituloInicio ">BIENVENIDO</h2>
             </header>
+            <?php if(isset($alert)) { ?>
+                <p class="psException <?= $alert["type"] ?>"> <?= $alert["text"]; } ?> </p>
             <div class="loginForm">
                 <form action=" <?php echo FRONT_ROOT?> Home/inicioSesion" method="post">
                     <div class = "contenidoForm">
@@ -23,10 +25,6 @@
 
                         <label for="">Dueño</label>
                         <input type="radio" name="typeUser" value="O">
-                    </div>
-
-                    <div class="exceptionLogin">
-                        <p class="psException"><?php if(isset($e)){ echo $e->getMessage();}  ?></td>
                     </div>
                         <button class="buttonInicio buttonHoversGreen" type="submit">Iniciar Sesion</button>
                     

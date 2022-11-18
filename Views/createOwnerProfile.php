@@ -3,10 +3,13 @@
 ?>
 <html class="pantallaInicial">
     <main>
+    <?php if(isset($alert)) { ?>
+                    <p class="psException <?= $alert["type"] ?>"> <?= $alert["text"]; } ?> </p>
         <div class="formCreateProfile">         
             <header>            
                 <h3 class="tituloForm">Create un nuevo perfil como dueño</h3>        
             </header>          
+                    
             <form action=" <?php echo FRONT_ROOT ?>Home/createOwnerProfile" method="POST" class="contentForm"> 
                     <div class="divOwner">                    
                         <label for="">Name</label>                                     
@@ -59,13 +62,6 @@
                     <div>
                         <input type="hidden" name="typeUser" value="O">
                         <button type="submit" class="buttonOwner buttonHoversGreen">Registrarse</button>
-                    </div>
-
-                    <div class="exceptionCreateProfile">
-                        <?php if (isset($e)) { ?>
-                            <p class="psException"><?php echo $e->getMessage(); ?></p><br>
-                            <p class="psException">Intente de nuevo</p>
-                        <?php } ?>
                     </div>
                 </form>
             

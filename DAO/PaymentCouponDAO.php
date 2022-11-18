@@ -1,7 +1,9 @@
 <?php
 
     namespace DAO;
-    use Models\PaymentCoupon;
+
+use Countable;
+use Models\PaymentCoupon;
     use Exception;
 
     class PaymentCouponDAO {
@@ -34,29 +36,29 @@
 
         public function getPaymentByIdReservation ($idRes)
         {
+            $arrayPayment = array();
+
             $query = "CALL paymentCoupon_getPaymentById(?)";
 
             $parameters["idRes"] = $idRes;
 
-            try{
-                $this->connection = Connection::GetInstance();
-                $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
-
-                foreach($result as $row){
-                    $payment = new PaymentCoupon();
-                    $payment->setIdPayment($row['idPayment']);
-                    $payment->setOwnerName($row['ownerName']);
-                    $payment->setGuardianName($row['guardianName']);
-                    $payment->setPetName($row['petName']);
-                    $payment->setPrice($row['price']);
-                    $payment->setDate($row['dateP']);
-                    $payment->setTitular($row['titular']);
-                    $payment->setReservationNumber($row['reservationNumber']);
-                }
-                return $payment;
-            }catch(Exception $error){
-                throw new Exception("No existe pago con ese id aun");
+            $this->connection = Connection::GetInstance();
+            $result = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+            foreach($result as $row){
+                $payment = new PaymentCoupon();
+                $payment->setIdPayment($row['idPayment']);
+                $payment->setOwnerName($row['ownerName']);
+                $payment->setGuardianName($row['guardianName']);
+                $payment->setPetName($row['petName']);
+                $payment->setPrice($row['price']);
+                $payment->setDate($row['dateP']);
+                $payment->setTitular($row['titular']);
+                $payment->setReservationNumber($row['reservationNumber']);
+                array_push($arrayPayment, $payment);
             }
+
+            return $arrayPayment;
+            
         }
     }
 

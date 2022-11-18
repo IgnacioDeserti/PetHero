@@ -4,7 +4,10 @@
 ?>
 
 <html class="fondoMenus">
+     <?php if(isset($alert)) { ?>
+               <p class="psException <?= $alert["type"] ?>"> <?= $alert["text"]; } ?> </p>
      <div class="containerFilterGuardian">
+
           <form action=" <?php echo FRONT_ROOT ?>Owner/showGuardianList" method="POST">
                     
                     <div class="containerFilter">

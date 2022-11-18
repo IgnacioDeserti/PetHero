@@ -271,7 +271,7 @@
         {
             $reservationList = array();
 
-            $query = "CALL Reservation_getReservationByStatusAndIdOwner2(?,?,?)";
+            $query = "CALL Reservation_getReservationByStatusAndIdGuardian2(?,?,?)";
             $parameters["stat1"] = $status1;
             $parameters["stat2"] = $status2;
             $parameters["idGuardianR"] = $idGuardian;

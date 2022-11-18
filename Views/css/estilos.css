@@ -258,7 +258,7 @@ h5{
     justify-content: center;
     align-items: center;
     text-align: center;
-    width: 100%;
+    width: 99%;
 }
 
 .thListGuardian{
@@ -279,7 +279,7 @@ h5{
 .formSelectPet{
     position: absolute;
     left: 30%;
-    top: 20%;
+    top: 30%;
     height: 350px;
     width: 630px;
     background-color: rgba(255, 242, 183, 0.599);
@@ -524,6 +524,13 @@ h5{
     border-radius: 5px;
 }
 
+.buttonDeletePet{
+    position: relative;
+    bottom: 15px;
+    padding: 15px;
+    border-radius: 5px;
+    left: 10%;
+}
 .buttonCreateLink{
     position: absolute;
     top: 75%;
@@ -565,13 +572,31 @@ h5{
     position: absolute;
     background-color:#d1b056;
 }
+.psException{
+    position: relative;
+    text-align: center;
+    top: 100px;
+    font-size: 20px;
+}
+
+.success{
+    background-color: rgb(46, 196, 4);
+    width:fit-content;
+    left: 41%;
+}
+
+.alert{
+    background-color: rgb(202, 148, 0);
+    width:fit-content;
+    left: 42%;
+}
 
 .containerFilterGuardian{
     margin-top: 20px;
     margin-bottom: 20px;
     position: relative;
     top: 12rem;
-    left: 35%; 
+    left: 38%; 
     width: 400px;
     height: 200px;
     background: #FDC830;  /* fallback for old browsers */

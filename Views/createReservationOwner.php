@@ -4,6 +4,8 @@
 ?>
 
 <html class="fondoMenus">
+<?php if(isset($alert)) { ?>
+                    <p class="psException <?= $alert["type"] ?>"> <?= $alert["text"]; } ?> </p>
     <div class="containerFilterGuardian">
         <form action=" <?php echo FRONT_ROOT ?>Owner/makeReservation" method = 'post'>
             
@@ -36,10 +38,6 @@
                 <option value="<?php echo $pet->getIdPet()?>"><?php echo $pet->getName() .'('.$pet->getBreed().')'?></option>
                 <?php }?>
             </select>
-
-            <?php if(isset($e)){
-                echo $e->getMessage();
-            }?>
 
             <input type="hidden" name="idGuardian" value="<?php echo $idGuardian?>">
             </div>

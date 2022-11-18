@@ -5,6 +5,8 @@
 
 <html class="fondoMenus">
      <main class="d-flex align-items-center justify-content-center height-100">
+     <?php if(isset($alert)) { ?>
+                    <p class="psException <?= $alert["type"] ?>"> <?= $alert["text"]; } ?> </p>
           <div class="formSelectPet">
                <header>
                     <h2 style="text-align: center;"> INGRESAR TARJETA</h2>

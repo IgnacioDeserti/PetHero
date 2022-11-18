@@ -41,7 +41,7 @@
 
 
         //permite mandar los parametros para filtrar guardianes
-        public function filterGuardians(){
+        public function filterGuardians($alert = null){
             try{
                 date_default_timezone_set("America/Buenos_Aires");
                 $date = strtotime('today');
@@ -58,58 +58,76 @@
             }
         }
 
+        private function verifyAvailability ($avStart, $avEnd){
+            date_default_timezone_set("America/Buenos_Aires");
+            $date = strtotime('today');
+            $date = date("Y-m-d", $date);
+            if($avStart > $avEnd){
+                throw new Exception ("Fechas invalidas, ingrese otras");
+            }
+            if($avStart < $date){
+                throw new Exception ("Fechas invalidas, ingrese otras");
+            }
+        }
+
         //llama al checkeo 
         public function showGuardianList($availabilityStart ,$availabilityEnd, $idPet){
-
             try{
-                $listGuardian = $this->guardianDAO->getAll();
-                $listGuardianSize = array();
+                $this->verifyAvailability($availabilityStart, $availabilityEnd);
                 try{
-                    $pet = $this->PetDAO->getPetByIdPet($idPet);
-                    foreach($listGuardian as $guardian){
-                        $listSize = $this->guardian_x_sizeDAO->getSizeById($guardian->getIdGuardian());
-                        foreach($listSize as $size){
-                            if(strcmp($this->sizeDAO->getName($pet->getIdSize()),$size) == 0){
-                                array_push($listGuardianSize,$guardian);
+                    $listGuardian = $this->guardianDAO->getAll();
+                    $listGuardianSize = array();
+                    try{
+                        $pet = $this->PetDAO->getPetByIdPet($idPet);
+                        foreach($listGuardian as $guardian){
+                            $listSize = $this->guardian_x_sizeDAO->getSizeById($guardian->getIdGuardian());
+                            foreach($listSize as $size){
+                                if(strcmp($this->sizeDAO->getName($pet->getIdSize()),$size) == 0){
+                                    array_push($listGuardianSize,$guardian);
+                                }
                             }
                         }
-                    }
-                    $listChecked = array();
-                    
-                    $i = 0;
-                    foreach($listGuardianSize as $guardian){
-                        if($this->checkGuardian($availabilityStart ,$availabilityEnd, $pet->getBreed(), $pet->getType(), $this->sizeDAO->getName($pet->getIdSize()), $guardian->getIdGuardian())){
-                            array_push($listChecked,$guardian);
+                        $listChecked = array();
+                        
+                        $i = 0;
+                        foreach($listGuardianSize as $guardian){
+                            if($this->checkGuardian($availabilityStart ,$availabilityEnd, $pet->getBreed(), $pet->getType(), $this->sizeDAO->getName($pet->getIdSize()), $guardian->getIdGuardian())){
+                                array_push($listChecked,$guardian);
+                            }
                         }
+                        $gxsDAO = $this->guardian_x_sizeDAO;
+                        require_once(VIEWS_PATH . "validate-session.php");
+                        require_once(VIEWS_PATH . "listGuardian.php");
+
+                    }catch(Exception $e){
+                        $alert = [
+                            "type" => "alert",
+                            "text" => $e->getMessage()
+                        ];
+                        $this->showAddPet($alert);
                     }
-
-                $gxsDAO = $this->guardian_x_sizeDAO;
-                require_once(VIEWS_PATH . "validate-session.php");
-                require_once(VIEWS_PATH . "listGuardian.php");
-
+                    
                 }catch(Exception $e){
                     $alert = [
                         "type" => "alert",
                         "text" => $e->getMessage()
                     ];
-                    $this->showAddPet($alert);
+                    $this->showListPet($alert);
                 }
-                
-            }catch(Exception $e){
-                $alert = [
-                    "type" => "alert",
-                    "text" => $e->getMessage()
-                ];
-                $this->showListPet($alert);
-            }
             
+        }catch(Exception $e){
+            $alert = [
+                "type" => "alert",
+                "text" => $e->getMessage()
+            ];
+            $this->filterGuardians($alert);
         }
+    }
 
         //checkea que la disponibilidad deseada este dentro de la disponibilidad del guardian
         public function checkGuardian($availabilityStart ,$availabilityEnd, $breed, $type, $size, $idGuardian){
             $flag = 0;
             $listDisponibility = $this->getDisponibilityByGuardian($idGuardian);
-            $guardian = $this->guardianDAO->getGuardianById($idGuardian);
 
             $i = 0;
             while($i<count($listDisponibility)){
@@ -184,8 +202,12 @@
             try{
                 $arrayListPet = $this->PetDAO->GetPetByIdOwner($_SESSION["idUser"]);
                 $size = $this->sizeDAO;
-                require_once(VIEWS_PATH . "validate-session.php");
-                require_once(VIEWS_PATH . "listPet.php");
+                if(count($arrayListPet) > 0){
+                    require_once(VIEWS_PATH . "validate-session.php");
+                    require_once(VIEWS_PATH . "listPet.php");
+                }else{
+                    throw new Exception("No tienes mascotas");
+                }
             }catch (Exception $e){
                 $alert = [
                     "type" => "alert",
@@ -208,6 +230,10 @@
                 $arrayListGuardianxSize = $this->guardian_x_sizeDAO->getAll();
                 $reviewsList = $this->reviewDAO->GetReviewsByGuardian($guardian->getIdGuardian());
                 $ownerList = $this->ownerDAO;
+                $alert = [
+                    "type" => "success",
+                    "text" => "Guardian seleccionado correctamente!"
+                ];
                 require_once(VIEWS_PATH . "validate-session.php");
                 require_once(VIEWS_PATH . "showGuardian.php");
             }catch(Exception $e){
@@ -215,6 +241,7 @@
                     "type" => "alert",
                     "text" => $e->getMessage()
                 ];
+                $this->filterGuardians($alert);
             }   
         }
 
@@ -345,11 +372,18 @@
                         $reservation->setSize($this->sizeDAO->getName($pet->getIdSize()));
                         $reservation->setPrice($this->totalPrice($guardian->getPrice(), $availabilityStart, $availabilityEnd));
                         $this->reservationDAO->Add($reservation);
-                        $this->showReservationsList();
+                        $alert = [
+                            "type" => "success",
+                            "text" => "Solicitud enviada con exito!"
+                        ];
+                        $this->showReservationsList($alert);
                     }
-
                 }catch (Exception $e){
-                    $this->filterGuardians();
+                    $alert = [
+                        "type" => "success",
+                        "text" => "Solicitud enviada con exito!"
+                    ];
+                    $this->filterGuardians($alert);
                 }
         }
 
@@ -389,45 +423,59 @@
             $date = strtotime('today');
             try{   
                 $this->checkExpirationDate($expirationDate,$date);
-                $alert = [
-                    "tpye" => "success",
-                    "text" => "Cupon de pago creado correctamente!"
-                ];
-                $this->createPayment($titular,$date, $idReservation, $alert);
+                $this->createPayment($titular,$date, $idReservation);
             }catch (Exception $e){
                 $alert = [
-                    "tpye" => "alert",
+                    "type" => "alert",
                     "text" => $e->getMessage()
                 ];
                 $this->chargeCard($idReservation, $alert);
             } 
         }
 
-        public function createPayment($titular,$date,$idReservation, $alert){
+        public function createPayment($titular,$date,$idReservation){
             $payment = new PaymentCoupon();
             $date = date("Y-m-d", $date);
-            $reservation = $this->reservationDAO->GetReservationsById($idReservation);
-            $payment->setOwnerName($this->ownerDAO->GetNameById($reservation->getIdOwner()));
-            $payment->setGuardianName(($this->guardianDAO->getGuardianById($reservation->getIdGuardian()))->getName());
-            $payment->setPetName(($this->PetDAO->getPetByIdPet($reservation->getIdPet()))->getName());
-            $payment->setPrice($reservation->getPrice()/2);
-            $payment->setDate($date);
-            $payment->setTitular($titular);
-            $payment->setReservationNumber($reservation->getIdReservation());
-            $this->reservationDAO->changeReservationStatus($idReservation, "Aceptada");
-            $this->reservationDAO->updatePrice($idReservation);
-            $this->paymentDAO->Add($payment);
-            $this->getCoupon($idReservation, $alert);
+            try{
+                $reservation = $this->reservationDAO->GetReservationsById($idReservation);
+                $payment->setOwnerName($this->ownerDAO->GetNameById($reservation->getIdOwner()));
+                $payment->setGuardianName(($this->guardianDAO->getGuardianById($reservation->getIdGuardian()))->getName());
+                $payment->setPetName(($this->PetDAO->getPetByIdPet($reservation->getIdPet()))->getName());
+                $payment->setPrice($reservation->getPrice()/2);
+                $payment->setDate($date);
+                $payment->setTitular($titular);
+                $payment->setReservationNumber($reservation->getIdReservation());
+                $this->reservationDAO->changeReservationStatus($idReservation, "Aceptada");
+                $this->reservationDAO->updatePrice($idReservation);
+                $this->paymentDAO->Add($payment);
+                $alert = [
+                    "type" => "success",
+                    "text" => "Pago realizado con exito!"
+                ];
+                $this->getCoupon($idReservation, $alert);
+            }catch(Exception $e){
+                $alert = [
+                    "type" => "alert",
+                    "text" => $e->getMessage()
+                ];
+                $this->showReservationsList($alert);
+            }
+
         }
 
         public function getCoupon($idReservation, $alert = null){
             try{
-                $payment = $this->paymentDAO->getPaymentByIdReservation($idReservation);
-                require_once(VIEWS_PATH . 'validate-session.php');
-                require_once(VIEWS_PATH . 'viewPaymentCoupon.php');
+                $paymentArray = $this->paymentDAO->getPaymentByIdReservation($idReservation);
+                if(count($paymentArray) > 0){
+                    $payment = $paymentArray[0];
+                    require_once(VIEWS_PATH . "validate-session.php");
+                    require_once(VIEWS_PATH . "viewPaymentCoupon.php");
+                }else{
+                    throw new Exception("La reserva no tiene pago aun");
+                }
             }catch(Exception $e){
                 $alert = [
-                    "tpye" => "alert",
+                    "type" => "alert",
                     "text" => $e->getMessage()
                 ];
                 $this->showReservationsList($alert);
@@ -445,8 +493,124 @@
 
         }
 
+        public function deletePet ($idPet){
 
+            try{
+                $this->PetDAO->deletePet($idPet);
+                $alert = [
+                    "type" => "success",
+                    "text" => 'Mascota eliminada correctamente'
+                ];
+                $this->showListPet($alert);
+            }catch (Exception $e){
+                $alert = [
+                    "type" => "alert",
+                    "text" => $e->getMessage()
+                ];
+                $this->showListPet($alert);
+            }
+
+        }
 
     }
+
+    /* 
+    private $ownerList;
+        private $fileName;
+        private $dogDAO;
+
+        public function __construct(){
+            $this->fileName = dirname(__DIR__)."/Data/owners.json";
+            $this->dogDAO = new DogDAO();
+        }
+
+
+        public function add(Owner $newOwner){
+            $this->retrieveData();
+            $newOwner->setIdOwner($this->setId());
+            array_push($this->ownerList, $newOwner);
+            $this->saveData();
+        }
+        
+        public function delete($id){
+
+        }
+
+        public function getAll(){
+            $this->retrieveData();
+            return $this->ownerList;
+        }
+
+        public function getOwner(Owner $newOwner){
+            $searched = NULL;
+
+            foreach($this->ownerList as $list){
+                if(strcmp($list->getEmail(), $newOwner->getEmail()) == 0){
+                    $searched = $newOwner;
+                }
+            }
+
+            return $searched;
+        }
+
+        private function saveData(){
+            $arrayToEncode = array();
+
+            foreach($this->ownerList as $owner){
+                    $valuesArray["name"] = $owner->getName();
+                    $valuesArray["address"] = $owner->getAddress();
+                    $valuesArray["email"] = $owner->getEmail();
+                    $valuesArray["number"] = $owner->getNumber();
+                    $valuesArray["userName"] = $owner->getUserName();
+                    $valuesArray["password"] = $owner->getPassword();
+                    $valuesArray["idOwner"] = $owner->getIdOwner();
+                    $valuesArray["typeUser"] = $owner->getTypeUser();
+                    array_push($arrayToEncode, $valuesArray);
+                }
+
+            $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
+
+            file_put_contents($this->GetJsonFilePath(), $jsonContent);
+        } 
+
+        private function retrieveData(){
+            $this->ownerList = array();
+            if(file_exists($this->fileName)){
+                $jsonContent = file_get_contents($this->GetJsonFilePath());
+
+                $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
+
+                foreach($arrayToDecode as $valuesArray){
+                    $owner = new Owner();
+                    $owner->setName($valuesArray["name"]);
+                    $owner->setAddress($valuesArray["address"]);
+                    $owner->setEmail($valuesArray["email"]);
+                    $owner->setNumber($valuesArray["number"]);
+                    $owner->setUserName($valuesArray["userName"]);
+                    $owner->setPassword($valuesArray["password"]);
+                    $owner->setIdOwner($valuesArray["idOwner"]);
+                    $owner->setTypeUser($valuesArray["typeUser"]);
+                    array_push($this->ownerList, $owner);
+                }
+            }
+        }
+
+        private function GetJsonFilePath(){
+
+            $initialPath = "Data/owners.json";
+            if(file_exists($initialPath)){
+                $jsonFilePath = $initialPath;
+            }else{
+                $jsonFilePath = "../".$initialPath;
+            }
+
+            return $jsonFilePath;
+        }
+
+        private function setId(){
+            return count($this->getAll()) + 1;
+        }
+}
+*/
 
 ?>

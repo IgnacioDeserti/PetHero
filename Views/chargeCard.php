@@ -27,7 +27,7 @@
                     </div>
 
                     <div class="inputPet">
-                         <input type="text" name="titular" class="form-control form-control-lg" placeholder="-ingrese los numeros sin espacios" required>
+                         <input type="text" name="titular" class="form-control form-control-lg" placeholder="-ingrese el nombre del titular de la tarjeta" required>
                     </div>
                     
                     <div class="divOwner">

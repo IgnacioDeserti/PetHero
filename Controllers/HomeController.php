@@ -43,42 +43,57 @@
         }
 
         public function inicioSesion($email, $password, $typeUser){
-            if($typeUser == 'G'){
-                try{
-                    $aux = $this->searchGuardian($email, $password);
-                    $_SESSION["idUser"] = $aux->getIdGuardian();
-                    $_SESSION["typeUser"] = $aux->getTypeUser();
-                    $alert = [
-                        "type" => "success",
-                        "text" => "Sesion iniciada con exito!"
-                    ];
-                    $this->selectViewGuardian($aux, $alert);
-                }catch(Exception $e){
-                    $alert = [
-                        "type" => "alert",
-                        "text" => $e->getMessage()
-                    ];
-                    require_once(VIEWS_PATH . "inicio.php");
+            try{
+                $this->checkTypeUser($typeUser);
+                if($typeUser == 'G'){
+                    try{
+                        $aux = $this->searchGuardian($email, $password);
+                        $_SESSION["idUser"] = $aux->getIdGuardian();
+                        $_SESSION["typeUser"] = $aux->getTypeUser();
+                        $alert = [
+                            "type" => "success",
+                            "text" => "Sesion iniciada con exito!"
+                        ];
+                        $this->selectViewGuardian($aux, $alert);
+                    }catch(Exception $e){
+                        $alert = [
+                            "type" => "alert",
+                            "text" => $e->getMessage()
+                        ];
+                        require_once(VIEWS_PATH . "inicio.php");
+                    }
+                }else{
+                    try{
+                        $aux = $this->searchOwner($email, $password);
+                        $_SESSION["idUser"] = $aux->getIdOwner();
+                        $_SESSION["typeUser"] = $aux->getTypeUser();
+                        $alert = [
+                            "type" => "success",
+                            "text" => "Sesion iniciada con exito!"
+                        ];
+                        $this->selectView($aux->getIdOwner(), $alert);
+                    }catch(Exception $e){
+                        $alert = [
+                            "type" => "alert",
+                            "text" => $e->getMessage()
+                        ];
+                        require_once(VIEWS_PATH . "inicio.php");
+                    }
                 }
-            }else{
-                try{
-                    $aux = $this->searchOwner($email, $password);
-                    $_SESSION["idUser"] = $aux->getIdOwner();
-                    $_SESSION["typeUser"] = $aux->getTypeUser();
-                    $alert = [
-                        "type" => "success",
-                        "text" => "Sesion iniciada con exito!"
-                    ];
-                    $this->selectView($aux->getIdOwner(), $alert);
-                }catch(Exception $e){
-                    $alert = [
-                        "type" => "alert",
-                        "text" => $e->getMessage()
-                    ];
-                    require_once(VIEWS_PATH . "inicio.php");
-                }
+            }catch (Exception $e){
+                $alert = [
+                    "type" => "alert",
+                    "text" => $e->getMessage()
+                ];
+                require_once(VIEWS_PATH . "inicio.php");
             }
         
+        }
+
+        public function checkTypeUser($typeUser){
+            if($typeUser!='G' && $typeUser!='O'){
+                throw new Exception ('Elija un tipo de usuario');
+            }
         }
 
         public function searchOwner($email, $password){

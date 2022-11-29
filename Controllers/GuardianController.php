@@ -10,6 +10,10 @@
     use DAO\ReservationDAO;
     use Exception;
 
+    use PHPMailer\Exception as MailerException;
+    use PHPMailer\PHPMailer;
+
+
     class GuardianController{
 
         private $ownerDAO;
@@ -113,6 +117,7 @@
                 $reservation = $this->reservationDAO->GetReservationsById($idReservation);
                 $this->checkGuardian($reservation->getReservationDateStart(), $reservation->getReservationDateEnd(), $reservation->getBreed(), $reservation->getAnimalType(), $reservation->getSize(), $reservation->getIdGuardian());
                 $this->reservationDAO->changeReservationStatus($idReservation,'Esperando pago');
+                $this->sendEmail($reservation);
                 $alert = [
                     "type" => "success",
                     "text" => 'Reserva aceptada con exito, esperando pago!'
@@ -269,7 +274,41 @@
             
             return $listAvailability;
         }
+
+        private function sendEmail($reserva){
+            $guardian=$this->guardianDAO->getGuardianById($reserva->getIdGuardian());
+            $owner = $this->ownerDAO->GetOwnerById($reserva->GetIdOwner());
+            $pet=$this->PetDAO->getPetByIdPet($reserva->getIdPet());
+
+            $mail = new PHPMailer(true);
+            $mail->isSMTP();
+            $mail->Host='smtp.gmail.com';
+            $mail->SMTPAuth=true;
+            $mail->Username='petheroadvisor@gmail.com';
+            $mail->Password='Mailer123';
+            $mail->SMTPSecure='ssl';
+            $mail->Port=465;
+            $mail->setFrom('petheroreserves@gmail.com');
+            $mail->addAddress($owner->getEmail());
+            $mail->isHTML(true);
+            $mail->Subject="Confirmacion Reserva - Pet Hero";
+
+            $body="<h1>Buenos dias " . $owner->getName() . "! </h1>" 
+            . "\nLa reserva solicitada a " . $guardian->getUserName() . " para cuidar a " . $pet->getName() . " ha sido aceptada!\n" 
+            . "desde el dia " . $reserva->getReservationDateStart() . " hasta el " . $reserva->getReservationDateEnd() . "\n" .
+            "<h2>--Para contactarse con el guardian:--</h2> \n" .
+            "       - Telefono : ". $guardian->getNumber() ."<br>".
+            "       -     Mail : ". $guardian->getEmail() ."<br>".
+            "Gracias por confiar en Pet Hero!" . "<br>" .
+            "(Mail enviado automáticamente, por favor no responder)";
+
+            $mail->Body=$body;
+
+            $mail->send();
+        }
     }
+
+    
 
     /* 
     private $guardianList;

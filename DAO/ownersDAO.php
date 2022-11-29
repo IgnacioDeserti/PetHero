@@ -180,6 +180,35 @@
                 throw $error;
             }
         }
+
+        public function GetOwnerById($id){
+            $result = NULL;
+
+            $parameter["idS"] = $id;
+
+            $query = "CALL Owner_GetOwnerById(?)";
+
+            try{
+                $this->connection = Connection::GetInstance();
+                $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
+
+                $owner = new Owner();
+                foreach($result as $row){
+                    $owner->setIdOwner($row["idOwner"]);
+                    $owner->setName($row["name"]);
+                    $owner->setAddress($row["address"]);
+                    $owner->setEmail($row["email"]);
+                    $owner->setNumber($row["number"]);
+                    $owner->setUserName($row["userName"]);
+                    $owner->setPassword($row["password"]);
+                    $owner->setTypeUser($row["typeUser"]);
+                }
+
+                return $owner;
+            }catch(Exception $error) {
+                throw $error;
+            }
+        }
 }
 
 ?>

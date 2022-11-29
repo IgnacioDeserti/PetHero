@@ -515,8 +515,29 @@
 
         
         public function finishReservation($idReservation){
-            $this->reservationDAO->changeReservationStatus($idReservation,'Finalizado');
-            $this->showReservationsList();
+            try{
+                $this->checkFinishReservation($idReservation);
+                $this->reservationDAO->changeReservationStatus($idReservation,'Finalizado');
+                $this->showReservationsList();
+            }catch(Exception $e){
+                $alert = [
+                    "type" => "alert",
+                    "text" => $e->getMessage()
+                ];
+                $this->showReservationsList($alert);
+            }
+        }
+
+        public function checkFinishReservation($idReservation){
+            date_default_timezone_set("America/Buenos_Aires");
+            $date = strtotime('today');
+            $date = date("Y-m-d", $date);
+
+            $reservation = $this->reservationDAO->GetReservationsById($idReservation);
+            if($reservation->getReservationDateEnd() > $date){
+                throw new Exception("La reserva no finalizo, espere a que finalice");
+            }
+
         }
 
         public function createReview($idReservation){

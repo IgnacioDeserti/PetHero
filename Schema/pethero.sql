@@ -107,6 +107,18 @@ CREATE TABLE IF NOT EXISTS paymentCoupon(
     constraint FK_reservationNumber foreign key (reservationNumber) references reservation (idReservation)
 );
 
+CREATE TABLE IF NOT EXISTS message{
+    idMessage integer not null auto_increment,
+    idOwner integer not null,
+    idGuardian integer not null,
+    content varchar(140) not null,
+    fecha date not null,
+    sender varchar(1) not null,
+    primary key (idMessage),
+    foreign key (idOwner) references owner (idOwner),
+    foreign key (idGuardian) references guardian (idGuardian)
+}
+
 DELIMITER //
 
 CREATE PROCEDURE Guardian_Add (IN name varchar(50), IN address varchar(50), IN email varchar(50), IN number varchar(50), IN userName varchar(50), IN password varchar(50), IN typeUser char(1), IN availabilityStart date, IN availabilityEnd date, IN price float)
@@ -455,4 +467,21 @@ DELIMITER //
 CREATE PROCEDURE Pet_deletePet (in idPetS int)
 BEGIN
     UPDATE pet SET pet.status = 0 WHERE pet.idPet = idPetS;
+END//
+
+DELIMITER//
+
+CREATE PROCEDURE Message_Add (in idOwnerS integer. in idGuardianS integer, in contentS varchar(140), in fechaS date, in senderS varchar(1))
+BEGIN 
+    INSERT INTO message (message.idOwner, message.idGuardian, message.content, message.fecha,message.sender)
+    VALUES (idOwnerS, idGuardianS,contentS,fechaS,senderS);
+END//
+
+DELIMITER//
+
+CREATE PROCEDURE Message_GetById(in idOwnerS integer, in idGuardianS integer)
+BEGIN 
+    SELECT *
+    FROM message
+    WHERE message.idOwner = idOwnerS and message.idGuardian = idGuardianS;
 END//

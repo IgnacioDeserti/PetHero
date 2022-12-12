@@ -14,11 +14,11 @@
         public function Add (Message $message){
             $query = "CALL Message_Add(?,?,?,?,?)";
 
-            $parameters["idOwner"] = $message->getIdOwner();
-            $parameters["idGuardian"] = $message->getidGuardian();
-            $parameters["content"] = $message->getContent();
-            $parameters["fecha"] = $message->getFecha();
-            $parameters["sender"] = $message->getSender();
+            $parameters["idOwnerS"] = $message->getIdOwner();
+            $parameters["idGuardianS"] = $message->getidGuardian();
+            $parameters["contentS"] = $message->getContent();
+            $parameters["fechaS"] = $message->getFecha();
+            $parameters["senderS"] = $message->getSender();
             
             try{
                 $this->connection = Connection::GetInstance();

@@ -5,8 +5,7 @@
     class Message {
         
         private $idMessage;
-        private $idOwner;
-        private $idGuardian;
+        private $idReservation;
         private $content;
         private $fecha;
         private $sender;
@@ -23,30 +22,6 @@
         public function setIdMessage($idMessage)
         {
                 $this->idMessage = $idMessage;
-
-                return $this;
-        }
-
-        public function getIdOwner()
-        {
-                return $this->idOwner;
-        }
- 
-        public function setIdOwner($idOwner)
-        {
-                $this->idOwner = $idOwner;
-
-                return $this;
-        }
- 
-        public function getIdGuardian()
-        {
-                return $this->idGuardian;
-        }
- 
-        public function setIdGuardian($idGuardian)
-        {
-                $this->idGuardian = $idGuardian;
 
                 return $this;
         }
@@ -75,7 +50,6 @@
                 return $this;
         }
 
- 
         public function getSender()
         {
                 return $this->sender;
@@ -87,7 +61,15 @@
 
                 return $this;
         }
-    }
+
+	public function getIdReservation() {
+		return $this->idReservation;
+	}
+	
+	public function setIdReservation($idReservation){
+		$this->idReservation = $idReservation;
+	}
+}
 
 
 

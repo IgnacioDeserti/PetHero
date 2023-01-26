@@ -285,7 +285,7 @@
             $mail->Host='smtp.gmail.com';
             $mail->SMTPAuth=true;
             $mail->Username='petheroadvisor@gmail.com';
-            $mail->Password='Mailer123';
+            $mail->Password='zvfcmpwllxaimbnx';
             $mail->SMTPSecure='ssl';
             $mail->Port=465;
             $mail->setFrom('petheroreserves@gmail.com');
@@ -294,8 +294,8 @@
             $mail->Subject="Confirmacion Reserva - Pet Hero";
 
             $body="<h1>Buenos dias " . $owner->getName() . "! </h1>" 
-            . "\nLa reserva solicitada a " . $guardian->getUserName() . " para cuidar a " . $pet->getName() . " ha sido aceptada!\n" 
-            . "desde el dia " . $reserva->getReservationDateStart() . " hasta el " . $reserva->getReservationDateEnd() . "\n" .
+            . "\n<h3>La reserva solicitada a " . $guardian->getName() . " para cuidar a " . $pet->getName() . " ha sido aceptada!\n" 
+            . "Desde el dia " . $reserva->getReservationDateStart() . " hasta el " . $reserva->getReservationDateEnd() . "</h3>\n" .
             "<h2>--Para contactarse con el guardian:--</h2> \n" .
             "       - Telefono : ". $guardian->getNumber() ."<br>".
             "       -     Mail : ". $guardian->getEmail() ."<br>".

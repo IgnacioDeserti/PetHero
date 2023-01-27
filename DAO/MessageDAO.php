@@ -6,6 +6,9 @@
     use FFI\Exception;
 
     class MessageDAO {
+
+        private $connection;
+        private $tableName = "message";
         
         public function __construct (){
 
@@ -14,8 +17,7 @@
         public function Add (Message $message){
             $query = "CALL Message_Add(?,?,?,?,?)";
 
-            $parameters["idOwnerS"] = $message->getIdOwner();
-            $parameters["idGuardianS"] = $message->getidGuardian();
+            $parameters["idReservationS"] = $message->getIdReservation();
             $parameters["contentS"] = $message->getContent();
             $parameters["fechaS"] = $message->getFecha();
             $parameters["senderS"] = $message->getSender();
@@ -28,20 +30,18 @@
             }
         }
 
-        public function GetById($idOwner,$idGuardian){
-            $query = "CALL Message_GetById(?,?)";
-            $parameters['idOwnerS'] = $idOwner;
-            $parameters['idGuardianS'] = $idGuardian;
+        public function GetById($idReservation){
+            $query = "CALL Message_GetById(?)";
+            $parameters['idReservation'] = $idReservation;
             $chat = array();
 
             try{
                 $this->connection = Connection::GetInstance();
-                $results = $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
                 foreach($results as $row){
                     $message = new Message();
                     $message->setIdMessage($row['idMessage']);
-                    $message->setIdOwner($row['idOwner']);
-                    $message->setIdGuardian($row['idGuardian']);
+                    $message->setIdReservation($row['idReservation']);
                     $message->setContent($row['content']);
                     $message->setFecha($row['fecha']);
                     $message->setSender($row["sender"]);

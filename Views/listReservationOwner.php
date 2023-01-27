@@ -51,6 +51,9 @@
                                     <td class="thListGuardian"><?php echo $reservation->getReservationDateStart() ?> </td>
                                     <td class="thListGuardian"><?php echo $reservation->getReservationDateEnd() ?> </td>
                                     <td class="thListGuardian"><?php echo $reservation->getPrice()?> </td>
+                                    <form action="<?= FRONT_ROOT ?>" method="post">
+                                        <td><button class="buttonSelectG buttonHoversGreen" type="submit" name="idReservation" value="<?= $reservation->getIdReservation(); ?>">Chat</button></td>
+                                    </form>
                                     <?php if(strcmp($reservation->getReservationStatus(), "Esperando pago") == 0) { ?>
                                         <form action="<?= FRONT_ROOT ?>Owner/chargeCard" method="post">
                                             <td><button class="buttonSelectG buttonHoversGreen" type="submit" name="idReservation" value="<?= $reservation->getIdReservation(); ?>">Pagar</button></td>
@@ -58,9 +61,6 @@
                                     <?php } else { ?>
                                         <form action="<?= FRONT_ROOT ?>Owner/getCoupon" method="post">
                                             <td><button class="buttonSelectG buttonHoversGreen" type="submit" name="idReservation" value="<?= $reservation->getIdReservation(); ?>">Ver Factura</button></td>
-                                        </form>
-                                        <form action="<?= FRONT_ROOT ?>Owner/finishReservation" method="post">
-                                            <td><button class="buttonSelectG buttonHoversGreen" type="submit" name="idReservation" value="<?= $reservation->getIdReservation(); ?>">Finalizar</button></td>
                                         </form>
                                 </tr>
                             <?php }}}?>

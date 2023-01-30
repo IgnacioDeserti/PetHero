@@ -15,7 +15,7 @@
         }
 
         public function Add (Message $message){
-            $query = "CALL Message_Add(?,?,?,?,?)";
+            $query = "CALL Message_Add(?,?,?,?)";
 
             $parameters["idReservationS"] = $message->getIdReservation();
             $parameters["contentS"] = $message->getContent();
@@ -26,13 +26,13 @@
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
             }catch(Exception $error){
-                throw new Exception("No se pudo agregar la reseña");
+                throw new Exception("No se pudo mandar el mensaje");
             }
         }
 
         public function GetById($idReservation){
             $query = "CALL Message_GetById(?)";
-            $parameters['idReservation'] = $idReservation;
+            $parameters['idReservationS'] = $idReservation;
             $chat = array();
 
             try{

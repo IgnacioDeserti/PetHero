@@ -257,6 +257,28 @@ use Models\Review as Review;
             }
         }
 
+        public function getNameById($id){
+            
+            $result = NULL;
+
+            $parameter["idG"] = $id;
+
+            $query = "CALL Guardian_GetNameGuardianById(?)";
+
+            try{
+                $this->connection = Connection::GetInstance();
+                $result = $this->connection->Execute($query, $parameter, QueryType::StoredProcedure);
+
+                foreach($result as $row){
+                    $name = $row["name"];
+                }
+                return $name;
+            }catch(Exception $error){
+                throw new Exception("No existe Guardian con ese id");
+            }
+        }
+
+        
 }
 
 ?>

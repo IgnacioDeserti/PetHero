@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS paymentCoupon(
     constraint FK_reservationNumber foreign key (reservationNumber) references reservation (idReservation)
 );
 
-CREATE TABLE IF NOT EXISTS message{
+CREATE TABLE IF NOT EXISTS message(
     idMessage integer not null auto_increment,
     idReservation integer not null,
     content varchar(140) not null,
@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS message{
     sender varchar(1) not null,
     primary key (idMessage),
     foreign key (idReservation) references Reservation (idReservation)
-}
+)
 
 DELIMITER //
 
@@ -467,20 +467,20 @@ BEGIN
     UPDATE pet SET pet.status = 0 WHERE pet.idPet = idPetS;
 END//
 
-DELIMITER//
+DELIMITER //
 
-CREATE PROCEDURE Message_Add (in idReservationS, in contentS varchar(140), in fechaS date, in senderS varchar(1))
+CREATE PROCEDURE Message_Add (in idReservationS integer, in contentS varchar(140), in fechaS date, in senderS varchar(1))
 BEGIN 
     INSERT INTO message (message.idReservation, message.content, message.fecha,message.sender)
     VALUES (idReservationS,contentS,fechaS,senderS);
 END//
 
-DELIMITER//
+DELIMITER //
 
 CREATE PROCEDURE Message_GetById(in idReservationS integer)
 BEGIN 
     SELECT *
     FROM message
-    WHERE message.idReservation = idReservationS;
+    WHERE message.idReservation = idReservationS
     ORDER BY message.fecha;
 END//

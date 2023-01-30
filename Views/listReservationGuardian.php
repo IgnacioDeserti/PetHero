@@ -55,8 +55,11 @@
                                     <td class="thListGuardian"><?php echo $reservation->getReservationDateStart() ?> </td>
                                     <td class="thListGuardian"><?php echo $reservation->getReservationDateEnd() ?> </td>
                                     <td class="thListGuardian"><?php echo $reservation->getPrice()?> </td>
-                                    
-                                        <form action="<?= FRONT_ROOT ?>Guardian/getCoupon" method = 'POST'>
+                                    <form action="<?= FRONT_ROOT ?>Home/LoadChat" method="post">
+                                        <input type="hidden" name="content">
+                                        <td><button class="buttonSelectG buttonHoversGreen" type="submit" name="idReservation" value="<?= $reservation->getIdReservation(); ?>">Chat</button></td>
+                                    </form>
+                                    <form action="<?= FRONT_ROOT ?>Guardian/getCoupon" method = 'POST'>
                                         <td><button class="buttonSelectG buttonHoversGreen" name="idReservation" type= 'submit' value = '<?= $reservation->getIdReservation()?>'>Ver cupon de pago</button><td>
                                     </form> 
                                 </tr>

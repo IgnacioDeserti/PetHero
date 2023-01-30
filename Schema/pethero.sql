@@ -109,14 +109,12 @@ CREATE TABLE IF NOT EXISTS paymentCoupon(
 
 CREATE TABLE IF NOT EXISTS message{
     idMessage integer not null auto_increment,
-    idOwner integer not null,
-    idGuardian integer not null,
+    idReservation integer not null,
     content varchar(140) not null,
     fecha date not null,
     sender varchar(1) not null,
     primary key (idMessage),
-    foreign key (idOwner) references owner (idOwner),
-    foreign key (idGuardian) references guardian (idGuardian)
+    foreign key (idReservation) references Reservation (idReservation)
 }
 
 DELIMITER //
@@ -471,17 +469,18 @@ END//
 
 DELIMITER//
 
-CREATE PROCEDURE Message_Add (in idOwnerS integer. in idGuardianS integer, in contentS varchar(140), in fechaS date, in senderS varchar(1))
+CREATE PROCEDURE Message_Add (in idReservationS, in contentS varchar(140), in fechaS date, in senderS varchar(1))
 BEGIN 
-    INSERT INTO message (message.idOwner, message.idGuardian, message.content, message.fecha,message.sender)
-    VALUES (idOwnerS, idGuardianS,contentS,fechaS,senderS);
+    INSERT INTO message (message.idReservation, message.content, message.fecha,message.sender)
+    VALUES (idReservationS,contentS,fechaS,senderS);
 END//
 
 DELIMITER//
 
-CREATE PROCEDURE Message_GetById(in idOwnerS integer, in idGuardianS integer)
+CREATE PROCEDURE Message_GetById(in idReservationS integer)
 BEGIN 
     SELECT *
     FROM message
-    WHERE message.idOwner = idOwnerS and message.idGuardian = idGuardianS;
+    WHERE message.idReservation = idReservationS;
+    ORDER BY message.fecha;
 END//

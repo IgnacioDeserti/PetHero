@@ -9,6 +9,8 @@
     use DAO\Guardian_x_SizeDAO;
     use Models\Guardian as Guardian;
     use DAO\ReservationDAO;
+    use Models\Message as Message;
+    use DAO\MessageDAO as MessageDAO;
     use Exception;
 
     class HomeController{
@@ -19,6 +21,7 @@
         private $sizeDAO;
         private $gxsDAO;
         private $reservationDAO;
+        private $messageDAO;
 
         public function __construct(){
             $this->guardianDAO = new guardiansDAO();
@@ -27,6 +30,7 @@
             $this->sizeDAO = new sizeDAO();
             $this->gxsDAO = new Guardian_x_SizeDAO();
             $this->reservationDAO = new ReservationDAO();
+            $this->messageDAO = new MessageDAO();
         }
 
         public function Index(){
@@ -270,6 +274,23 @@
                     require_once(VIEWS_PATH . "createGuardianProfile.php");
                 }   
             }
+        }
+
+        public function LoadChat ($idReservation, $content = ''){
+            if($content != ''){
+                date_default_timezone_set("America/Buenos_Aires");
+                $date = strtotime('today');
+                $message = new Message();
+                $message->setIdReservation($idReservation);
+                $message->setFecha($date);
+                $message->setSender($_SESSION['typeUser']);
+                $message->setContent($content);
+                $this->messageDAO->Add($message);
+            }
+            $chat = array();
+            $chat = $this->messageDAO->GetById($idReservation);
+            require_once (VIEWS_PATH.'validate-session.php');
+            require_once (VIEWS_PATH.'chat.php');
         }
     }
 

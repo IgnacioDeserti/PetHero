@@ -43,7 +43,7 @@
                 </div> 
 
                 <div class="containerNewMessage">
-                    <input type="textarea" name="content" class="newMessageTextArea">
+                    <input type="textarea" name="content" class="newMessageTextArea" placeholder="Escribe un mensaje">
                 </div>
 
                 <input type="hidden" name="idReservation" value="<?php echo $idReservation; ?>">

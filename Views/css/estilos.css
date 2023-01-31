@@ -631,7 +631,7 @@ h5{
 
 .containerImgChat{
     position: relative;
-    top: -30px;
+    top: -40px;
     left: 10px;
 }
 
@@ -641,7 +641,8 @@ h5{
     left: 100px;
     width: 380px;
     height: fit-content;
-    background-color:darkkhaki
+    background-color:darkkhaki;
+    text-align: center;
 }
 
 .containerChat{
@@ -659,17 +660,14 @@ h5{
 .sender{
     position: relative;
     left: 370px;
-    border-radius: 5px;
-    border-color: black;
     background-color: #d1b056;
+    max-width: 300px;
 }
 
 .receiver{
     position: relative;
     left: 10px;
     background-color: #d1b056;
-    border-radius: 5px;
-    border-color: black;
     max-width: 300px;
 }
 

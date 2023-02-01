@@ -13,7 +13,7 @@
                         <thead>
                             <caption class="captionListGuardian"> Reservas en espera de confirmacion </th>
                             <th class="thListGuardian">Nombre de la mascota</th>
-                            <th class="thListGuardian">Nombre del Guardian</th>
+                            <th class="thListGuardian">Nombre del Dueño</th>
                             <th class="thListGuardian">Fecha de inicio</th>
                             <th class="thListGuardian">Fecha de finalizacion</th>
                             <th class="thListGuardian">Precio</th>
@@ -22,7 +22,7 @@
                                 <?php foreach($wcReservationList as $reservation){ ?>
                                     <tr>
                                         <td class="thListGuardian"><?php echo $allpets->getNameByIdPet($reservation->getIdPet()) ?> </td> 
-                                        <td class="thListGuardian"><?php echo $guardian->getGuardianById($reservation->getIdGuardian())->getName() ?> </td>
+                                        <td class="thListGuardian"><?php echo $owner->getOwnerById($reservation->getIdOwner())->getName() ?> </td>
                                         <td class="thListGuardian"><?php echo $reservation->getReservationDateStart() ?> </td>
                                         <td class="thListGuardian"><?php echo $reservation->getReservationDateEnd() ?> </td>
                                         <td class="thListGuardian"><?php echo $reservation->getPrice()?></td>
@@ -42,7 +42,7 @@
                         <thead>
                             <caption class="captionListGuardian"> Reservas confirmadas</th>
                             <th class="thListGuardian">Nombre de la mascota</th>
-                            <th class="thListGuardian">Nombre del Guardian</th>
+                            <th class="thListGuardian">Nombre del Dueño</th>
                             <th class="thListGuardian">Fecha de inicio</th>
                             <th class="thListGuardian">Fecha de finalizacion</th>
                             <th class="thListGuardian">Precio</th>
@@ -51,7 +51,7 @@
                             <?php foreach($cReservationList as $reservation){ ?>
                                 <tr>
                                     <td class="thListGuardian"><?php echo $allpets->getNameByIdPet($reservation->getIdPet()) ?> </td> 
-                                    <td class="thListGuardian"><?php echo $guardian->getGuardianById($reservation->getIdGuardian())->getName() ?> </td>
+                                    <td class="thListGuardian"><?php echo $owner->getOwnerById($reservation->getIdOwner())->getName() ?> </td>
                                     <td class="thListGuardian"><?php echo $reservation->getReservationDateStart() ?> </td>
                                     <td class="thListGuardian"><?php echo $reservation->getReservationDateEnd() ?> </td>
                                     <td class="thListGuardian"><?php echo $reservation->getPrice()?> </td>
@@ -73,19 +73,25 @@
                         <thead>
                             <caption class="captionListGuardian">Reservas finalizadas</th>
                             <th class="thListGuardian">Nombre de la mascota</th>
-                            <th class="thListGuardian">Nombre del Guardian</th>
+                            <th class="thListGuardian">Nombre del Dueño</th>
                             <th class="thListGuardian">Fecha de inicio</th>
                             <th class="thListGuardian">Fecha de finalizacion</th>
-                            <th class="thListGuardian">Precio</th>
                         </thead>
                         <tbody>
                                 <?php foreach($fReservationList as $reservation){ ?>
                                     <tr>
                                         <td class="thListGuardian"><?php echo $allpets->getNameByIdPet($reservation->getIdPet()) ?> </td>
-                                        <td class="thListGuardian"><?php echo $guardian->getGuardianById($reservation->getIdGuardian())->getName() ?> </td>
+                                        <td class="thListGuardian"><?php echo $owner->getOwnerById($reservation->getIdOwner())->getName() ?> </td>
                                         <td class="thListGuardian"><?php echo $reservation->getReservationDateStart() ?> </td>
                                         <td class="thListGuardian"><?php echo $reservation->getReservationDateEnd() ?> </td>
-                                        <td class="thListGuardian"><?php echo $reservation->getPrice()?> </td>
+                                        <form action="<?= FRONT_ROOT ?>Owner/getCoupon" method="post">
+                                        <td><button class="buttonSelectG buttonHoversGreen" type="submit" name="idReservation" value="<?= $reservation->getIdReservation(); ?>">Ver Facturas</button></td>
+                                    </form>
+
+                                    <form action="<?= FRONT_ROOT ?>Home/LoadChat" method="post">
+                                        <input type="hidden" name="content">
+                                        <td><button class="buttonSelectG buttonHoversGreen" type="submit" name="idReservation" value="<?= $reservation->getIdReservation(); ?>">Chat</button></td>
+                                    </form>
                                     </tr>
                                 <?php }?>
                         </tbody>

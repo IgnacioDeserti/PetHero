@@ -30,5 +30,9 @@
                 </tbody>
             </table>
         </div>
+
+        <?php if (strcmp($reservation->getReservationStatus(), "Finalizado") == 0 || strcmp($reservation->getReservationStatus(), "Finalizado Revisado") == 0){?>
+                    <p class="finishPayment success"> El resto a pagar (<?= $payment->getPrice() ?>) fue acordado entre el Dueño y el Guardián</p>
+                <?php }?>
     </main>
 </html>

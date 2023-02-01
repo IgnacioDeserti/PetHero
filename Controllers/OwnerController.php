@@ -469,6 +469,7 @@
                 $paymentArray = $this->paymentDAO->getPaymentByIdReservation($idReservation);
                 if(count($paymentArray) > 0){
                     $payment = $paymentArray[0];
+                    $reservation = $this->reservationDAO->GetReservationsById($idReservation);
                     require_once(VIEWS_PATH . "validate-session.php");
                     require_once(VIEWS_PATH . "viewPaymentCoupon.php");
                 }else{
@@ -513,33 +514,6 @@
 
         }
 
-        
-        public function finishReservation($idReservation){
-            try{
-                $this->checkFinishReservation($idReservation);
-                $this->reservationDAO->changeReservationStatus($idReservation,'Finalizado');
-                $this->showReservationsList();
-            }catch(Exception $e){
-                $alert = [
-                    "type" => "alert",
-                    "text" => $e->getMessage()
-                ];
-                $this->showReservationsList($alert);
-            }
-        }
-
-        public function checkFinishReservation($idReservation){
-            date_default_timezone_set("America/Buenos_Aires");
-            $date = strtotime('today');
-            $date = date("Y-m-d", $date);
-
-            $reservation = $this->reservationDAO->GetReservationsById($idReservation);
-            if($reservation->getReservationDateEnd() > $date){
-                throw new Exception("La reserva no finalizo, espere a que finalice");
-            }
-
-        }
-
         public function createReview($idReservation){
             $reservation = $this->reservationDAO->GetReservationsById($idReservation);
             require_once(VIEWS_PATH . 'validate-session.php');
@@ -569,6 +543,8 @@
                 $this->showReservationsList($alert);
             }
         }
+
+        
 
     }
 

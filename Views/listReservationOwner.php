@@ -77,7 +77,6 @@
                         <th class="thListGuardian">Nombre del Guardian</th>
                         <th class="thListGuardian">Fecha de inicio</th>
                         <th class="thListGuardian">Fecha de finalizacion</th>
-                        <th class="thListGuardian">Precio</th>
                     </thead>
                     <tbody>
                             <?php foreach($fReservationList as $reservation){ ?>
@@ -86,16 +85,22 @@
                                     <td class="thListGuardian"><?php echo $guardian->getGuardianById($reservation->getIdGuardian())->getName() ?> </td>
                                     <td class="thListGuardian"><?php echo $reservation->getReservationDateStart() ?> </td>
                                     <td class="thListGuardian"><?php echo $reservation->getReservationDateEnd() ?> </td>
-                                    <td class="thListGuardian"><?php echo $reservation->getPrice()?> </td>
                                     <?php if(strcmp($reservation->getReservationStatus(), "Finalizado") == 0) { ?>
                                         <form action="<?= FRONT_ROOT ?>Owner/createReview" method="post">
                                             <td><button class="buttonSelectG buttonHoversGreen" type="submit" name="idReservation" value="<?= $reservation->getIdReservation(); ?>">Realizar review</button></td>
                                     </form>
+                                    
+                                </tr>
+                            <?php }?>
                                     <form action="<?= FRONT_ROOT ?>Owner/getCoupon" method="post">
                                         <td><button class="buttonSelectG buttonHoversGreen" type="submit" name="idReservation" value="<?= $reservation->getIdReservation(); ?>">Ver Facturas</button></td>
                                     </form>
-                                </tr>
-                            <?php }}?>
+
+                                    <form action="<?= FRONT_ROOT ?>Home/LoadChat" method="post">
+                                        <input type="hidden" name="content">
+                                        <td><button class="buttonSelectG buttonHoversGreen" type="submit" name="idReservation" value="<?= $reservation->getIdReservation(); ?>">Chat</button></td>
+                                    </form>
+                            <?php }?>
                     </tbody>
                 </table>
                 

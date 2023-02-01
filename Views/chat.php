@@ -41,14 +41,17 @@
                             <?php } ?>
                         <?php } ?>
                 </div> 
+                
+                <?php if(strcmp($reservation->getReservationStatus(), "Finalizado") != 0 && strcmp($reservation->getReservationStatus(), "Finalizado Revisado") != 0) { ?>
+                    <div class="containerNewMessage">
+                        <input type="textarea" name="content" class="newMessageTextArea" placeholder="Escribe un mensaje">
+                    </div>
 
-                <div class="containerNewMessage">
-                    <input type="textarea" name="content" class="newMessageTextArea" placeholder="Escribe un mensaje">
-                </div>
+                    <input type="hidden" name="idReservation" value="<?php echo $reservation->getIdReservation(); ?>">
 
-                <input type="hidden" name="idReservation" value="<?php echo $idReservation; ?>">
-
-                <button class="buttonSendMessage buttonHoversGreen" type="submit"><img class="imgSendMessage" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdXuAPaGjfVszgVw9SQ7NjvRn1MYUXYfEDfQ&usqp=CAU" width="50px" height="50px"></img></button>
+                    <button class="buttonSendMessage buttonHoversGreen" type="submit"><img class="imgSendMessage" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdXuAPaGjfVszgVw9SQ7NjvRn1MYUXYfEDfQ&usqp=CAU" width="50px" height="50px"></img></button>
+                    
+                <?php }?>
             </form>
         
         </div>

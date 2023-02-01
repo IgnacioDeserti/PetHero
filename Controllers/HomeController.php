@@ -51,7 +51,8 @@ class HomeController
     }
 
     public function inicioSesion($email, $password, $typeUser)
-    {
+    {   
+        $this->reservationDAO->updateEndedReservations();
         try {
             $this->checkTypeUser($typeUser);
             if ($typeUser == 'G') {
@@ -178,7 +179,8 @@ class HomeController
     }
 
     public function createProfile()
-    {
+    {   
+        $this->reservationDAO->updateEndedReservations();
         require_once(VIEWS_PATH . "createProfile.php");
     }
 

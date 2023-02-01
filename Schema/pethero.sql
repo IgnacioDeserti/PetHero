@@ -456,9 +456,9 @@ BEGIN
 END//
 
 DELIMITER //
-CREATE PROCEDURE reservation_changePrice (in idReservationS int)
+CREATE PROCEDURE reservation_changePrice (in idReservationS int,in splitS float)
 BEGIN
-    UPDATE reservation SET reservation.price = price * 0.5 WHERE reservation.idReservation = idReservationS;
+    UPDATE reservation SET reservation.price = price * splitS WHERE reservation.idReservation = idReservationS;
 END//
 
 DELIMITER //
@@ -483,4 +483,10 @@ BEGIN
     FROM message
     WHERE message.idReservation = idReservationS
     ORDER BY message.fecha;
+END//
+
+DELIMITER //
+CREATE PROCEDURE Reservation_updateEnd (in dateS date)
+BEGIN
+    UPDATE reservation SET reservation.status = 'Finalizado' WHERE reservation.reservationDateEnd < dateS AND reservation.status = 'Confirmado'; 
 END//

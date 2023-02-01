@@ -91,6 +91,9 @@
                                         <form action="<?= FRONT_ROOT ?>Owner/createReview" method="post">
                                             <td><button class="buttonSelectG buttonHoversGreen" type="submit" name="idReservation" value="<?= $reservation->getIdReservation(); ?>">Realizar review</button></td>
                                     </form>
+                                    <form action="<?= FRONT_ROOT ?>Owner/getCoupon" method="post">
+                                        <td><button class="buttonSelectG buttonHoversGreen" type="submit" name="idReservation" value="<?= $reservation->getIdReservation(); ?>">Ver Facturas</button></td>
+                                    </form>
                                 </tr>
                             <?php }}?>
                     </tbody>

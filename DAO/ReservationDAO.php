@@ -340,12 +340,11 @@
 
         }
         
-        public function updatePrice($idReservation){
-            $reservationList = array();
-
-            $query = "CALL reservation_changePrice(?)";
+        public function updatePrice($idReservation, $split){
+            $query = "CALL reservation_changePrice(?,?)";
 
             $parameters["idReservationS"] = $idReservation;
+            $parameters["splitS"] = $split;
 
             try{
                 $this->connection = Connection::GetInstance();
@@ -354,7 +353,21 @@
                 return null;
             }
         }
-        
+            
+        public function updateEndedReservations (){
+            $query = "CALL Reservation_updateEnd(?)";
+
+            date_default_timezone_set("America/Buenos_Aires");
+            $date = date("Y-m-d");
+            $parameters["dateS"] = $date;
+
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+            }catch(Exception $error){
+                return null;
+            }
+        }
 }
 
 ?>

@@ -447,7 +447,7 @@
                 $payment->setTitular($titular);
                 $payment->setReservationNumber($reservation->getIdReservation());
                 $this->reservationDAO->changeReservationStatus($idReservation, "Aceptada");
-                $this->reservationDAO->updatePrice($idReservation);
+                $this->reservationDAO->updatePrice($idReservation,0.50);
                 $this->paymentDAO->Add($payment);
                 $alert = [
                     "type" => "success",

@@ -1,8 +1,8 @@
 <?php 
 
-    namespace Models;
+namespace Models;
 
-    class Message {
+class Message {
         
         private $idMessage;
         private $idReservation;

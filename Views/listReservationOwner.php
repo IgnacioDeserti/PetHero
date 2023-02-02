@@ -88,10 +88,8 @@
                                     <?php if(strcmp($reservation->getReservationStatus(), "Finalizado") == 0) { ?>
                                         <form action="<?= FRONT_ROOT ?>Owner/createReview" method="post">
                                             <td><button class="buttonSelectG buttonHoversGreen" type="submit" name="idReservation" value="<?= $reservation->getIdReservation(); ?>">Realizar review</button></td>
-                                    </form>
-                                    
-                                </tr>
-                            <?php }?>
+                                        </form>
+                                    <?php }?>
                                     <form action="<?= FRONT_ROOT ?>Owner/getCoupon" method="post">
                                         <td><button class="buttonSelectG buttonHoversGreen" type="submit" name="idReservation" value="<?= $reservation->getIdReservation(); ?>">Ver Facturas</button></td>
                                     </form>
@@ -100,6 +98,7 @@
                                         <input type="hidden" name="content">
                                         <td><button class="buttonSelectG buttonHoversGreen" type="submit" name="idReservation" value="<?= $reservation->getIdReservation(); ?>">Chat</button></td>
                                     </form>
+                                </tr>
                             <?php }?>
                     </tbody>
                 </table>

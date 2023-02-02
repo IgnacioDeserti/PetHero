@@ -284,8 +284,8 @@
             $mail->isSMTP();
             $mail->Host='smtp.gmail.com';
             $mail->SMTPAuth=true;
-            $mail->Username='petheroadvisor@gmail.com';
-            $mail->Password='zvfcmpwllxaimbnx';
+            $mail->Username='petheromessages@gmail.com';
+            $mail->Password='lpkjztpzyzrajdax';
             $mail->SMTPSecure='ssl';
             $mail->Port=465;
             $mail->setFrom('petheroreserves@gmail.com');

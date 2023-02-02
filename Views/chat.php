@@ -25,12 +25,23 @@
                         if(isset($chat)){
                             foreach($chat as $message){?>
                                 <div class="containerMessage">
+                                    <h4 class="negritaNombre <?php if ($message->getSender() == $_SESSION["typeUser"]) {
+                                        echo "sender";
+                                    } else {
+                                        echo "receiver";
+                                    } ?>"> 
+                                    <?php if ($message->getSender() == "O") {
+                                        echo $owners->getNameById($reservation->getIdOwner());
+                                    } else {
+                                        echo $guardians->getNameById($reservation->getIdGuardian()); } ?> <br></h4>
+                                    
                                     <h4 class="<?php if ($message->getSender() == $_SESSION["typeUser"]) {
                                         echo "sender";
                                     } else {
                                         echo "receiver";
                                     } ?>"> 
-                                    <?= $message->getContent(); ?></h4>
+                                        <?= $message->getContent(); ?></h4>
+
                                     <h6 class="<?php if ($message->getSender() == $_SESSION["typeUser"]) {
                                         echo "sender";
                                     } else {

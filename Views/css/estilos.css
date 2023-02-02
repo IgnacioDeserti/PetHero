@@ -613,7 +613,9 @@ h5{
     top: 20%;
     height: 550px;
     width: 630px;
-    background-color: rgba(255, 242, 183, 0.599);
+    background: #8E2DE2;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #4A00E0, #8E2DE2);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #4A00E0, #8E2DE2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     border: 2px solid black;
 }
 
@@ -661,14 +663,14 @@ h5{
     position: relative;
     left: 370px;
     background-color: #d1b056;
-    max-width: 300px;
+    max-width: 250px;
 }
 
 .receiver{
     position: relative;
     left: 10px;
     background-color: #d1b056;
-    max-width: 300px;
+    max-width: 250px;
 }
 
 .containerNewMessage{
@@ -689,4 +691,9 @@ h5{
     left: 500px;
     top: 50px;
     font-size: 20px;
+}
+
+.negritaNombre{
+    font-weight: bold;
+    color:rgb(164, 0, 0)
 }

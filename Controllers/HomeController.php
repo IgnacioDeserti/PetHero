@@ -304,6 +304,8 @@ class HomeController
             require_once(VIEWS_PATH . "inicio.php");
         }
         $reservation = $this->reservationDAO->GetReservationsById($idReservation);
+        $owners = $this->ownerDAO;
+        $guardians = $this->guardianDAO;
         if ($content != '') {
             date_default_timezone_set("America/Buenos_Aires");
             $date = date("Y-m-d h:i:sa");

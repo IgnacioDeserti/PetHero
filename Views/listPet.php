@@ -32,7 +32,7 @@
                                                   <td class="thListGuardian"><?php echo $size->getName($Pet->getIdSize()) ?></td>
                                                   <td class="thListGuardian"><?php echo $Pet->getObservations() ?></td>
                                                   <?php if ($Pet->getVideo() != null) { ?>
-                                                  <td class="thListGuardian"><iframe src="<?php echo $Pet->getVideo(); ?>" frameborder="0" width="150" height="150"></iframe></td>
+                                                  <td class="thListGuardian"><iframe src="<?php echo $Pet->getVideo(); ?>" frameborder="0" width="150" height="150" allowfullscreen></iframe></td>
                                                   <?php } else { ?>
                                                        <td class="thListGuardian">No disponible</td>
                                                   <?php } ?> 

@@ -21,7 +21,7 @@
 
                     <div class="selectUser">
                         <label for="">Guardian</label>
-                        <input type="radio" name="typeUser" value="G">
+                        <input type="radio" name="typeUser" value="G" checked>
 
                         <label for="">Dueño</label>
                         <input type="radio" name="typeUser" value="O">

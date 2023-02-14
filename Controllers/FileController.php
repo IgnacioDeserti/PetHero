@@ -10,7 +10,7 @@ class FileController
 
      function __construct() {
           $this->allowedExtensions = array('png', 'jpg', 'gif', 'mp4', "JPG");
-          $this->maxSize = 5000000000000000000;
+          $this->maxSize = 999999999999999999;
           $this->uploadFilePath = IMG_ROOT;
      }
 

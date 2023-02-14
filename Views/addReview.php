@@ -38,7 +38,7 @@
                 <input type="hidden" name="idGuardian" value="<?= $reservation->getIdGuardian() ?>">
                 <input type="hidden" name="idReservation" value="<?= $reservation->getIdReservation() ?>">
 
-                    <button class="buttonSelectPet buttonHoversGreen" type="submit">Agregar Mascota</button>
+                    <button class="buttonSelectPet buttonHoversGreen" type="submit">Agregar Reseña</button>
             </form>
             <a href="<?php echo FRONT_ROOT?> Owner/showReservationsList "><button class="buttonGoBackSelectPet buttonRedHovers">Volver</button></a>
         

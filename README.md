@@ -1,2 +1,2 @@
 # PetHero
- Proyecto Final de Laboratorio iv y Metodología de Sistemas
+ Página Web de gestionamiento de turnos para cuidados de perro
